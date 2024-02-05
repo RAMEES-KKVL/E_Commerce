@@ -1,0 +1,68 @@
+<%- include("../admin-header.ejs") %>
+    <div class="container">
+
+        <%- include("../adminnav.ejs") %>
+        <div class="body">
+            <%- include("../sidebar.ejs") %>
+
+            <div class="content_part">
+
+                <form action="" method="post">
+                    <div class="frame">
+                        <div class="banner_gap_div">
+                            <div class="banner_div">
+
+                                <div class="banner_img_div">      
+                                    <div class="form-group img_centr">
+                                        <div class="banner_image_space">
+                                            <img src="" alt="">
+                                        </div>
+                                       <div class="banner_image_buttn">
+                                           Choose Image
+                                        <input type="file" id="productImage" name="productImage">
+                                       </div>
+                                    </div>
+                                </div>
+
+                                <div style="width: 100%;">
+                                    <div class="form-group">
+                                        <label for="bannerProduct">Banner Product</label>
+                                        <input type="text" id="bannerProduct" name="bannerProduct" placeholder="Enter banner product name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bannerHeading">Banner Heading</label>
+                                        <input type="text" id="bannerHeading" name="bannerHeading" placeholder="Enter banner heading name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bannerDescription">Banner Description</label>
+                                        <input type="text" id="bannerDescription" name="bannerDescription" placeholder="Enter banner description">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="buttonLink">Button Link</label>
+                                        <input type="text" id="buttonLink" name="buttonLink" placeholder="Enter button link">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="startingDate">Starting Date</label>
+                                        <input type="date" id="startingDate" name="startingDate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endingDate">Starting Date</label>
+                                        <input type="date" id="endingDate" name="endingDate">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit">Add Banner</button>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                         
+            </div>
+        </div>
+    </div>
+
+<%- include("../../end.ejs") %>

@@ -1,0 +1,53 @@
+<%- include("../admin-header.ejs") %>
+    <div class="container">
+
+        <%- include("../adminnav.ejs") %>
+        <div class="body">
+            <%- include("../sidebar.ejs") %>
+
+            <div class="content_part">
+
+                <form action="" method="post">
+                    <div class="frame">
+                        <div class="coupon_gap_div">
+                            <div class="coupon_div">
+
+                                <div class="form-group">
+                                    <label for="couponName">Coupon Name</label>
+                                    <input type="text" id="couponName" name="couponName" placeholder="Enter Coupon Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="couponDiscount">Coupon Discount</label>
+                                    <input type="text" id="couponDiscount" name="couponDiscount" placeholder="Enter Coupon Discount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="minOrderAmount">Minimum Order Amount</label>
+                                    <input type="text" id="minOrderAmount" name="minOrderAmount" placeholder="Enter Minimum Order Amount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="maxOrderAmount">Maximum Order Amount</label>
+                                    <input type="text" id="maxOrderAmount" name="maxOrderAmount" placeholder="Enter Maximum Order Amount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="startingDate">Starting Date</label>
+                                    <input type="date" id="startingDate" name="startingDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="endingDate">Ending Date</label>
+                                    <input type="date" id="endingDate" name="endingDate">
+                                </div>
+
+                                <button type="submit">Create Coupon</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+                         
+            </div>
+        </div>
+    </div>
+
+<%- include("../../end.ejs") %>

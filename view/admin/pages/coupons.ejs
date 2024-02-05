@@ -1,0 +1,61 @@
+<%- include("../admin-header.ejs") %>
+    <div class="container">
+
+        <%- include("../adminnav.ejs") %>
+        <div class="body">
+            <%- include("../sidebar.ejs") %>
+
+            <div class="content_part">
+
+                <div class="products_list_head">
+                    <p style="font-size: x-large; padding-left: 1.5rem;">Coupons</p>
+                    <button class="add_product_btn_admin">Add Coupon</button>
+                </div>
+
+                <div class="product_list">
+                    <div class="product_table">
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Sl.No</th>
+                                    <th>Coupon ID</th>
+                                    <th>Coupon Name</th>
+                                    <th>Coupon Discount</th>
+                                    <th>Minimum Amount</th>
+                                    <th>Maximum Amount</th>                                                                              
+                                    <th>Starting Date</th>
+                                    <th>Ending Date</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>56KSVZZZZZ6788666</td>
+                                    <td>AXGY5677554765</td>
+                                    <td>20%</td>
+                                    <td>1000</td>
+                                    <td>5000</td>
+                                    <td>02/01/2023</td>
+                                    <td>02/01/2024</td>
+                                    <td>
+                                        <i class="bi bi-pencil-square"></i>
+                                    </td>
+                                    <td>
+                                        <i class="bi bi-trash-fill"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+    
+                        </table>
+                    </div>
+                </div>
+
+                         
+            </div>
+        </div>
+    </div>
+
+<%- include("../../end.ejs") %>

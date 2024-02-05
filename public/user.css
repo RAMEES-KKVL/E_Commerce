@@ -1,0 +1,404 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&family=Roboto:ital,wght@1,900&display=swap');
+
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Poppins',sans-serif;
+    font-size: 1rem;
+    
+}
+.container{
+    height: 100vh;
+    width: 100vw;
+}
+.header{
+    display: flex;
+    width: 100vw;
+    height: 4rem;
+    background-color:lightsteelblue ;
+}
+.web_logo{
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+    font-size: 1.2rem;
+    flex: 1;
+    color: aliceblue;
+    /* border-right: 1px solid white; */
+}
+.search_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+    /* border-right: 1px solid white; */
+}
+.search_bar{
+    display: flex;
+    background-color: aliceblue;
+    height: 2rem;
+    width: 70%;
+    border-radius: 4px 0px 0px 4px;
+    /* box-shadow: -1px 1px 8px 1px; */
+}
+.search_text{
+    font-size: .8rem;
+    display: flex;
+    align-items:center ;
+    justify-content: center;
+    height: 100%;
+    width: 3.5rem;
+    /* border-left: 1px solid #000; */
+    background-color: #edb409;
+    color: #363062;
+    
+}
+.search_text:hover{
+    background-color: #4D4C7D;
+    color: aliceblue;
+
+}
+.input_serach{
+    height: 100%;
+    width: calc(100% - 3.5rem);
+    border: none;
+    outline: none;
+    background: none;
+    padding-left: .3rem;
+}
+.page_links{
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    flex: 1;
+}
+.input_serach:focus{
+    box-shadow: 1px -1px 10px rgba(0, 0, 0, 0.529);
+}
+.page_links ul{
+    display: flex;
+    gap: 3rem;   
+}
+@media screen and (max-width:1100px) {
+    .page_links ul :nth-child(3){
+        display: none;
+    }
+  }
+@media screen and (max-width:900px) {
+    .page_links ul :nth-child(2){
+        display: none;
+    }
+
+}
+  
+.page_links ul li{
+    list-style: none;
+}
+.page_links ul li a{
+    text-decoration: none;
+    color: #4D4C7D;
+}
+.page_links ul li a:hover{
+    color: #f5bd1390;
+    /* color: aqua; */
+    /* background-color: red; */
+}
+.bi_topnav{
+    font-size: 1.5rem;
+}
+
+
+
+
+
+
+
+
+
+
+/* ============================================================
+   LOGIN
+============================================================ */
+
+.body{
+    width: 100vw;
+    height: calc(100vh - 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aliceblue;
+}
+.box{
+    display: flex;
+    width: 54rem;
+    height: 30rem;
+    overflow:hidden ;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.205);
+}
+.input_logoin{
+    /* border: 1px solid black; */
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border-radius: 2rem 0 0 2rem; */
+    background-color: rgba(255, 255, 255, 0.842);
+
+}
+.logo{
+    /* border: 1px solid black; */
+    width: 50%;
+    height: 100%;
+}
+.form_layout{
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    /* border:1px solid black; */
+}
+.input_logoin .form_layout form{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    background-color: white;
+    width: 100%;
+}
+.input_logoin .form_layout form input{
+    height: 1.7rem;
+    padding-left: .5rem;
+}
+.login_submit{
+    width: 5rem;
+    height: 2rem;
+    background-color: #edb409;
+    color: #363062;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+.login_submit:hover{
+    background-color: #363062;
+    color:aliceblue;
+    border: none;
+    border-radius: 4px;
+}
+.form_layout form .redirect_signin a{
+    text-decoration: none;
+}
+.login_head{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: xx-large;
+    height: 6rem;
+    color: rgba(0, 0, 0, 0.638);
+}
+
+.login_submit_div{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightsteelblue;
+}
+.logo img{
+    width: 12rem;
+    height: 12rem;
+}
+
+
+
+
+
+
+/* ============================================================
+   SIGNUP
+============================================================ */
+
+.signup_submit_div{
+    display: flex;
+    justify-content: center;
+    /* margin-top: 1rem; */
+    /* margin-bottom: 2rem; */
+}
+.signup_box{
+    display: flex;
+    width: 54rem;
+    height: 33rem;
+    overflow:hidden ;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.205);
+}
+.signup_part{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* border:1px solid black; */
+}
+.signup_part_head{
+font-size: xx-large;
+height: 3.4rem !important;
+}
+.part_2_btn{
+    width: 7rem;
+    height: 2rem;
+    background-color: #edb409;
+    color: #363062;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+.part_2_btn:hover{
+    background-color: #363062;
+    color: aliceblue;
+}
+
+@media screen and (max-width:650px){
+    .logo{
+        display: none;
+    }
+    .box{
+        width: 24rem;
+    }
+    .signup_box{
+        width: 24rem;
+    }
+    .input_logoin{
+        width: 100%;
+    }
+    .page_links ul :nth-child(4){
+        display: none;
+    }
+    .page_links ul :nth-child(1){
+        margin-left: 2.5rem;
+    }
+    .search_div{
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+/* ================================ OTP ================================ */
+
+.otp_container{
+    width: 100vw;
+    height: 100vh;
+    background-color: aliceblue;
+}
+.otp_content_area{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.otp_content{
+    width: 35rem;
+    height: 30rem;
+    border: 1px solid rgba(119, 119, 119, 0.323);
+    border-radius: 4px;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.812);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0px 0px 1rem .1rem rgba(128, 128, 128, 0.43);
+}
+.otp_content:hover{
+    box-shadow: 0px 0px 1.4rem .1rem rgba(128, 128, 128, 0.523);
+}
+.verification{
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.verification p{
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #363062;
+}
+.content_verify{
+    width: 100%;
+    height: 5rem;
+    color: #4D4C7D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.content_verify p{
+    font-size: 1.5rem;
+    font-family:sans-serif;
+}
+.otp_number{
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+.num_one,.num_two,.num_three,.num_four,.num_five,.num_six{
+    width: 2.5rem;
+    height: 2.5rem;
+    /* display: flex; */
+    color: #4D4C7D;
+    font-size: 1.5rem;
+    /* align-items: center; */
+    /* justify-content: center; */
+    background-color: aliceblue;
+    box-shadow: 2px 2px 4px 2px lightsteelblue;
+}
+.otp_content .otp_number input{
+    text-align: center;
+    border: none;
+    outline: none;
+}
+.verify_otp_button{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.verify_otp_button button{
+    width: 7rem;
+    height: 2.4rem;
+    background-color: #edb409;
+    color: #4D4C7D;
+    font-size: 1.1rem;
+    border:none ;
+    border-radius: 4px;
+}
+.verify_otp_button button:hover{
+    background-color: #363062;
+    color: aliceblue;
+}
+.resend_otp{
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.resend_otp p a{
+    text-decoration: none;
+    color: #4D4C7D;
+}
+.resend_otp p a:hover{
+    color:#edb409;
+}

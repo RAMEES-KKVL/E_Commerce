@@ -1,0 +1,52 @@
+<%- include("../../header.ejs") %>
+
+<div class="container">
+<%- include("../usernav") %>
+    
+    <div class="body">
+        <div class="box" >
+
+            <div class="input_logoin">
+                <div class="form_layout">
+                    <div class="login_head" style="margin-top: 1rem;">Forget Password ?</div>
+
+                    <form action="/forget_Password" method="post" id="forgetPass_Form">
+                        <label for="" style="margin-top: 2rem;">Email</label>
+                        <input type="email" id="forget_email" name="email">
+                        <!-- <label for="">Enter remembered password</label> -->
+                        <!-- <input type="password" id="password" name="password"> -->
+
+                        <div style="display: flex; justify-content: space-between; margin-top: .5rem;">
+                            <div style=" display: flex;  align-items: center; gap: .3rem;">
+                                <!-- <input type="checkbox" style="width:1rem; height:1rem; "><p style="font-family:serif;">Remember me</p> -->
+                            </div>
+                            <!-- <div><a href="/forget_Password/:email" style="font-family: serif; text-decoration: none;">Forgot Password?</a></div> -->
+                        </div>
+
+                        <div id="forgetPass_Error" style="display: flex; justify-content: center; color: brown;"></div>
+
+                        <div class="login_submit_div" >
+                            <button class="login_submit" id="forget_pass_submitBtn" type="submit">Submit</button>
+                        </div>
+
+                        <div style="font-family: serif; display: flex; justify-content: center; align-items: center;" >
+                            <p>Don't have an account?</p> <a href="/signup" style="text-decoration: none; margin-left:.3rem"> Register</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="logo">
+                <img src="/assets/ekart_logo.png" alt="">
+            </div>
+
+        </div>
+
+</div>
+</div>
+
+<%- include("../../end.ejs") %>
+
+
+<script src="/js/forgetPass.js">
+
+</script>

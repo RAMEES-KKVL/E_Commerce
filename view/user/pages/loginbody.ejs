@@ -1,0 +1,48 @@
+<%- include("../../header.ejs") %>
+
+<div class="container">
+<%- include("../usernav.ejs") %>
+    
+    <div class="body">
+        <div class="box" >
+
+            <div class="input_logoin">
+                <div class="form_layout">
+                    <div class="login_head">Login</div>
+                    <form action="/login" method="post" id="loginForm">
+                        <label for="">Email</label>
+                        <input type="email" id="email" name="email">
+                        <label for="">Password</label>
+                        <input type="password" id="password" name="password">
+
+                        <div style="display: flex; justify-content: space-between; margin-top: .5rem;">
+                            <div style=" display: flex;  align-items: center; gap: .3rem;">
+                                <input type="checkbox" style="width:1rem; height:1rem; "><p style="font-family:serif;">Remember me</p>
+                            </div>
+                            <div><a href="/forget_Password" style="font-family: serif; text-decoration: none;">Forgot Password?</a></div>
+                        </div>
+
+                        <div id="loginError" style="display: flex; justify-content: center; color: brown;"></div>
+
+                        <div class="login_submit_div" >
+                            <button class="login_submit" type="submit">Login</button>
+                        </div>
+
+                        <div style="font-family: serif; display: flex; justify-content: center; align-items: center;" >
+                            <p>Don't have an account?</p> <a href="/signup" style="text-decoration: none; margin-left:.3rem"> Register</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="logo">
+                <img src="/assets/ekart_logo.png" alt="">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<%- include("../../end.ejs") %>
+
+<script src="/js/login.js"></script>

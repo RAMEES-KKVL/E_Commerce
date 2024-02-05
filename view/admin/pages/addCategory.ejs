@@ -1,0 +1,45 @@
+<%- include("../admin-header.ejs") %>
+    <div class="container">
+
+        <%- include("../adminnav.ejs") %>
+        <div class="body">
+            <%- include("../sidebar.ejs") %>
+
+            <div class="content_part">
+
+                <form action="" method="post">
+                    <div class="frame">
+                        <div class="category_gap_div">
+                            <div class="category_div">
+
+                                <div class="category_img_div">      
+                                    <div class="form-group img_centr">
+                                        <div class="category_image_space">
+                                            <img src="" alt="">
+                                        </div>
+                                       <div class="category_image_buttn">
+                                          Choose Image
+                                        <input type="file" id="productImage" name="productImage">
+                                       </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="categoryName">Category Name</label>
+                                    <input type="text" id="categoryName" name="categoryName" placeholder="Enter category name">
+                                </div>
+                                <div style="display:flex; justify-content: center;">
+                                    <button type="submit">Submit</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>  
+
+                         
+            </div>
+        </div>
+    </div>
+
+<%- include("../../end.ejs") %>

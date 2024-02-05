@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="web_logo">
+            <img src="/public/assets/ekart_logo - Copy.png" style="height: 32%;" alt="">
+            </div>
+            <div class="search_div">
+                <!-- <div class="search_bar">
+                    <input type="text" class="input_serach">
+                    <p class="search_text">search</p>
+                </div> -->
+            </div>
+            <div class="page_links">
+            <ul class="login_nav_ul">
+                <!-- <li><a href="#"><i class="bi bi_topnav bi-house"></i></a></li> -->
+                <!-- <li><a href="#"><i class="bi bi_topnav bi-person"></i></a></li> -->
+                <!-- <li><a href="#"><i class="bi bi_topnav bi-box-arrow-right"></i></a></li> -->
+            </ul>
+            </div>
+        </div>
+
+                  
+        <div class="login_body">
+            <div class="signup_box">
+
+               <div class="input_logoin">  
+                   <div class="form_layout signup_part">
+                       <div class="login_head signup_part_head">Sign Up</div>
+                       <form action="/signup" method="post" id="signup_form">
+
+                           <label for="">Username</label>
+                           <input type="text" id="signup_input_username" name="username">
+
+                           <label for="">Email</label>
+                           <div style="color: firebrick;" id="signup_error_email"> </div>
+                           <input type="email" id="signup_input_email" name="email">
+                           
+                           <label for="">Phone No</label>
+                           <div style="color: firebrick;" id="signup_error_phone"> </div>
+                           <input type="text" id="signup_input_phone" name="phone">
+                           
+                           <label for="">Password</label>
+                           <div style="color: firebrick;" id="signup_error_password"> </div>
+                           <input type="password" id="signup_input_password" name="password">
+                           
+                           <label for="">Confirm Password</label>
+                           <div style="color: firebrick;" id="signup_error_cpass"> </div>
+                           <input type="password" id="signup_input_confirmPassword" name="confirmPassword">
+
+                           <div style="color: firebrick; display: flex; justify-content: center;" id="signup_error"> </div>
+
+                           <div class="signup_submit_div" >
+                               <button class="signup_submit part_2_btn" id="signup_submit_btn" type="submit">Send OTP</button>
+                           </div>
+
+                           <div style="font-family: serif; display: flex; justify-content: center; align-items: center;" >
+                               <p>Already have an account?</p> <a href="/login" style="text-decoration: none; margin-left:.3rem"> Login</a>
+                           </div>
+
+                       </form>
+
+                   </div>
+               </div>
+
+               <div class="logo">
+                   <img src="public/assets/ekart_logo.png" alt="">
+               </div>
+
+            </div>
+        </div>
+        
+    </div>
+
+
+
+
+</body>
+</html>
