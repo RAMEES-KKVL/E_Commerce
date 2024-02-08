@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 
 const schema = {
-    username : {
-        type : String ,
+    name : {
+        type :String,
         required : true
     },
     email : {
@@ -26,8 +26,8 @@ const schema = {
     }
 }
 
-const signupSchema = new mongoose.Schema(schema)
+const adminSignupSchema = new mongoose.Schema(schema)
 
-const signupModel = new mongoose.model("signup-datas", signupSchema)
+const adminSignupModel = new mongoose.model("admin-signup-datas", adminSignupSchema)
 
-module.exports = signupModel
+module.exports = adminSignupModel

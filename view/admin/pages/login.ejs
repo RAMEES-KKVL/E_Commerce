@@ -1,24 +1,18 @@
-<%- include("../../header.ejs") %>
+<%- include("../admin-header.ejs") %>
     <div class="container">
         <%- include("../navLogin.ejs") %>
          
-            <div class="login_body" style="
-                                        width: 100vw;
-                                        height: calc(100vh - 4rem);
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        background-color: aliceblue;">
+            <div class="login_body">
                 <div class="box" >
 
                     <div class="input_logoin">
                         <div class="form_layout">
                             <div class="login_head">Admin Login</div>
-                            <form action="/login" method="post" id="loginForm">
+                            <form method="post" id="loginForm">
                                 <label for="">Email</label>
-                                <input type="email" id="email" name="email">
+                                <input type="email" id="email" name="email" value="ramees@gmail.com">
                                 <label for="">Password</label>
-                                <input type="password" id="password" name="password">
+                                <input type="password" id="password" name="password" value="Ramees@22">
 
                                 <div style="display: flex; justify-content: space-between; margin-top: .5rem;">
                                     <div style=" display: flex;  align-items: center; gap: .3rem;">
@@ -51,3 +45,5 @@
     </div>
 
 <%- include("../../end.ejs") %>
+
+<script src="/js/admin/login.js"></script>

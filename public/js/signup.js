@@ -15,14 +15,7 @@ const cPass_value = document.getElementById("signup_input_confirmPassword")
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
         const phoneRegex = /^[0-9]{10}$/
         
-        const email = document.getElementById("signup_input_email").value
-        const password = document.getElementById("signup_input_password").value
-        const phone = document.getElementById("signup_input_phone").value
         
-        
-        const validatingEmail = emailRegex.test(email)
-        const validatingPassword = passwordRegex.test(password)
-        const validatingPhone = phoneRegex.test(phone)
         
 
 email_value.onblur = ()=>{
@@ -75,69 +68,92 @@ cPass_value.onblur = ()=>{
 
 submitButn.addEventListener("click", async (event)=>{
     event.preventDefault()
-
     const signupForm = new FormData(form)
 
     try {
+        const email = document.getElementById("signup_input_email").value
+        const password = document.getElementById("signup_input_password").value
+        const phone = document.getElementById("signup_input_phone").value
+        
+    
+    const validatingEmail = emailRegex.test(email)
+    const validatingPassword = passwordRegex.test(password)
+    const validatingPhone = phoneRegex.test(phone)
+
+   
+
+    if( !validatingEmail ){
+
+        signup_email.innerHTML = "Invalid Email"
+        setTimeout(() => {
+            signup_email.innerHTML = ""
+        }, 4000);
+    }
+    else if( !validatingPassword ){
+        signup_password.innerHTML = "Invalid Password"
+        setTimeout(() => {
+            signup_password.innerHTML = ""
+        }, 4000);
+    }
+    else if( !validatingPhone ){
+        signup_phone.innerHTML = "Invalid Mobile Number"
+        setTimeout(() => {
+            signup_phone.innerHTML = ""
+        }, 4000);
+    }
+    else{
+
         const response = await fetch("/signup",{
-            method: "post",
+            method: "POST",
             headers: {
                 "content-Type":"application/json" 
             },
             body: JSON.stringify(Object.fromEntries(signupForm))
         })
-        
-        
+    
         const result = await response.json()
+    
+        if(response.ok){
 
-            if( !validatingEmail ){
-                signup_email.innerHTML = "Invalid Email"
-                setTimeout(() => {
-                    signup_email.innerHTML = ""
-                }, 4000);
-            }
-            else if( !validatingPassword ){
-                signup_password.innerHTML = "Invalid Password"
-                setTimeout(() => {
-                    signup_password.innerHTML = ""
-                }, 4000);
-            }
-            else if( !validatingPhone ){
-                signup_phone.innerHTML = "Invalid Mobile Number"
-                setTimeout(() => {
-                    signup_phone.innerHTML = ""
-                }, 4000);
-            }else{
-                if( result.success ){
-                    const phone = result.phone
-                    if(result.notVerified){
-                        window.location.href = `/otp/${phone}`
-                    }else if(result.newUser){
-                        window.location.href = `/otp/${phone}`
-                    }
-                }else{
-                    if(result.missingdata){
-                        signup_error.innerHTML = result.error
-                        setTimeout(() => {
-                            signup_error.innerHTML = ""
-                        }, 4000);
-                    }
-                    else if(result.notequlapass){
-                        signup_cpass.innerHTML = result.error
-                        setTimeout(() => {
-                            signup_cpass.innerHTML = ""
-                        }, 4000);
-                    }
-                    else if(result.userExist){
-                        signup_error.innerHTML = result.error
-                        setTimeout(() => {
-                            signup_error.innerHTML = ""
-                        }, 4000);
-                    }
+            if(result.success){
+
+                const phone = result.phone
+                if(result.notVerified){
+
+                    window.location.href =`/otp?phone=${phone}`
+                }else if(result.newUser){
+                    window.location.href = `/otp?phone=${phone}`
                 }
-                
             }
-        
+            }else{
+                if(result.missingdata){
+                    signup_error.innerHTML = result.error
+                    setTimeout(() => {
+                        signup_error.innerHTML = ""
+                    }, 4000);
+                }
+                else if(result.notequlapass){
+                    signup_cpass.innerHTML = result.error
+                    setTimeout(() => {
+                        signup_cpass.innerHTML = ""
+                    }, 4000);
+                }
+                else if(result.userExist){
+                    signup_error.innerHTML = result.error
+                    setTimeout(() => {
+                        signup_error.innerHTML = ""
+                    }, 4000);
+                
+                } 
+                else if(result.usernoval){
+                    signup_error.innerHTML = result.error
+                    setTimeout(() => {
+                        signup_error.innerHTML = ""
+                    }, 4000);
+                }
+            }
+        }
+    
     } catch (error) {
         console.log("signup ",error.message);
     }

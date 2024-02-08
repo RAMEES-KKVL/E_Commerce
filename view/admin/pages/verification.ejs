@@ -1,14 +1,16 @@
-<%- include("../../header.ejs") %>
+<%- include("../admin-header.ejs") %>
+
+
     <div class="otp_container">
         <div class="otp_content_area">
             <div class="otp_content">
-                <form method="post" id="otp_form">  
+                <form action="/admin/verification?phone=<%= phone || rePhone %>&email=<%= email || reEmail %>&forget_email=<%= forget_email %>" method="post" id="otp_form">  
                     <div class="verification">
-                        <p>Mobile OTP Verification</p>
+                        <p>Secret Key Verification</p>
                     </div>
 
                     <div class="content_verify">
-                        <p>Please enter the verification code</p>
+                        <p>Please enter Secret key</p>
                     </div>
 
                     <div class="otp_number">
@@ -19,24 +21,33 @@
                         <input type="text" class="num_four" maxlength="1" id="four" name="four">
                         <input type="text" class="num_five" maxlength="1" id="five" name="five">
                         <input type="text" class="num_six" maxlength="1" id="six" name="six">
+                        <input type="text" class="num_seven" maxlength="1" id="seven" name="seven">
+                        <input type="text" class="num_eight" maxlength="1" id="eight" name="eight">
+                        <input type="text" class="num_nine" maxlength="1" id="nine" name="nine">
+                        <input type="text" class="num_ten" maxlength="1" id="ten" name="ten">
 
                     </div>
 
-                    <div style="color:brown; display: flex; justify-content: center;" id="otp_error_message"> </div>
+                    <div style="color:brown; display: flex; justify-content: center;" id="otp_error_message"><%= error %></div>
 
                     <div class="verify_otp_button">
                         <button type="submit" id="otp_submit_btn">Verify</button>
                     </div>
 
                     <div class="resend_otp">
-                        <p><a href="/otp/resend_otp?phone=<%= phone %>">Resend otp</a></p>
+        
                     </div>
                 </form>
 
             </div>
         </div>
     </div>
+
+
+
 <%- include("../../end.ejs") %>
+
+
 
 <script>
     
@@ -78,4 +89,3 @@
 
 </script>
 
-<script src="/js/otp.js"></script>

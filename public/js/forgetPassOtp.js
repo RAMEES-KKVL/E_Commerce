@@ -21,6 +21,7 @@ submitButn.addEventListener("click", async (event)=>{
             window.location.href = `/reset_Password?email=${encodeURIComponent(email)}`
         }
         else{
+            errorMessage.innerHT
             errorMessage.innerHTML = result.error
             setTimeout(() => {
                 errorMessage.innerHTML = ""

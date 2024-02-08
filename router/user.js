@@ -11,9 +11,9 @@ router.post("/signup",userRouter.post_signup)
 
 router.get("/login",userRouter.get_login)
 router.post("/login",userRouter.post_login)
-
-router.get("/otp/:phone",userRouter.get_otp)
-router.post("/otp/:phone",userRouter.post_otp)
+ 
+router.get("/otp",userRouter.get_otp)
+router.post("/otp",userRouter.post_otp)
 
 router.get("/otp/resend_otp",userRouter.get_resend_otp)
  

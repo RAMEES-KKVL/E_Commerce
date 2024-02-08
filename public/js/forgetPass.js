@@ -18,6 +18,9 @@ submitButn.addEventListener("click", async (event)=>{
 
                 if(result.success === false){
                     errorMessage.innerHTML = response.data.error
+                    setTimeout(() => {
+                        errorMessage.innerHTML = ""
+                    }, 4000);
                 }
                 else{
                     window.location.href = `forget_Password/otp/?email=${encodeURIComponent(email)}`

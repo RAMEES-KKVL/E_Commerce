@@ -6,16 +6,20 @@ const adminController = require("../controller/adminController")
 
 
 router.get("/login",adminController.admin_get_login)
-// router.post("/login",adminController.admin)
+router.post("/login",adminController.admin_post_login)
 
 
 router.get("/signup",adminController.admin_get_signup)
-// router.post("/signup",adminController)
+router.post("/signup",adminController.admin_post_signup)
  
 router.get("/forget_Password",adminController.admin_get_forget_Password)
-// router.post("/forget_Password",userRouter.post_forget_Password)
+router.post("/forget_Password",adminController.admin_post_forget_Password)
 
+router.get("/verification",adminController.admin_get_verification)
+router.post("/verification",adminController.admin_post_verification)
 
+router.get("/reset_password",adminController.admin_get_reset_pass)
+router.post("/reset_password",adminController.admin_post_reset_pass)
 
 router.get("/home",adminController.admin_get_Home)
 

@@ -21,6 +21,7 @@ sumbitbtn.addEventListener("click", async (event)=>{
         if( !response.ok ){
             throw new Error("Login failed")
 
+
         }
         else{
             const result = await response.json()
