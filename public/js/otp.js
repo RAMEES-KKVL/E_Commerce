@@ -7,7 +7,6 @@ const phone = urlParams.get("phone")
 
 submitButn.addEventListener("click", async (event)=>{
     event.preventDefault()
-
     const otpForm = new FormData(form)
     const formotp = Object.fromEntries(otpForm)
    

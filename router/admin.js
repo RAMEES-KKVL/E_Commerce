@@ -1,30 +1,36 @@
 const express = require("express")
 const router = express.Router()
 
+const adminControllerInfo = require("../controller/authController")
 const adminController = require("../controller/adminController")
+const upload = require("../middlewares/multer")
 
 
 
-router.get("/login",adminController.admin_get_login)
-router.post("/login",adminController.admin_post_login)
+router.get("/login",adminControllerInfo.admin_get_login)
+router.post("/login",adminControllerInfo.admin_post_login)
 
 
-router.get("/signup",adminController.admin_get_signup)
-router.post("/signup",adminController.admin_post_signup)
+router.get("/signup",adminControllerInfo.admin_get_signup)
+router.post("/signup",adminControllerInfo.admin_post_signup)
  
-router.get("/forget_Password",adminController.admin_get_forget_Password)
-router.post("/forget_Password",adminController.admin_post_forget_Password)
+router.get("/forget_Password",adminControllerInfo.admin_get_forget_Password)
+router.post("/forget_Password",adminControllerInfo.admin_post_forget_Password)
 
-router.get("/verification",adminController.admin_get_verification)
-router.post("/verification",adminController.admin_post_verification)
+router.get("/verification",adminControllerInfo.admin_get_verification)
+router.post("/verification",adminControllerInfo.admin_post_verification)
 
-router.get("/reset_password",adminController.admin_get_reset_pass)
-router.post("/reset_password",adminController.admin_post_reset_pass)
+router.get("/reset_password",adminControllerInfo.admin_get_reset_pass)
+router.post("/reset_password",adminControllerInfo.admin_post_reset_pass)
+
+
+
+
 
 router.get("/home",adminController.admin_get_Home)
 
-router.get("/user_List",adminController.admin_get_userList)
-router.delete("/user_List/delete_User",adminController.admin_delete_user)
+router.get("/user_list",adminController.admin_get_userList)
+router.delete("/user_List/delete_User/:user_id",adminController.admin_delete_user)
 
 router.get("/products",adminController.admin_get_products)
 
@@ -48,7 +54,8 @@ router.delete("/coupons/delete_Coupon",adminController.admin_delete_coupon)
 router.get("/category",adminController.admin_get_category)
 
 router.get("/category/add_Category",adminController.admin_get_addCategory)
-router.post("/category/add_Category",adminController.admin_post_addCategory)
+// router.post("/category/add_subcategory", adminController.admin_post_subcategory)
+router.post("/category/add_Category", upload.single("categoryImage"), adminController.admin_post_addCategory)
 
 router.get("/category/edit_Category",adminController.admin_get_editCategory)
 router.patch("/category/edit_Category",adminController.admin_patch_editCategory)         // ?  patch  or post

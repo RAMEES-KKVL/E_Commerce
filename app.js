@@ -1,10 +1,11 @@
 const express = require("express")
-const mongoose = require("mongoose")
 const flash = require("connect-flash")
 const session = require("express-session")
 require("dotenv").config()
 const port = process.env.port || 7001
 const secretKey = process.env.secret
+const mongoose = require("mongoose")
+
 
 const app = express()
 
@@ -34,3 +35,6 @@ mongoose.connect("mongodb://localhost:27017/E_commerce_project")
 .catch(()=>console.log("Database connection failed"))
 
 app.listen(port,()=>console.log("All set to go...!",port))
+
+  
+

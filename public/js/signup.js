@@ -11,12 +11,9 @@ const password_value = document.getElementById("signup_input_password")
 const phone_value = document.getElementById("signup_input_phone")
 const cPass_value = document.getElementById("signup_input_confirmPassword")
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-        const phoneRegex = /^[0-9]{10}$/
-        
-        
-        
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+const phoneRegex = /^[0-9]{10}$/  
 
 email_value.onblur = ()=>{
     if(emailRegex.test(email_value.value)){
@@ -74,16 +71,12 @@ submitButn.addEventListener("click", async (event)=>{
         const email = document.getElementById("signup_input_email").value
         const password = document.getElementById("signup_input_password").value
         const phone = document.getElementById("signup_input_phone").value
-        
     
-    const validatingEmail = emailRegex.test(email)
-    const validatingPassword = passwordRegex.test(password)
-    const validatingPhone = phoneRegex.test(phone)
-
-   
+        const validatingEmail = emailRegex.test(email)
+        const validatingPassword = passwordRegex.test(password)
+        const validatingPhone = phoneRegex.test(phone)
 
     if( !validatingEmail ){
-
         signup_email.innerHTML = "Invalid Email"
         setTimeout(() => {
             signup_email.innerHTML = ""
@@ -100,9 +93,8 @@ submitButn.addEventListener("click", async (event)=>{
         setTimeout(() => {
             signup_phone.innerHTML = ""
         }, 4000);
-    }
+    } 
     else{
-
         const response = await fetch("/signup",{
             method: "POST",
             headers: {
@@ -110,21 +102,17 @@ submitButn.addEventListener("click", async (event)=>{
             },
             body: JSON.stringify(Object.fromEntries(signupForm))
         })
-    
         const result = await response.json()
     
         if(response.ok){
-
             if(result.success){
-
                 const phone = result.phone
-                if(result.notVerified){
-
-                    window.location.href =`/otp?phone=${phone}`
-                }else if(result.newUser){
-                    window.location.href = `/otp?phone=${phone}`
+                    if(result.notVerified){
+                        window.location.href =`/otp?phone=${phone}`
+                    }else if(result.newUser){
+                        window.location.href = `/otp?phone=${phone}`
+                    }
                 }
-            }
             }else{
                 if(result.missingdata){
                     signup_error.innerHTML = result.error
@@ -143,7 +131,6 @@ submitButn.addEventListener("click", async (event)=>{
                     setTimeout(() => {
                         signup_error.innerHTML = ""
                     }, 4000);
-                
                 } 
                 else if(result.usernoval){
                     signup_error.innerHTML = result.error
@@ -153,7 +140,6 @@ submitButn.addEventListener("click", async (event)=>{
                 }
             }
         }
-    
     } catch (error) {
         console.log("signup ",error.message);
     }

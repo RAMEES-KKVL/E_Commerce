@@ -4,11 +4,8 @@ const errorMessage = document.getElementById("resetError")
 
 const urlParams = new URLSearchParams(window.location.search)
 const email = urlParams.get('email')
-// console.log(email);
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-
 const passValue = document.getElementById("password")
-// const cPassValue = document.getElementById("confirmPassword")
 
 passValue.onblur = ()=>{
     if(passwordRegex.test(passValue.value)){
@@ -23,18 +20,14 @@ passValue.onblur = ()=>{
 }
 
 submitbtn.addEventListener("click", async (event)=>{
-
     event.preventDefault()
-
     const resetForm = new FormData(form)
     const resetData = Object.fromEntries(resetForm)
 
     try {
-
         const url = `/admin/reset_password?email=${encodeURIComponent(email)}`
         const response = await axios.post(url,resetData)
         const result = response.data
-
         const password = document.getElementById("password").value
         const validatingPassword= passwordRegex.test(password)
 
@@ -52,8 +45,7 @@ submitbtn.addEventListener("click", async (event)=>{
                 setTimeout(() => {
                     errorMessage.innerHTML = ""
                 }, 4000);
-            }
-            else{
+            }else{
                 errorMessage.innerHTML = result.error
                 setTimeout(() => {
                     errorMessage.innerHTML = ""

@@ -1,13 +1,10 @@
-
 const sumbitbtn = document.querySelector('.login_submit')
 const form = document.getElementById('loginForm')
 const errorMessage = document.getElementById("loginError")
 
 sumbitbtn.addEventListener("click", async (event)=>{
-
     event.preventDefault()
-
-  const loginForm = new FormData(form)
+    const loginForm = new FormData(form)
 
     try {
         const response = await fetch("/login",{
@@ -20,8 +17,6 @@ sumbitbtn.addEventListener("click", async (event)=>{
 
         if( !response.ok ){
             throw new Error("Login failed")
-
-
         }
         else{
             const result = await response.json()
@@ -32,17 +27,12 @@ sumbitbtn.addEventListener("click", async (event)=>{
                 }
                 else if(result.otp){
                     const phone = result.phone
-                    
                     window.location.href = `/otp/${phone}`
                 }
-
-            }
-            else{
+            }else{
                 errorMessage.innerHTML = result.error
             }
         }
-
-
     } catch (error) {
         console.log("login fetch ",error.message);
     }

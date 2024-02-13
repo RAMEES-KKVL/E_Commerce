@@ -15,39 +15,30 @@
                     <table>
                        <thead>
                         <tr>
-                            <th style="width: 2rem; max-width: 2rem;">Sl.No</th>
-                            <th style="width: 12rem; max-width: 15rem;">User ID</th>
+                            <!-- <th style="width: 2rem; max-width: 2rem;">Sl.No</th> -->
                             <th style="width: 6rem; max-width: 7rem;">Username</th>
                             <th style="width: 6rem; max-width: 7rem;">Email</th>
                             <th style="width: 5rem; max-width: 5rem;">Phone</th>
-                            <th style="width: 5rem; max-width: 5rem;">Reg.Date</th>
+                            <!-- <th style="width: 5rem; max-width: 5rem;">Reg.Date</th> -->
                             <th style="width: 3rem; max-width: 3rem;">Orders</th>
+                            <th style="width: 12rem; max-width: 3rem;">Details</th>
                             <th style="width: 3rem; max-width: 3rem;">Action</th>
                         </tr>
                        </thead>
      
                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>12234067456475647564700785</td>
-                            <td>User</td>
-                            <td>user@gmail.com</td>
-                            <td>9090909090</td>
-                            <td>24/01/2024</td>
-                            <td>0</td>
-                            <td> <i class="bi bi-trash-fill"></i> </td>
+                        <% users.forEach(val =>{ %>
+                        <tr id="userlist_tr">
+                            <td><%= val.username %></td>
+                            <td><%= val.email %></td>
+                            <td><%= val.phone %></td>
+                            <!-- <td><%= val.createdat %></td> -->
+                            <td><%= 0 %></td>
+                            <td><a href="">link</a></td>
+                            <td> <i class="bi bi-trash-fill " data-id="<%=val._id%>"><a href="#"></a></i><div id="errorMessage"></div> </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>1223458rt4647094748</td>
-                            <td>User</td>
-                            <td>user@gmail.com</td>
-                            <td>9090909090</td>
-                            <td>24/01/2024</td>
-                            <td>0</td>
-                            <td> <i class="bi bi-trash-fill"></i> </td>
-                        </tr>
-                        
+                       <% }) %>
+                       
                        </tbody>
     
     
@@ -60,3 +51,44 @@
     </div>
 </div>
 <%- include("../../end.ejs") %>
+
+<script>
+
+// const deleteBtn = document.querySelector(".bi-trash-fill")
+// const userTr = deleteBtn.closest("tr")
+// const errorMessage = document.getElementById("errorMessage")
+
+// const urlParams = new URLSearchParams(window.location.search)
+// console.log(urlParams);
+// const user_id = urlParams.get(encodeURIComponent('user_id'))
+// console.log(user_id);
+
+
+document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
+
+deleteBtn.addEventListener("click", async (event)=>{
+    event.preventDefault()
+    const userId = deleteBtn.getAttribute("data-id");
+    const userTr = deleteBtn.closest("tr")
+    const errorMessage = document.getElementById("errorMessage")
+    try {
+        // const url = `/admin/user_List/delete_User?user_id=${encodeURIComponent(user_id)}`
+        const url = `/admin/user_List/delete_User/${userId}`
+        const response = await axios.delete(url)
+        const result = response.data
+
+        if(result.success){
+            userTr.remove()
+        }else{
+            errorMessage.innerHTML = "Failed    "
+            setTimeout(() => {
+                errorMessage.innerHTML = "" 
+            }, 4000);
+        }
+
+    } catch (error) {
+        console.log("user delete ",error.message);
+    }
+})
+})
+</script>
