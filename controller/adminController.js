@@ -1,5 +1,6 @@
 const signupModel = require("../model/signupModel")
 const categoryModel = require("../model/categoryModel")
+const { json } = require("express")
 
 
 exports.admin_get_Home = (req,res)=>{
@@ -151,6 +152,11 @@ exports.admin_post_addCategory = async (req,res)=>{
     try{
         const { category, subCategory} = req.body
         const categoryImage = req.file.filename
+        console.log(subCategory);
+        const subCategoryArray = JSON.parse(subCategory)
+        // const subCategoryArray = subCategory.map((val)=>{
+        //     val
+        // }) 
         const categories = await categoryModel.find()
         const existCategory = categories.find( val => val.category === category)
         if(!category || !categoryImage){
@@ -163,10 +169,10 @@ exports.admin_post_addCategory = async (req,res)=>{
             const newSchema = new categoryModel({
                 category,
                 categoryImage,
-                subCategory
+                subCategory : subCategoryArray
             })
             await newSchema.save()
-            return res.status(200).json({ success:true, allData:true, message:"Category and subcategory added successfully" })
+            return res.status(200).json({ success:true, allData:true })
         }
         else if(category && categoryImage && !subCategory){
             const newSchema = new categoryModel({
@@ -175,7 +181,7 @@ exports.admin_post_addCategory = async (req,res)=>{
             })
             await newSchema.save()
             console.log("hello");
-            return res.status(200).json({ success:true, data:true, message:"Category added successfully" })
+            return res.status(200).json({ success:true, data:true })
         }
     } catch (error){
         console.log("category post ",error.message);

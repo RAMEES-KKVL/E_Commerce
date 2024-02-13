@@ -6,7 +6,7 @@
 const categoryBtn = document.getElementById("category_submit_btn")
 const subcategoryBtn = document.getElementById("sub-category_submit_btn")
 
-const subcategoryArray = []
+let subcategoryArray = []
 subcategoryBtn.addEventListener("click", async (event)=>{
     event.preventDefault()
    try {
@@ -39,7 +39,7 @@ categoryBtn.addEventListener("click", async (event)=>{
     const categoryForm = new FormData()
     categoryForm.append("categoryImage",categoryImage)
     categoryForm.append("category",categoryName)
-    categoryForm.append("subCategory",subcategoryArray)
+    categoryForm.append("subCategory",JSON.stringify(subcategoryArray))
     const errormsg = document.getElementById("errorMessage")
     try {
         if(categoryName === "" && !categoryImage){
@@ -74,22 +74,30 @@ categoryBtn.addEventListener("click", async (event)=>{
 
                 if(result.success){
                     if(result.allData){
-                        errormsg.innerHTML = result.message
                         categoryInput.value = ""
                         subcategoryNameInput.value = ""
                         imageInput.src = ""
-                        setTimeout(() => {
-                            errormsg.innerHTML = ""
-                        }, 4000);
+                        subcategoryArray = []
+                        Swal.fire({
+                            position: "canter",
+                            icon: "success",
+                            title: "Category and subcategory added successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
                     }
                     else if(result.data){
-                        errormsg.innerHTML = result.message
                         categoryInput.value = ""
                         imageInput.src = ""
                         subcategoryNameInput.value = ""
-                        setTimeout(() => {
-                            errormsg.innerHTML = ""
-                        }, 4000);
+                        subcategoryArray = []
+                        Swal.fire({
+                            position: "canter",
+                            icon: "success",
+                            title: "Category added successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
                     }
                 }else{
                     if(result.missingData){
