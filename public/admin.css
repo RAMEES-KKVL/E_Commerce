@@ -934,6 +934,33 @@ button:hover {
     color: aliceblue;
     border: none;
 }
+#dropdownList {
+    background-color: lightsteelblue;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    list-style-type: none;
+    position: absolute;
+    z-index: 100;
+    display: none;
+    width: 90%; 
+    border-radius: 4px; 
+    bottom: 2.5rem;
+    max-height:10rem;
+    overflow-y: scroll;
+}
+.ul_li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0.3rem 1rem;
+    cursor: pointer;
+    list-style: none;
+    z-index: 100;
+    height: auto;
+    width:90%;
+    overflow: hidden;
+    line-break:anywhere;
+}
+
 
 
 

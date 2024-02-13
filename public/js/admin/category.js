@@ -1,12 +1,32 @@
 // const { default: axios } = require("axios")
 // const Content = require("twilio/lib/rest/Content")
 
+let subcategoryArray = []
 
+function toggleDropdown() {
+    const dropdown = document.getElementById("dropdownList");
+    dropdown.style.display = 'block'
+}
+
+function hideDropdown() {
+    const dropdown = document.getElementById("dropdownList");
+    dropdown.style.display = 'none'
+}
+
+function previewImage(input){
+    const file = input.files[0]
+    if(file){
+        const reader = new FileReader()
+        reader.onload = (e)=>{
+            document.getElementById("imagePreview").src = e.target.result
+        }
+        reader.readAsDataURL(file)
+    }
+}
 
 const categoryBtn = document.getElementById("category_submit_btn")
 const subcategoryBtn = document.getElementById("sub-category_submit_btn")
 
-let subcategoryArray = []
 subcategoryBtn.addEventListener("click", async (event)=>{
     event.preventDefault()
    try {
@@ -14,27 +34,64 @@ subcategoryBtn.addEventListener("click", async (event)=>{
       const subcategoryName = subcategoryNameInput.value.trim()
       const subcatError = document.getElementById("subcatError")
       
-      if(subcategoryName === ""){
-          subcatError.innerHTML = "Provide Subcategory name"
-          setTimeout(() => {
-              subcatError.innerHTML = ""
-            }, 4000);
+        if(subcategoryName === ""){
+            subcatError.innerHTML = "Provide Subcategory name"
+            setTimeout(() => {
+                subcatError.innerHTML = ""
+                }, 4000);
         }else{
-            subcategoryArray.push(subcategoryName)
-            subcategoryNameInput.value = "" 
-      } 
+            const exist = subcategoryArray.find((val)=> val === subcategoryName )
+            if(exist){
+                subcatError.innerHTML = "Subcategory already exist"
+                setTimeout(() => {
+                    subcatError.innerHTML = ""
+                    }, 4000);
+            }else{
+                subcategoryArray.push(subcategoryName)
+                subcategoryNameInput.value = ""
+                updateSubcategoryList(subcategoryArray) 
+            }
+        } 
    } catch (error) {
     console.log("subCategory ",error);
    } 
 })
 
+function updateSubcategoryList(){
+    const dropdownList = document.getElementById("dropdownList")
+    dropdownList.innerHTML = ""
+    
+    subcategoryArray.forEach(subcategory => {
+        const listItem = document.createElement("li")
+        listItem.classList.add('ul_li')
+        listItem.innerHTML = subcategory + `<i  class="bi delete${subcategory} bi-trash-fill"></i>`
+        dropdownList.appendChild(listItem)
+
+        if(dropdownList.appendChild(listItem)){
+        document.querySelector(`.delete${subcategory}`).addEventListener('click',()=>{
+            const index = subcategoryArray.indexOf(subcategory)
+                if(index !== -1){
+                    subcategoryArray.splice(index, 1)
+                    updateSubcategoryList()
+                }
+            })
+        }
+    });
+}
+
 categoryBtn.addEventListener("click", async (event)=>{
     event.preventDefault()
     const categoryImage = document.getElementById("categoryImage").files[0]
     const categoryName = document.getElementById("categoryName").value.trim()
-    const subcategoryName = document.getElementById("subcategoryName").value.trim()
+    let subcategoryName = document.getElementById("subcategoryName").value.trim()
     if(subcategoryName){
-        subcategoryArray.push(subcategoryName)
+        const exist = subcategoryArray.find((val)=> val === subcategoryName)
+        if(!exist){
+            subcategoryArray.push(subcategoryName)
+        }
+        else{
+            subcategoryName = ''
+        }
     }
     const categoryForm = new FormData()
     categoryForm.append("categoryImage",categoryImage)
@@ -78,12 +135,13 @@ categoryBtn.addEventListener("click", async (event)=>{
                         subcategoryNameInput.value = ""
                         imageInput.src = ""
                         subcategoryArray = []
+                        dropdownList.innerHTML = ""
                         Swal.fire({
-                            position: "canter",
+                            position: "center",
                             icon: "success",
                             title: "Category and subcategory added successfully",
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2500
                           });
                     }
                     else if(result.data){
@@ -91,12 +149,13 @@ categoryBtn.addEventListener("click", async (event)=>{
                         imageInput.src = ""
                         subcategoryNameInput.value = ""
                         subcategoryArray = []
+                        dropdownList.innerHTML = ""
                         Swal.fire({
-                            position: "canter",
+                            position: "center",
                             icon: "success",
                             title: "Category added successfully",
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2500
                           });
                     }
                 }else{
@@ -143,29 +202,3 @@ categoryBtn.addEventListener("click", async (event)=>{
 
 
 
-
-
-
-
-
-
-
-
-// document.addEventListener("DOMContentLoaded", async ()=>{
-//     try {
-//         const subcategoryDropdown = document.getElementById("subcategory_list_icon")
-//         const deleteButton = subcategoryDropdown.querySelectorAll(".bi-trash-fill")
-//         deleteButton.forEach(dltbtn =>{
-//             dltbtn.addEventListener("click",()=>{
-
-//                 const listItem = dltbtn.closest("li")
-//                 if(listItem){
-//                     listItem.remove()
-//                 }
-//             })
-//             })
-        
-//     } catch (error) {
-//         console.error("Error adding event listener:", error);
-//     }
-// })

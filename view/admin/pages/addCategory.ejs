@@ -30,55 +30,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="categoryName">Sub-Category Name</label>
-                                    <!-- <input type="text" id="categoryName" name="subCategory" placeholder="Enter sub-category name"> -->
                                     <div id="subcatError" style="color: brown;"></div>
                                     <div style=" display: flex;">
                                         <div class="subcategoryDropdown" style="width: 100%; display: block; position: relative;">
-                                            <input type="text" id="subcategoryName" name="subCategory" placeholder="Add sub-category" onclick="toggleDropdown()" style="width: calc(100% - 2.5rem);">
+                                            <input type="text" id="subcategoryName" name="subCategory" placeholder="Add sub-category"  onfocus="toggleDropdown()" style="width: calc(100% - 2.5rem);">
                                             <div id="dropdownList" class="li_div">
-                                                <ul>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                    <li>item 1</li>
-                                                </ul>
+                                                <ul></ul>
                                             </div>
                                         </div>
                                         <button id="sub-category_submit_btn" style="width: 2.5rem; display: flex;justify-content: center; margin-left: .5rem;">Add</button>
                                     </div>
-
-
-
-
-
-
-
-                                    <!-- <div id="subcategoryDropdown" class="dropdown-list" style="">
-                                        <ul style="overflow: visible;">
-                                            
-                                                <li>
-                                                    <div style="display: flex; width: 100%;">
-                                                        <div class="subcategory_list_name" style="overflow: auto; width: calc(100% - 1.5rem);"></div>
-                                                        <div class="subcategory_list_icon" style="width: 1.5rem; display: flex; align-items: center; justify-content: center; margin-left: 5px;">
-                                                            <i class="bi bi-trash-fill" style=""></i>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            
-                                        </ul>
-                                    </div> -->
-
-
                                 </div>
                                 <div id="errorMessage" style="color: brown; margin-bottom: .5rem;"></div>
                                 <div style="display:flex; justify-content: center;">
@@ -98,47 +59,17 @@
 <%- include("../../end.ejs") %>
 <script src="/js/admin/category.js"></script>
 
-<script>
-    function toggleDropdown() {
-        var dropdown = document.getElementById("dropdownList");
-        dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-    }
-
-    function previewImage(input){
-        const file = input.files[0]
-        if(file){
-            const reader = new FileReader()
-            reader.onload = (e)=>{
-                document.getElementById("imagePreview").src = e.target.result
-            }
-            reader.readAsDataURL(file)
-        }
-    }
-</script>
 
 
 <style>
-    #dropdownList {
-        background-color: lightsteelblue;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        list-style-type: none;
-        position: absolute;
-        z-index: 100;
-        display: none;
-        width: 100%; 
-        border-radius: 4px; 
-        height: auto;
-        bottom: 2.5rem;
-        }
-    .li_div ul li {
-        /* padding: 10px; */
-        cursor: pointer;
-        list-style: none;
-        overflow: visible;
-        z-index: 100;
-        /* border-top: 1px solid aliceblue; */
+    .bi-trash-fill{
+        color: #363062;
+        margin-left: .5rem;
     }
-    #dropdown-list ul li:hover {
+    .bi-trash-fill:hover{
+        color: brown;
+    }
+    .ul_li:hover {
         background-color: aliceblue;
     }
-</style>
+</style>  

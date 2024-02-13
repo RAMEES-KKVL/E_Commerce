@@ -129,34 +129,16 @@ exports.admin_get_category = (req,res)=>{
 
 
 
-// const subCategoryArray = []
+
 exports.admin_get_addCategory = (req,res)=>{
     res.render("admin/pages/addCategory")
 }
-
-// exports.admin_post_subcategory = async (req,res)=>{
-    // try {
-    //     const {subcategoryArray} = req.body
-    //     console.log(subcategoryArray);
-    //     if(subcategoryArray){
-    //         subCategoryArray.push(subCategory)
-    //         console.log(subCategoryArray);
-    //         return res.status(200).json({success:true})
-    //     }
-    // } catch (error) {
-    //     console.log("subCat ",error);
-    // }
-// }
 
 exports.admin_post_addCategory = async (req,res)=>{
     try{
         const { category, subCategory} = req.body
         const categoryImage = req.file.filename
-        console.log(subCategory);
         const subCategoryArray = JSON.parse(subCategory)
-        // const subCategoryArray = subCategory.map((val)=>{
-        //     val
-        // }) 
         const categories = await categoryModel.find()
         const existCategory = categories.find( val => val.category === category)
         if(!category || !categoryImage){
@@ -165,7 +147,7 @@ exports.admin_post_addCategory = async (req,res)=>{
         else if(existCategory){
             return res.status(289).json({success:false, exist:true, errorMsg:"Category already exist"})
         }
-        else if(category && categoryImage && subCategory){
+        else if(category && categoryImage && subCategoryArray.length > 0){
             const newSchema = new categoryModel({
                 category,
                 categoryImage,
@@ -174,13 +156,12 @@ exports.admin_post_addCategory = async (req,res)=>{
             await newSchema.save()
             return res.status(200).json({ success:true, allData:true })
         }
-        else if(category && categoryImage && !subCategory){
+        else if(category && categoryImage && subCategoryArray.length == 0){
             const newSchema = new categoryModel({
                 category,
                 categoryImage
             })
             await newSchema.save()
-            console.log("hello");
             return res.status(200).json({ success:true, data:true })
         }
     } catch (error){
