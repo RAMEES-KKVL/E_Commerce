@@ -31,22 +31,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <!-- <td>1</td> -->
-                                    <td>56KSVZZZZZ6788666</td>
-                                    <td>AXGY5677554765</td>
-                                    <td>20%</td>
-                                    <td>1000</td>
-                                    <td>5000</td>
-                                    <td>02/01/2023</td>
-                                    <td>02/01/2024</td>
-                                    <td>
-                                        <i class="bi bi-pencil-square"></i>
-                                    </td>
-                                    <td>
-                                        <i class="bi bi-trash-fill"></i>
-                                    </td>
-                                </tr>
+                                <% coupons.forEach(coupon =>{ %>
+                                    <tr>
+                                        <!-- <td>1</td> -->
+                                        <td> <%= coupon._id %> </td>
+                                        <td> <%= coupon.couponName %> </td>
+                                        <td> <%= coupon.couponDiscount %> </td>
+                                        <td> <%= coupon.minOrderAmount %> </td>
+                                        <td> <%= coupon.maxOrderAmount %> </td>
+                                        <td> <%= coupon.startingDate.toDateString() %> </td>
+                                        <td> <%= coupon.endingDate.toDateString() %> </td>
+                                        <td>
+                                            <i class="bi bi-pencil-square"></i>
+                                        </td>
+                                        <td>
+                                            <i class="bi bi-trash-fill"></i>
+                                        </td>
+                                    </tr>
+                                <% }) %>
                             </tbody>
     
                         </table>

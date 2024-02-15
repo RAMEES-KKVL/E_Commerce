@@ -7,7 +7,7 @@
 
             <div class="content_part">
 
-                <form action="" method="post">
+                <form id="banner_add_form">
                     <div class="frame">
                         <div class="banner_gap_div">
                             <div class="banner_div">
@@ -15,42 +15,47 @@
                                 <div class="banner_img_div">      
                                     <div class="form-group img_centr">
                                         <div class="banner_image_space">
-                                            <img src="" alt="">
+                                            <img src="" alt="" id="imagePreview" style="width: 100%; height: 100%;">
                                         </div>
                                        <div class="banner_image_buttn">
                                            Choose Image
-                                        <input type="file" id="productImage" name="productImage">
+                                        <input type="file" id="bannerImage" name="bannerImage" onchange="previewImage(this)">
                                        </div>
                                     </div>
                                 </div>
 
                                 <div style="width: 100%;">
                                     <div class="form-group">
-                                        <label for="bannerProduct">Banner Product</label>
-                                        <input type="text" id="bannerProduct" name="bannerProduct" placeholder="Enter banner product name">
+                                        <label for="bannerProduct">Banner Name</label>
+                                        <input type="text" id="bannerName" name="bannerName" placeholder="Enter banner name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="offerPrice">Offer Price</label>
+                                        <input type="number" id="offerPrice" name="offerPrice" placeholder="Enter banner offer price">
                                     </div>
                                     <div class="form-group">
                                         <label for="bannerHeading">Banner Heading</label>
                                         <input type="text" id="bannerHeading" name="bannerHeading" placeholder="Enter banner heading name">
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="bannerDescription">Banner Description</label>
-                                        <input type="text" id="bannerDescription" name="bannerDescription" placeholder="Enter banner description">
-                                    </div>
-                                    <div class="form-group">
+                                        <textarea type="text" id="bannerDescription" name="bannerDescription" placeholder="Enter banner description"></textarea>
+                                    </div> -->
+                                    <!-- <div class="form-group">
                                         <label for="buttonLink">Button Link</label>
                                         <input type="text" id="buttonLink" name="buttonLink" placeholder="Enter button link">
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="startingDate">Starting Date</label>
                                         <input type="date" id="startingDate" name="startingDate">
                                     </div>
                                     <div class="form-group">
-                                        <label for="endingDate">Starting Date</label>
+                                        <label for="endingDate">Ending Date</label>
                                         <input type="date" id="endingDate" name="endingDate">
                                     </div>
+                                    <div id="errorMessage" style="color: brown; margin-bottom: 1rem;"></div>
                                     <div class="form-group">
-                                        <button type="submit">Add Banner</button>
+                                        <button type="submit" id="banner_add_button">Add Banner</button>
                                     </div>
                                 </div>
                                 
@@ -66,3 +71,5 @@
     </div>
 
 <%- include("../../end.ejs") %>
+
+<script src="/js/admin/banner.js"></script>

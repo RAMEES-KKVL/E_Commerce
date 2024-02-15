@@ -33,6 +33,7 @@ document.getElementById("coupon_create_button").addEventListener("click", async 
                 document.getElementById("maxOrderAmount").value = ""
                 document.getElementById("startingDate").value = ""
                 document.getElementById("endingDate").value = ""
+                
                 Swal.fire({
                     position: "center",
                     icon: "success",

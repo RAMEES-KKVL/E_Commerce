@@ -1022,8 +1022,8 @@ button:hover {
     align-items: center;
 }
 .banner_img_div{
-    width: 100%;
-    max-width: 30rem;
+    /* width: 100%; */
+    width: 15rem;
     height: 15rem;
     display: flex;
     align-items: center;

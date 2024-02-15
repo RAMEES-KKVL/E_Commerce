@@ -6,6 +6,7 @@ const adminController = require("../controller/adminController")
 const productController = require("../controller/productController")
 const upload = require("../middlewares/multerCategory")
 const productUpload = require("../middlewares/multerProduct")
+const bannerUpload = require("../middlewares/multerBanner")
 
 
 
@@ -102,9 +103,29 @@ router.patch("/category/edit_Category",adminController.admin_patch_editCategory)
 
 router.delete("/category/delete_Category",adminController.admin_delete_category)
 
+
+
+
+
+
+
+
+
+
+
 router.get("/banners",adminController.admin_get_banners)
 router.get("/banners/add_banner",adminController.admin_get_addbanner)
-// router.post()
+router.post("/banners/add_banner", bannerUpload.single("bannerImage"), adminController.admin_post_addbanner)
+
+
+
+
+
+
+
+
+
+
 
 router.get("/logout",adminController.admin_get_logout)
 

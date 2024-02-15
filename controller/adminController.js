@@ -1,6 +1,7 @@
 const signupModel = require("../model/signupModel")
 const categoryModel = require("../model/categoryModel")
 const couponModel = require("../model/couponModel")
+const bannerModel = require("../model/bannerModel")
 const { json } = require("express")
 
 
@@ -50,8 +51,16 @@ exports.admin_get_orders = (req,res)=>{
 
 
 
-exports.admin_get_coupons = (req,res)=>{
-    res.render("admin/pages/coupons")
+
+
+
+exports.admin_get_coupons = async (req,res)=>{
+    try {
+        const coupons = await couponModel.find()
+        res.render("admin/pages/coupons", {coupons})
+    } catch (error) {
+        
+    }
 }
 
 
@@ -85,22 +94,22 @@ exports.admin_post_addCoupon = async (req,res)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 exports.admin_delete_coupon = (req,res)=>{}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -223,8 +232,28 @@ exports.admin_delete_category = (req,res)=>{}
 
 
 
-exports.admin_get_banners = (req,res)=>{
-    res.render("admin/pages/banners")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exports.admin_get_banners = async (req,res)=>{
+    try {
+        const banners = await bannerModel.find()
+        res.render("admin/pages/banners")
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -233,6 +262,31 @@ exports.admin_get_banners = (req,res)=>{
 
 exports.admin_get_addbanner = (req,res)=>{
     res.render("admin/pages/addBanner")
+}
+exports.admin_post_addbanner = async (req,res)=>{
+    try {
+        const {bannerName, offerPrice, bannerHeading, startingDate, endingDate} = req.body
+        const bannerImage = req.file.filename
+        const exist = await bannerModel.findOne({bannerName})
+        
+        if(exist){
+            return res.status(289).json({ success: false })
+        }else{
+            const newSchema = new bannerModel({
+                bannerName,
+                offerPrice,
+                bannerHeading,
+                startingDate,
+                endingDate,
+                bannerImage
+            })
+            await newSchema.save()
+
+            return res.status(200).json({ success: true })
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
