@@ -36,50 +36,7 @@ exports.admin_delete_user = async (req,res)=>{
 
 
 
-exports.admin_get_products = (req,res)=>{
-    res.render("admin/pages/products")
-}
 
-
-
-exports.admin_get_addProduct = (req,res)=>{
-    res.render("admin/pages/addProduct")
-}
-
-
-
-exports.admin_post_addProduct = async (req,res)=>{
-    try {
-        const {productName, price, discount, stock, category, subCategory, deliveryDate, colour, size, description} = req.body
-        const productImage = req.file.filename
-
-        if(!productName || !price || !discount || !stock || !category || !subCategory || !deliveryDate || !colour || !size || !description || !productImage){
-            res.status(278).json({success:false, missingField:true, error:"Fill all fields"})
-        }
-        else{
-            res.status(200).json({success:true})
-        }
-    } catch (error) {
-        console.log("server side - add product ",error.message);
-    }
-}
-
-
-
-
-exports.admin_get_editProduct = (req,res)=>{
-    // res.redirect("/admin/products/add_product")
-}
-
-
-
-
-exports.admin_patch_editProduct = (req,res)=>{}
-
-
-
-
-exports.admin_delete_product = (req,res)=>{}
 
 
 
@@ -119,8 +76,13 @@ exports.admin_delete_coupon = (req,res)=>{}
 
 
 
-exports.admin_get_category = (req,res)=>{
-    res.render("admin/pages/category")
+exports.admin_get_category = async (req,res)=>{
+    try {
+        const category = await categoryModel.find()
+        res.render("admin/pages/category", {category})
+    } catch (error) {
+        console.log("category get ",error);
+    }
 }
 
 

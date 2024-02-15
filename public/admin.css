@@ -732,6 +732,26 @@ textarea {
 }
 
 
+.dropdown_size ul{
+    list-style: none;
+}
+
+.dropdown_size input:hover + ul {
+     display: block;
+}
+
+
+
+ 
+
+
+
+
+
+
+
+
+
 
 
 

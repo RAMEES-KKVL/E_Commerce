@@ -3,7 +3,9 @@ const router = express.Router()
 
 const adminControllerInfo = require("../controller/authController")
 const adminController = require("../controller/adminController")
-const upload = require("../middlewares/multer")
+const productController = require("../controller/productController")
+const upload = require("../middlewares/multerCategory")
+const productUpload = require("../middlewares/multerProduct")
 
 
 
@@ -32,15 +34,45 @@ router.get("/home",adminController.admin_get_Home)
 router.get("/user_list",adminController.admin_get_userList)
 router.delete("/user_List/delete_User/:user_id",adminController.admin_delete_user)
 
-router.get("/products",adminController.admin_get_products)
 
-router.get("/products/add_Product",adminController.admin_get_addProduct)
-router.post("/products/add_Product",adminController.admin_post_addProduct)
 
-router.get("/products/edit_Product",adminController.admin_get_editProduct)
-router.patch("/products/edit_product",adminController.admin_patch_editProduct)                      // ?  patch  or post
 
-router.delete("/products/delete_Product",adminController.admin_delete_product)
+
+
+
+
+
+
+
+
+
+
+
+router.get("/products",productController.admin_get_products)
+router.get("/product/subcategory_find",productController.admin_get_subcategory)
+
+router.get("/products/add_Product",productController.admin_get_addProduct)
+router.post("/products/add_Product", productUpload.array("productImage",10), productController.admin_post_addProduct)
+
+router.get("/products/edit_Product",productController.admin_get_editProduct)
+router.patch("/products/edit_product",productController.admin_patch_editProduct)                      // ?  patch  or post
+
+router.delete("/products/delete_Product",productController.admin_delete_product)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.get("/orders",adminController.admin_get_orders)
 
