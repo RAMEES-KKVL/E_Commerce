@@ -67,15 +67,26 @@ function updateSubcategoryList(){
         listItem.innerHTML = subcategory + `<i  class="bi delete${subcategory} bi-trash-fill"></i>`
         dropdownList.appendChild(listItem)
 
-        if(dropdownList.appendChild(listItem)){
-        document.querySelector(`.delete${subcategory}`).addEventListener('click',()=>{
-            const index = subcategoryArray.indexOf(subcategory)
-                if(index !== -1){
-                    subcategoryArray.splice(index, 1)
-                    updateSubcategoryList()
+        // if(dropdownList.appendChild(listItem)){
+        // document.querySelectorAll(`.delete${subcategory}`).addEventListener('click',()=>{
+        //     const index = subcategoryArray.indexOf(subcategory)
+        //         if(index !== -1){
+        //             subcategoryArray.splice(index, 1)
+        //             updateSubcategoryList()
+        //         }
+        //     })
+        // }
+
+        const deleteIcons = document.querySelectorAll(`.delete${subcategory}`);
+        deleteIcons.forEach(deleteIcon => {
+            deleteIcon.addEventListener('click', () => {
+                const index = subcategoryArray.indexOf(subcategory);
+                if (index !== -1) {
+                    subcategoryArray.splice(index, 1);
+                    updateSubcategoryList();
                 }
-            })
-        }
+            });
+        });
     });
 }
 

@@ -7,7 +7,7 @@
 
             <div class="content_part">
 
-                <form action="" method="post">
+                <form id="coupon_add_form">
                     <div class="frame">
                         <div class="coupon_gap_div">
                             <div class="coupon_div">
@@ -22,11 +22,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="minOrderAmount">Minimum Order Amount</label>
-                                    <input type="text" id="minOrderAmount" name="minOrderAmount" placeholder="Enter Minimum Order Amount">
+                                    <input type="number" id="minOrderAmount" name="minOrderAmount" placeholder="Enter Minimum Order Amount">
                                 </div>
                                 <div class="form-group">
                                     <label for="maxOrderAmount">Maximum Order Amount</label>
-                                    <input type="text" id="maxOrderAmount" name="maxOrderAmount" placeholder="Enter Maximum Order Amount">
+                                    <input type="number" id="maxOrderAmount" name="maxOrderAmount" placeholder="Enter Maximum Order Amount">
                                 </div>
                                 <div class="form-group">
                                     <label for="startingDate">Starting Date</label>
@@ -37,7 +37,8 @@
                                     <input type="date" id="endingDate" name="endingDate">
                                 </div>
 
-                                <button type="submit">Create Coupon</button>
+                                <div id="errorMessage" style="color: brown; margin-bottom: 1rem;"></div>
+                                <button type="submit" id="coupon_create_button">Create Coupon</button>
 
                             </div>
 
@@ -51,3 +52,5 @@
     </div>
 
 <%- include("../../end.ejs") %>
+
+<script src="/js/admin/addCoupons.js"></script>

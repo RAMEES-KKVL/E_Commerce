@@ -61,7 +61,18 @@ addButtn.addEventListener("click", async (event)=>{
             const result = await response.data
     
             if(result.success){
-                productName.value = ""
+                document.getElementById("productName").value = ""
+                document.getElementById("price").value = ""
+                document.getElementById("discount").value = ""
+                document.getElementById("stock").value = ""
+                document.getElementById("category").value = ""
+                document.getElementById("subCategory").value = ""
+                document.getElementById("deliveryDate").value = ""
+                document.getElementById("colour").value = ""
+                document.getElementById("size").value = ""
+                document.getElementById("descriptions").value = ""
+                document.getElementById("imagePreview").src = ""
+                
                 Swal.fire({
                     position: "center",
                     icon: "success",

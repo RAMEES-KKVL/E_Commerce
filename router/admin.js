@@ -81,6 +81,14 @@ router.get("/coupons",adminController.admin_get_coupons)
 router.get("/coupons/add_Coupon",adminController.admin_get_addCoupon)
 router.post("/coupons/add_Coupon",adminController.admin_post_addCoupon)
 
+
+
+
+
+
+
+
+
 router.delete("/coupons/delete_Coupon",adminController.admin_delete_coupon)
 
 router.get("/category",adminController.admin_get_category)
