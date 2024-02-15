@@ -4,6 +4,8 @@ const addButtn = document.getElementById("add_product_btn")
 const errorMain = document.getElementById("errorMain")
 
 
+// FUNCTION FOR IMAGE PREVIEW
+
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -14,6 +16,9 @@ function previewImage(input){
         reader.readAsDataURL(file)
     }
 } 
+
+
+// FUNCTION FOR VIEW SUBCATEGORY IF EXISTS 
 
 async function categoryView(event){
     try {
@@ -30,6 +35,9 @@ async function categoryView(event){
         console.log(error);
     } 
 } 
+
+
+// CONDUCTING CLIENT SIDE VALIDATION AND PASSING DATA TO SERVERSIDE
 
 addButtn.addEventListener("click", async (event)=>{
     event.preventDefault()
@@ -94,3 +102,8 @@ addButtn.addEventListener("click", async (event)=>{
         console.log("add product ",error.message);
     }
 })
+
+
+
+
+

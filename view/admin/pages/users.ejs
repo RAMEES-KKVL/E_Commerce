@@ -28,15 +28,15 @@
      
                        <tbody>
                         <% users.forEach(val =>{ %>
-                        <tr id="userlist_tr">
-                            <td><%= val.username %></td>
-                            <td><%= val.email %></td>
-                            <td><%= val.phone %></td>
-                            <!-- <td><%= val.createdat %></td> -->
-                            <td><%= 0 %></td>
-                            <td><a href="">link</a></td>
-                            <td> <i class="bi bi-trash-fill " data-id="<%=val._id%>"><a href="#"></a></i><div id="errorMessage"></div> </td>
-                        </tr>
+                            <tr id="userlist_tr">
+                                <td><%= val.username %></td>
+                                <td><%= val.email %></td>
+                                <td><%= val.phone %></td>
+                                <!-- <td><%= val.createdat %></td> -->
+                                <td><%= 0 %></td>
+                                <td><a href="">link</a></td>
+                                <td> <i class="bi bi-trash-fill " data-id="<%=val._id%>"><a href="#"></a></i><div id="errorMessage"></div> </td>
+                            </tr>
                        <% }) %>
                        
                        </tbody>
@@ -80,7 +80,7 @@ deleteBtn.addEventListener("click", async (event)=>{
         if(result.success){
             userTr.remove()
         }else{
-            errorMessage.innerHTML = "Failed    "
+            errorMessage.innerHTML = "Failed"
             setTimeout(() => {
                 errorMessage.innerHTML = "" 
             }, 4000);

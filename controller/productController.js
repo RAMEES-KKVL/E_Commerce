@@ -1,11 +1,16 @@
 const productModel = require("../model/productModel")
 const categoryModel = require("../model/categoryModel")
+const fs = require("fs")
 
 
 
-
-exports.admin_get_products = (req,res)=>{
-    res.render("admin/pages/products")
+exports.admin_get_products = async (req,res)=>{
+    try {
+        const products = await productModel.find()
+        res.render("admin/pages/products", {products})
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -36,7 +41,6 @@ exports.admin_get_subcategory = async (req,res)=>{
 exports.admin_get_addProduct = async (req,res)=>{
     try {
         const category = await categoryModel.find()
-
 
         res.render("admin/pages/addProduct", {category})  
     } catch (error) {
@@ -103,9 +107,33 @@ exports.admin_patch_editProduct = (req,res)=>{}
 
 
 
+// const success = await fs.unlinkSync("./public/uploads/product" + product.productImage)
 
 
-exports.admin_delete_product = (req,res)=>{}
+exports.admin_delete_product = async (req,res)=>{
+    try {
+        const productId = req.query.productId
+        const product = await productModel.findOne({_id:productId})
+        if(product){
+            const productImages = product.productImage
+            productImages.forEach(async image =>{
+                await fs.unlinkSync(`./public/uploads/product/${image}`)
+            })
+            const deleted = await productModel.deleteOne({_id:productId})
+            
+            if (deleted) {
+                return res.status(200).json({success: true})
+            }else{
+                return res.status(288).json({success: false, deleteIssue: true})
+            }
+        } else {
+            return res.status(299).json({success: false, productIssue: true})
+        }
+        
+    } catch (error) {
+        console.log(error); 
+    }
+}
 
 
 

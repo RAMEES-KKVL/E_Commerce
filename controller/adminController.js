@@ -250,7 +250,7 @@ exports.admin_delete_category = (req,res)=>{}
 exports.admin_get_banners = async (req,res)=>{
     try {
         const banners = await bannerModel.find()
-        res.render("admin/pages/banners")
+        res.render("admin/pages/banners", {banners})
     } catch (error) {
         console.log(error);
     }

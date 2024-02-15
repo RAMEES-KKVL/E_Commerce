@@ -21,6 +21,7 @@
                                     <!-- <th>Sl.No</th> -->
                                     <th>Banner ID</th>
                                     <th>Banner Name</th>                                     
+                                    <th>Banner Heading</th>                                     
                                     <th>Amount</th>
                                     <th>Starting Date</th>
                                     <th>Ending Date</th>
@@ -29,20 +30,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <!-- <td>1</td> -->
-                                    <td>56KSVZZZZZ6788666</td>
-                                    <td>AXGY5677554765</td>
-                                    <td>1000</td>                                                                               
-                                    <td>02/01/2023</td>
-                                    <td>02/01/2024</td>
-                                    <td>
-                                        <i class="bi bi-pencil-square"></i>
-                                    </td>
-                                    <td>
-                                        <i class="bi bi-trash-fill"></i>
-                                    </td>
-                                </tr>
+                                <% banners.forEach(banner =>{ %>
+                                    <tr>
+                                        <!-- <td>1</td> -->
+                                        <td> <%= banner._id %> </td>
+                                        <td> <%= banner.bannerName %> </td>
+                                        <td> <%= banner.bannerHeading %> </td>
+                                        <td> <%= banner.offerPrice %> </td>
+                                        <td> <%= banner.startingDate.toDateString() %> </td>
+                                        <td> <%= banner.endingDate.toDateString() %> </td>
+                                        <td>
+                                            <i class="bi bi-pencil-square"></i>
+                                        </td>
+                                        <td>
+                                            <i class="bi bi-trash-fill"></i>
+                                        </td>
+                                    </tr>
+                                <% }) %>
                             </tbody>
     
                         </table>
