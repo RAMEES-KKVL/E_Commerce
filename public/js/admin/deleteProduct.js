@@ -10,7 +10,7 @@ document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
             const result = await response.data
             
             if(result.success){
-                deleteBtn.closest("tr").remove()
+                deleteBtn.closest("tr").remove() 
             }else{
                 if(productIssue){
                     document.getElementById("errorMessage_dlt").innerHTML = "Failed"

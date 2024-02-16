@@ -94,7 +94,20 @@ exports.admin_post_addCoupon = async (req,res)=>{
 
 
 
-exports.admin_delete_coupon = (req,res)=>{}
+exports.admin_delete_coupon = async (req,res)=>{
+    try {
+        const couponId = req.query.couponId
+        const deleted = await couponModel.deleteOne({_id:couponId})
+        
+        if(deleted){
+            return res.status(200).json({success: true})
+        }else{
+            return res.status(288).json({success: false})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
