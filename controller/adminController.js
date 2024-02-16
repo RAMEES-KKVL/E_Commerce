@@ -2,6 +2,7 @@ const signupModel = require("../model/signupModel")
 const categoryModel = require("../model/categoryModel")
 const couponModel = require("../model/couponModel")
 const bannerModel = require("../model/bannerModel")
+const fs = require("fs")
 const { json } = require("express")
 
 
@@ -189,40 +190,6 @@ exports.admin_post_addCategory = async (req,res)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 exports.admin_get_editCategory = (req,res)=>{}
 
 
@@ -238,7 +205,26 @@ exports.admin_patch_editCategory = (req,res)=>{}
 
 
 
-exports.admin_delete_category = (req,res)=>{}
+exports.admin_delete_category = async (req,res)=>{
+    try {
+        const categoryId = req.query.categoryId
+        const category = await categoryModel.findOne({_id:categoryId})
+        if(category){
+            const categoryImage = category.categoryImage
+            await fs.unlinkSync(`./public/uploads/category/${categoryImage}`)
+            const deleted = await categoryModel.deleteOne({_id:categoryId})
+
+            if(deleted){
+                res.status(200).json({success: true})
+            }else{
+                res.status(289).json({success: false})
+            }
+        }
+    
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
@@ -256,7 +242,7 @@ exports.admin_delete_category = (req,res)=>{}
 
 
 
-
+ 
 
 
 
@@ -306,13 +292,18 @@ exports.admin_post_addbanner = async (req,res)=>{
 exports.admin_delete_banners = async (req,res)=>{
     try {
         const bannerId = req.query.bannerId
-        const deleted = await bannerModel.deleteOne({_id:bannerId})
-
-        if(deleted){
-            return res.status(200).json({success: true})
-        }else{
-            return res.status(289).json({success: false})
+        const banner = await bannerModel.findOne({_id:bannerId})
+        if(banner){
+            const bannerImage = banner.bannerImage
+            await fs.unlinkSync(`./public/uploads/banner/${bannerImage}`)
+            const deleted = await bannerModel.deleteOne({_id:bannerId})
+            if(deleted){
+                return res.status(200).json({success: true})
+            }else{
+                return res.status(289).json({success: false})
+            }
         }
+        
     } catch (error) {
         console.log(error);
     }
