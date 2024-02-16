@@ -1,0 +1,112 @@
+<%- include("../admin-header.ejs") %>
+    <div class="container">
+
+        <%- include("../adminnav.ejs") %>
+        <div class="body">
+            <%- include("../sidebar.ejs") %>
+
+            <div class="content_part">
+
+                <form id="coupon_edit_form">
+                    <div class="frame">
+                        <div class="coupon_gap_div">
+                            <div class="coupon_div">
+
+                                <div class="form-group">
+                                    <label for="couponName">Coupon Name</label>
+                                    <input type="text" id="couponName" name="couponName" placeholder="Enter Coupon Name" value="<%= coupon.couponName %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="couponDiscount">Coupon Discount</label>
+                                    <input type="text" id="couponDiscount" name="couponDiscount" placeholder="Enter Coupon Discount" value="<%= coupon.couponDiscount %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="minOrderAmount">Minimum Order Amount</label>
+                                    <input type="number" id="minOrderAmount" name="minOrderAmount" placeholder="Enter Minimum Order Amount" value="<%= coupon.minOrderAmount %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="maxOrderAmount">Maximum Order Amount</label>
+                                    <input type="number" id="maxOrderAmount" name="maxOrderAmount" placeholder="Enter Maximum Order Amount" value="<%= coupon.maxOrderAmount %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="startingDate">Starting Date</label>
+                                    <input type="date" id="startingDate" name="startingDate" value="<%= coupon.startingDate %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="endingDate">Ending Date</label>
+                                    <input type="date" id="endingDate" name="endingDate" value="<%= coupon.endingDate %>">
+                                </div>
+
+                                <div id="errorMessage" style="color: brown; margin-bottom: 1rem;"></div>
+                                <button type="submit" id="coupon_edit_button" coupon-id="<%= coupon._id %>">Edit Coupon</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+                         
+            </div>
+        </div>
+    </div>
+
+<%- include("../../end.ejs") %>
+
+<script>
+
+    document.getElementById("coupon_edit_button").addEventListener("click", async (event)=>{
+        event.preventDefault()
+
+        try {
+
+            const couponName = document.getElementById("couponName").value.trim()
+            const couponDiscount = document.getElementById("couponDiscount").value.trim()
+            const minOrderAmount = document.getElementById("minOrderAmount").value
+            const maxOrderAmount = document.getElementById("maxOrderAmount").value
+            const startingDate = document.getElementById("startingDate").value.trim()
+            const endingDate = document.getElementById("endingDate").value
+
+            if(!couponName || !couponDiscount || !minOrderAmount || !maxOrderAmount || !startingDate || !endingDate){
+                document.getElementById("errorMessage").innerHTML = "Provide required datas"
+                setTimeout(() => {
+                    document.getElementById("errorMessage").innerHTML = ""
+                }, 4000);
+            }else{
+                const formData = new FormData(document.getElementById("coupon_edit_form"))
+                const couponData = Object.fromEntries(formData)
+                const couponId = document.getElementById("coupon_edit_button").getAttribute("coupon-id")
+
+                const response = await axios.patch(`/admin/coupons/edit_Coupon?couponId=${couponId}`, couponData)
+                const result = response.data
+
+                if(result.success){
+                    document.getElementById("couponName").innerHTML = couponName
+                    document.getElementById("couponDiscount").innerHTML = couponDiscount
+                    document.getElementById("minOrderAmount").innerHTML = minOrderAmount
+                    document.getElementById("maxOrderAmount").innerHTML = maxOrderAmount
+                    document.getElementById("startingDate").innerHTML = startingDate
+                    document.getElementById("endingDate").innerHTML = endingDate
+
+                    Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Coupon edited successfully",
+                    showConfirmButton: false,
+                    timer: 2500
+                  });
+                }else{
+                    document.getElementById("errorMessage").innerHTML = "Could't edit coupon"
+                    setTimeout(() => {
+                        document.getElementById("errorMessage").innerHTML = ""
+                    }, 4000);
+                }
+            }
+
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    })
+</script>

@@ -39,10 +39,10 @@
                                         <td> <%= coupon.couponDiscount %> </td>
                                         <td> <%= coupon.minOrderAmount %> </td>
                                         <td> <%= coupon.maxOrderAmount %> </td>
-                                        <td> <%= coupon.startingDate.toDateString() %> </td>
-                                        <td> <%= coupon.endingDate.toDateString() %> </td>
+                                        <td> <%= coupon.startingDate %> </td>
+                                        <td> <%= coupon.endingDate %> </td>
                                         <td>
-                                            <i class="bi bi-pencil-square"></i>
+                                            <i class="bi bi-pencil-square" onclick="location.href= '/admin/coupons/edit_Coupon?couponId=<%= coupon._id %>'"></i>
                                         </td>
                                         <td>
                                             <i class="bi bi-trash-fill" coupon-id="<%= coupon._id %>"></i>
@@ -127,5 +127,33 @@
             }
         })
     })
+
+
+
+    // document.querySelectorAll(".bi-pencil-square").forEach(deleteBtn =>{
+    //     deleteBtn.addEventListener("click", async (event)=>{
+    //         event.preventDefault()
+    //         try {
+    //             const couponId = deleteBtn.getAttribute("coupon-id")
+
+    //             const response = await axios.patch(`/admin/coupons/edit_Coupon?couponId=${couponId}`)
+    //             const result = response.data
+
+    //             if(result.success){
+    //                 deleteBtn.closest("tr").remove()
+    //             }else{
+    //                 document.getElementById("errormsg").innerHTML = "Failed"
+    //                 setTimeout(() => {
+    //                     document.getElementById("errormsg").innerHTML = ""
+    //                 }, 4000);
+    //             }
+                
+
+ 
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     })
+    // })
 
 </script>

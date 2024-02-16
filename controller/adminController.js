@@ -73,7 +73,7 @@ exports.admin_post_addCoupon = async (req,res)=>{
     try {
         const { couponName, couponDiscount, minOrderAmount, maxOrderAmount, startingDate, endingDate } = req.body
         const exist = await couponModel.findOne({couponName})
-
+        
         if(exist){
             return res.status(289).json({ success: false })
         }else{
@@ -89,9 +89,49 @@ exports.admin_post_addCoupon = async (req,res)=>{
             return res.status(200).json({ success: true })
         }
     } catch (error) {
-       console.log(error); 
+        console.log(error); 
     }
 }
+
+exports.admin_edit_Coupon = async (req,res)=>{
+    try {
+        const couponId = req.query.couponId
+        const coupon = await couponModel.findOne({_id:couponId})
+        res.render("admin/pages/editCoupon", {coupon})
+    } catch (error) {
+        
+    }
+} 
+ 
+exports.admin_patch_coupon = async (req,res)=>{
+    try {
+        const {couponName, couponDiscount, minOrderAmount, maxOrderAmount, startingDate, endingDate} = req.body
+        const couponId = req.query.couponId
+        const couponUpdate = await couponModel.findOneAndUpdate(
+            {_id:couponId},
+            {$set:{
+                couponName,
+                couponDiscount,
+                minOrderAmount,
+                maxOrderAmount,
+                startingDate,
+                endingDate
+            }})
+
+        if(couponUpdate){
+            return res.status(200).json({success: true})
+        }else{
+            return res.status(290).json({success: false})
+        }
+        
+    } catch (error) {
+        
+    }
+}
+
+
+
+
 
 
 
@@ -262,6 +302,7 @@ exports.admin_get_banners = async (req,res)=>{
 exports.admin_get_addbanner = (req,res)=>{
     res.render("admin/pages/addBanner")
 }
+
 exports.admin_post_addbanner = async (req,res)=>{
     try {
         const {bannerName, offerPrice, bannerHeading, startingDate, endingDate} = req.body
@@ -287,7 +328,16 @@ exports.admin_post_addbanner = async (req,res)=>{
         console.log(error);
     }
 }
+
+exports.admin_edit_banner = (req,res)=>{
+    res.render("admin/pages/addBanner")
+}
  
+
+
+
+
+
 
 exports.admin_delete_banners = async (req,res)=>{
     try {
