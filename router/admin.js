@@ -116,7 +116,7 @@ router.delete("/category/delete_Category",adminController.admin_delete_category)
 router.get("/banners",adminController.admin_get_banners)
 router.get("/banners/add_banner",adminController.admin_get_addbanner)
 router.post("/banners/add_banner", bannerUpload.single("bannerImage"), adminController.admin_post_addbanner)
-
+router.delete("/banners/delete_banner",adminController.admin_delete_banners)
 
 
 

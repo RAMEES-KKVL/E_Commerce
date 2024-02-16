@@ -301,7 +301,22 @@ exports.admin_post_addbanner = async (req,res)=>{
         console.log(error);
     }
 }
+ 
 
+exports.admin_delete_banners = async (req,res)=>{
+    try {
+        const bannerId = req.query.bannerId
+        const deleted = await bannerModel.deleteOne({_id:bannerId})
+
+        if(deleted){
+            return res.status(200).json({success: true})
+        }else{
+            return res.status(289).json({success: false})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
