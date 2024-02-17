@@ -327,17 +327,53 @@ exports.admin_post_addbanner = async (req,res)=>{
     } catch (error) {
         console.log(error);
     }
-}
+} 
 
-exports.admin_edit_banner = (req,res)=>{
-    res.render("admin/pages/addBanner")
+exports.admin_edit_banner = async (req,res)=>{
+    try {
+        const bannerId = req.query.bannerId
+        const banner = await bannerModel.findOne({_id:bannerId})
+        res.render("admin/pages/editBanner", {banner})
+    } catch (error) {
+        
+    } 
 }
  
+exports.admin_patch_banner = async (req,res)=>{
+    try {
+        const {bannerName, offerPrice, bannerHeading, startingDate, endingDate} = req.body
+        const bannerId = req.query.banner_id
+        const oldBanner = await bannerModel.findOne({_id:bannerId}) 
+        const oldImage = oldBanner.bannerImage
+        const bannerImage = req.file ? req.file.filename : oldImage
+        
+        if(!req.file){
+            const oldupdated = await bannerModel.findOneAndUpdate({_id:bannerId},{$set:{bannerName, offerPrice, bannerHeading, startingDate, endingDate, bannerImage}})
+            if(oldupdated){
+                return res.status(200).json({success: true, oldimg:true})
+            }else{
+                return res.status(290).json({success: false, oldimg:false})
+            }
+            
+        }else{
+            const updated = await bannerModel.findOneAndUpdate({_id:bannerId},{$set:{bannerName, offerPrice, bannerHeading, startingDate, endingDate, bannerImage}})
+            console.log(1);
+            if(updated){
+                await fs.unlinkSync(`./public/uploads/banner/${oldImage}`)
+                return res.status(200).json({success: true, successnew: true})
+            }else{
+                return res.status(290).json({success: false, successnew: false,})
+            }
+        }
+        
+    }catch(error){
+        console.log(error);
+    }
+}
 
+   
 
-
-
-
+  
 
 exports.admin_delete_banners = async (req,res)=>{
     try {

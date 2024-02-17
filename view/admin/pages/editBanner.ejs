@@ -7,7 +7,7 @@
 
             <div class="content_part">
 
-                <form id="banner_add_form">
+                <form id="banner_edit_form">
                     <div class="frame">
                         <div class="banner_gap_div">
                             <div class="banner_div">
@@ -15,7 +15,7 @@
                                 <div class="banner_img_div">      
                                     <div class="form-group img_centr">
                                         <div class="banner_image_space">
-                                            <img src="" alt="" id="imagePreview" style="width: 100%; height: 100%;">
+                                            <img src="/uploads/banner/<%= banner.bannerImage %>" alt="" id="imagePreview" style="width: 100%; height: 100%;">
                                         </div>
                                        <div class="banner_image_buttn">
                                            Choose Image
@@ -27,15 +27,15 @@
                                 <div style="width: 100%;">
                                     <div class="form-group">
                                         <label for="bannerProduct">Banner Name</label>
-                                        <input type="text" id="bannerName" name="bannerName" placeholder="Enter banner name">
+                                        <input type="text" id="bannerName" name="bannerName" placeholder="Enter banner name" value="<%= banner.bannerName %>">
                                     </div>
                                     <div class="form-group">
                                         <label for="offerPrice">Offer Price</label>
-                                        <input type="number" id="offerPrice" name="offerPrice" placeholder="Enter banner offer price">
+                                        <input type="number" id="offerPrice" name="offerPrice" placeholder="Enter banner offer price" value="<%= banner.offerPrice %>">
                                     </div>
                                     <div class="form-group">
                                         <label for="bannerHeading">Banner Heading</label>
-                                        <input type="text" id="bannerHeading" name="bannerHeading" placeholder="Enter banner heading name">
+                                        <input type="text" id="bannerHeading" name="bannerHeading" placeholder="Enter banner heading name" value="<%= banner.bannerHeading %>">
                                     </div>
                                     <!-- <div class="form-group">
                                         <label for="bannerDescription">Banner Description</label>
@@ -47,15 +47,15 @@
                                     </div> -->
                                     <div class="form-group">
                                         <label for="startingDate">Starting Date</label>
-                                        <input type="date" id="startingDate" name="startingDate">
+                                        <input type="date" id="startingDate" name="startingDate" value="<%= banner.startingDate.toISOString().substring(0,10) %>">
                                     </div>
                                     <div class="form-group">
                                         <label for="endingDate">Ending Date</label>
-                                        <input type="date" id="endingDate" name="endingDate">
+                                        <input type="date" id="endingDate" name="endingDate" value="<%= banner.endingDate.toISOString().substring(0,10) %>">
                                     </div>
                                     <div id="errorMessage" style="color: brown; margin-bottom: 1rem;"></div>
                                     <div class="form-group">
-                                        <button type="submit" id="banner_add_button">Add Banner</button>
+                                        <button type="submit" id="banner_edit_button" banner-id="<%= banner._id %>">Update Banner</button>
                                     </div>
                                 </div>
                                 
@@ -74,5 +74,90 @@
 
 <script>
 
+    function previewImage(input){
+        const file = input.files[0]
+        if(file){
+            const reader = new FileReader()
+            reader.onload = (e)=>{
+                document.getElementById("imagePreview").src = e.target.result
+            }
+            reader.readAsDataURL(file)
+        } 
+    }
+
+    document.getElementById("banner_edit_button").addEventListener("click", async (event)=>{
+        event.preventDefault()
+
+        try {
+            const bannerName = document.getElementById("bannerName").value.trim()
+            const offerPrice = document.getElementById("offerPrice").value
+            const bannerHeading = document.getElementById("bannerHeading").value.trim()
+            const startingDate = document.getElementById("startingDate").value
+            const endingDate = document.getElementById("endingDate").value
+            const  newImage = document.getElementById("bannerImage").files[0]
+            
+            if(!bannerName || !offerPrice || !bannerHeading || !startingDate || !endingDate ){
+                document.getElementById("errorMessage").innerHTML = "Fill required datas"
+               setTimeout(() => {
+                document.getElementById("errorMessage").innerHTML = ""
+                }, 4000);
+            }else{
+                const banner_id = document.getElementById("banner_edit_button").getAttribute("banner-id")
+                const formData = new FormData(document.getElementById("banner_edit_form"))
+                const bannerData = Object.fromEntries(formData)
+                const response = await axios.patch(`/admin/banners/edit_banner?banner_id=${banner_id}`, bannerData, {
+                    headers : {
+                        "content-Type" : "multipart/form-data"
+                    }
+                })
+                const result = response.data
+
+                if(result.success){
+                    if(result.successnew){
+                        document.getElementById("bannerName").innerHTML = bannerName
+                        document.getElementById("offerPrice").innerHTML = offerPrice
+                        document.getElementById("bannerHeading").innerHTML = bannerHeading
+                        document.getElementById("startingDate").innerHTML = startingDate
+                        document.getElementById("endingDate").innerHTML = endingDate
+
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Coupon edited successfully",
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    }
+                    else if(result.oldimg){
+                        document.getElementById("bannerName").innerHTML = bannerName
+                        document.getElementById("offerPrice").innerHTML = offerPrice
+                        document.getElementById("bannerHeading").innerHTML = bannerHeading
+                        document.getElementById("startingDate").innerHTML = startingDate
+                        document.getElementById("endingDate").innerHTML = endingDate
     
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Banner updated successfully",
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+
+                    }
+
+                }else if(!result.success){
+                    if(!result.successnew){
+                        document.getElementById("errorMessage").innerHTML = "Failed upadating banner...!"
+                    }
+                    else if(!result.oldimg){
+                        console.log(1);
+                        document.getElementById("errorMessage").innerHTML = "Failed upadating banner...!"
+                    }
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
 </script>

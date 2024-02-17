@@ -40,7 +40,7 @@
                                         <td> <%= banner.startingDate.toDateString() %> </td>
                                         <td> <%= banner.endingDate.toDateString() %> </td>
                                         <td>
-                                            <i class="bi bi-pencil-square"></i>
+                                            <i class="bi bi-pencil-square" onclick="window.location.href='/admin/banners/edit_banner?bannerId=<%= banner._id %>'"></i>
                                         </td>
                                         <td>
                                             <i class="bi bi-trash-fill" bannerId="<%= banner._id %>"></i>
