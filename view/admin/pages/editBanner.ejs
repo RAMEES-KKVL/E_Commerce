@@ -148,10 +148,15 @@
                 }else if(!result.success){
                     if(!result.successnew){
                         document.getElementById("errorMessage").innerHTML = "Failed upadating banner...!"
+                        setTimeout(() => {
+                            document.getElementById("errorMessage").innerHTML = ""
+                        }, 4000);
                     }
                     else if(!result.oldimg){
-                        console.log(1);
                         document.getElementById("errorMessage").innerHTML = "Failed upadating banner...!"
+                        setTimeout(() => {
+                            document.getElementById("errorMessage").innerHTML = ""
+                        }, 4000);
                     }
                 }
             }

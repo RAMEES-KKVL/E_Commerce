@@ -41,7 +41,6 @@ exports.admin_get_subcategory = async (req,res)=>{
 exports.admin_get_addProduct = async (req,res)=>{
     try {
         const category = await categoryModel.find()
-
         res.render("admin/pages/addProduct", {category})  
     } catch (error) {
         console.log(error," product_add_get");
@@ -86,8 +85,15 @@ exports.admin_post_addProduct = async (req,res)=>{
 
 
 
-exports.admin_get_editProduct = (req,res)=>{
-    // res.redirect("/admin/products/add_product")
+exports.admin_get_editProduct = async (req,res)=>{
+    try {
+        const productId = req.query.product_id
+        const category = await categoryModel.find()
+        const product = await productModel.findOne({_id:productId})
+        res.render("admin/pages/editProduct", {category, product})
+    } catch (error) {
+        
+    }
 }
 
 
@@ -98,11 +104,72 @@ exports.admin_get_editProduct = (req,res)=>{
 
 
 
-exports.admin_patch_editProduct = (req,res)=>{}
+exports.admin_patch_editProduct = async (req,res)=>{
+    try {
+        const productId = req.query.product_id
+        const product = await productModel.findOne({_id:productId})
+        const {productName, price, discount, stock, category, subCategory, deliveryDate, colour, size, descriptions} = req.body
+        const oldImageArray = product.productImage
+        const productImage = req.files ? req.files.map((file) => file.filename) : oldImageArray
+        
+        if(!req.files){
+            const updatedWithOldArray = await productModel.findOneAndUpdate(
+                {_id:productId},
+                {$set:{ 
+                    productName,
+                    price,
+                    discount,
+                    stock,
+                    category,
+                    subCategory,
+                    deliveryDate,
+                    colour,
+                    size,
+                    descriptions,
+                    productImage
+                }
+            })
+
+            if(updatedWithOldArray){
+                return res.status(200).json({success: true, oldArray: true})
+            }else{
+                return res.status(290).json({success: false, oldArray: false})
+            }
+        }else{
+            const updatedWithNewArray = await productModel.findOneAndUpdate(
+                {_id:productId},
+                {$set:{
+                    productName,
+                    price,
+                    discount,
+                    stock,
+                    category, 
+                    subCategory,
+                    deliveryDate,
+                    colour,
+                    size,
+                    descriptions,
+                    productImage
+                }
+            })
+
+            if(updatedWithNewArray){
+                oldImageArray.forEach(async image =>{
+                    await fs.unlinkSync(`./public/uploads/product/${image}`)
+                })
+                return res.status(200).json({success: true, newArray: true})
+            }else{
+                return res.status(290).json({success: false, newArray: false})
+            }  
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
-
-
+ 
+ 
 
 
 

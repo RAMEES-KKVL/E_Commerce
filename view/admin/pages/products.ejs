@@ -39,7 +39,7 @@
                                         <td><%= product.discount %></td>
                                         <td><%= product.stock %></td>
                                         <td>
-                                            <i class="bi bi-pencil-square"></i>
+                                            <i class="bi bi-pencil-square" onclick="window.location.href='/admin/products/edit_Product?product_id=<%= product._id %>'"></i>
                                         </td>
                                         <td>
                                             <i class="bi bi-trash-fill" data-id="<%= product._id %>"></i>

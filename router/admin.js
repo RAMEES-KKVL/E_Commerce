@@ -56,7 +56,7 @@ router.get("/products/add_Product",productController.admin_get_addProduct)
 router.post("/products/add_Product", productUpload.array("productImage",10), productController.admin_post_addProduct)
 
 router.get("/products/edit_Product",productController.admin_get_editProduct)
-router.patch("/products/edit_product",productController.admin_patch_editProduct)                      // ?  patch  or post
+router.post("/products/edit_product", productUpload.array("productImage",10), productController.admin_patch_editProduct)                      // ?  patch  or post
 
 router.delete("/products/delete_Product",productController.admin_delete_product)
 

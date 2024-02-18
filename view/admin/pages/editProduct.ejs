@@ -1,0 +1,140 @@
+<%- include("../admin-header.ejs") %>
+    <div class="container">
+
+        <%- include("../adminnav.ejs") %>
+        <div class="body">
+            <%- include("../sidebar.ejs") %>
+
+            <div class="content_part">
+
+                <form id="edit_product_form" enctype="multipart/form-data">
+                    <div class="frame">
+                        <div class="gap_div">
+                            <div class="card_div">
+                                <div class="form-group">
+                                    <label for="productName">Product Name</label>
+                                    <div id="add_product_name_error"></div>
+                                    <input type="text" id="productName" name="productName" value="<%=product.productName%>">
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="price">Price</label>
+                                    <div id="add_product_price_error"></div>
+                                    <input type="number" id="price" name="price" value="<%= product.price %>">
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="discount">Discount</label>
+                                    <div id="add_product_discount_error"></div>
+                                    <input type="number" id="discount" name="discount" value="<%= product.discount %>">
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="stock">Stock</label>
+                                    <div id="add_product_stock_error"></div>
+                                    <input type="number" id="stock" name="stock" value="<%= product.stock %>">
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <div id="add_product_category_error"></div>
+                                    <select id="category" name="category" onchange="categoryView(event)" >
+                                        <!-- <option></option> -->
+                                        <% category.forEach((cat) =>{ %>    
+                                            <option value="<%= product.category %>"><%= product.category %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+
+                              
+                                    <div class="form-group" id="subcategory_display_div" style="display:block; padding: 0.5rem; border-radius: 4px;">
+                                        <label for="subCategory">Sub Category</label>
+                                        <div id="add_product_sub-category_error"></div>
+                                        <select name="subCategory" id="subCategory" style="width: 95%;" >
+                                            <option value="<%= product.subCategory %>" selected><%= product.subCategory %> </option>
+                                            <% category.forEach(categorys =>{ %> 
+                                                <% categorys.subCategory.forEach(element =>{ %>
+                                                    <option value="<%= element %>"> <%= element %></option> 
+                                                <% }) %> 
+                                            <% }) %> 
+                                        </select>
+                                    </div>
+                         
+                
+                                <div class="form-group">
+                                    <label for="deliveryDate">Delivery Date</label>
+                                    <div id="add_product_delivery-date_error"></div>
+                                    <input type="number" id="deliveryDate" name="deliveryDate" placeholder="Enter delivery date" value="<%= product.deliveryDate %>">
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="colour">Colour</label>
+                                    <div id="add_product_colour_error"></div>
+                                    <select name="colour" id="colour" value="<%= product.colour %>">
+                                        <!-- <option value="" selected disabled>Select color</option> -->
+                                        <option value="#ff0000" style="color: #ff0000;">Red</option> 
+                                        <option value="#0000ff" style="color: #0000ff;">Blue</option>
+                                        <option value="#00ff00" style="color: #00ff00;">Green</option>
+                                        <option value="#000000" style="color: #000000;">Black</option>
+                                        <option value="#f98000" style="color: #f98000;">Orange</option>
+                                        <option value="#ffea00" style="color: #ffea00;">Yellow</option>     
+                                    </select>
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="size">Size</label>
+                                    <div id="add_product_size_error"></div>
+                                    <!-- <div class="dropdown"> -->
+                                        <!-- <input type="text" style="width: 95%; position:relative;">
+                                        <ul style="display: none; position:absolute;">
+                                            <li><input type="checkbox" id="s" name="s" value="s"><label for="s">Small</label></li>
+                                            <li><input type="checkbox" id="m" name="m" value="m"><label for="m">Medium</label></li>
+                                            <li><input type="checkbox" id="l" name="l" value="l"><label for="l">Large</label></li>
+                                            <li><input type="checkbox" id="xl" name="xl" value="xl"><label for="xl">X-Large</label></li>
+                                            <li><input type="checkbox" id="xxl" name="xxl" value="xxl"><label for="xxl">XX-Large</label></li>
+                                        </ul> -->
+                                        <select name="size" id="size" value="<%= product.size %>">
+                                            <!-- <option value="" selected disabled>Choose Size</option>                                             -->
+                                            <option value="Small">Small</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Large">Large</option>
+                                            <option value="X-Large">X-Large</option>
+                                            <option value="Xx-Large">XX-Large</option>
+                                        </select>
+                                    <!-- </div> -->
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <div id="add_product_description_error"></div>
+                                    <textarea id="descriptions" name="descriptions" class="descriptions" value=""><%= product.descriptions %></textarea>
+                                </div>
+                                <div class="form-group">
+
+                                    <button type="submit" id="edit_product_btn" product-id="<%= product._id %>">Submit</button>
+                                </div>
+                            </div>
+                            <div class="img_div">      
+                                <div class="form-group img_centr">            
+                                    <div class="image_space">
+                                        <img src="/uploads/product/<%= product.productImage[0] %>" alt="" id="imagePreview" style="width: 100%; height: 100%;">
+                                    </div>
+                                    <div id="add_product_image_error"></div>
+                                   <div class="image_buttn">
+                                        Choose Image
+                                    <input type="file" id="productImage" accept="Image" name="productImage" onchange="previewImage(this)" multiple>
+                                   </div>
+                                   <div id="errorMain" style="color: brown; margin-top: 1rem;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                         
+            </div>
+        </div>
+    </div>
+
+<%- include("../../end.ejs") %>
+
+<script src="/js/admin/editProduct.js"></script>

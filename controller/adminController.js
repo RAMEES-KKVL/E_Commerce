@@ -348,7 +348,18 @@ exports.admin_patch_banner = async (req,res)=>{
         const bannerImage = req.file ? req.file.filename : oldImage
         
         if(!req.file){
-            const oldupdated = await bannerModel.findOneAndUpdate({_id:bannerId},{$set:{bannerName, offerPrice, bannerHeading, startingDate, endingDate, bannerImage}})
+            const oldupdated = await bannerModel.findOneAndUpdate(
+                {_id:bannerId},
+                {$set:{
+                    bannerName,
+                    offerPrice, 
+                    bannerHeading, 
+                    startingDate, 
+                    endingDate, 
+                    bannerImage
+                }
+            })
+            
             if(oldupdated){
                 return res.status(200).json({success: true, oldimg:true})
             }else{
@@ -356,8 +367,18 @@ exports.admin_patch_banner = async (req,res)=>{
             }
             
         }else{
-            const updated = await bannerModel.findOneAndUpdate({_id:bannerId},{$set:{bannerName, offerPrice, bannerHeading, startingDate, endingDate, bannerImage}})
-            console.log(1);
+            const updated = await bannerModel.findOneAndUpdate(
+                {_id:bannerId},
+                {$set:{
+                    bannerName, 
+                    offerPrice, 
+                    bannerHeading, 
+                    startingDate, 
+                    endingDate, 
+                    bannerImage
+                }
+            })
+
             if(updated){
                 await fs.unlinkSync(`./public/uploads/banner/${oldImage}`)
                 return res.status(200).json({success: true, successnew: true})

@@ -37,7 +37,7 @@ async function categoryView(event){
 } 
 
 
-// CONDUCTING CLIENT SIDE VALIDATION AND PASSING DATA TO SERVERSIDE
+// CONDUCTING CLIENT-SIDE VALIDATION AND PASSING DATA TO SERVER-SIDE
 
 addButtn.addEventListener("click", async (event)=>{
     event.preventDefault()
