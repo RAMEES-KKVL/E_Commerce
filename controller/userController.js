@@ -88,8 +88,12 @@
 
 
 
-exports.get_home = (req,res)=>{
-    res.send("hiii")
+exports.get_home = async (req,res)=>{
+    try {
+        res.render("user/pages/userHome")
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
