@@ -19,7 +19,7 @@
 
                             <thead>
                                 <tr>
-                                    <th>Sl.No</th>
+                                    <!-- <th>Sl.No</th> -->
                                     <th>Category ID</th>
                                     <th>Category Name</th>
                                     <th>Product Count</th>
@@ -30,12 +30,12 @@
                             <tbody>
                             <% category.forEach((value, index) =>{ %>
                                 <tr>
-                                    <td><%= index + 1 %></td>
+                                    <!-- <td><%= index + 1 %></td> -->
                                     <td><%= value._id %></td>
                                     <td><%= value.category %></td>
                                     <td><%= value.subCategory.length %></td>
                                     <td>
-                                        <i class="bi bi-pencil-square"></i>
+                                        <i class="bi bi-pencil-square" onclick="window.location.href='/admin/category/edit_Category?category_id=<%= value._id %>'"></i>
                                     </td>
                                     <td>
                                         <i class="bi bi-trash-fill" category-id="<%= value._id %>"></i>

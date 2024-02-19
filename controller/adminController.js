@@ -230,7 +230,15 @@ exports.admin_post_addCategory = async (req,res)=>{
 
 
 
-exports.admin_get_editCategory = (req,res)=>{}
+exports.admin_get_editCategory = async (req,res)=>{
+    try {
+        const categoryId = req.query.category_id
+        const category = await categoryModel.findOne({_id:categoryId})
+        res.render("admin/pages/editCategory", {category})
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
@@ -238,11 +246,79 @@ exports.admin_get_editCategory = (req,res)=>{}
 
 
 
-exports.admin_patch_editCategory = (req,res)=>{}
+exports.admin_patch_editCategory = async (req,res)=>{
+    try {
+        try{
+            const { category, subCategory} = req.body
+            const categoryId = req.query.category_id
+            const oldCategory = await categoryModel.findOne({_id:categoryId})
+            const oldImage = oldCategory.categoryImage
+            const categoryImage = req.file ? req.file.filename : oldImage
+            const subCategoryArray = subCategory ? JSON.parse(subCategory) : []
+            if(!category){
+                return res.status(294).json({ success:false, missingData:true, errorMsg:"Please provide category name"})
+            }else{
+                if(!req.file){
+                    if(category && categoryImage && subCategoryArray.length > 0){
+                       await categoryModel.updateOne(
+                            {_id:categoryId},
+                                {      
+                                    category,
+                                    subCategory : subCategoryArray,
+                                    categoryImage
+                                }
+                            )
+                        return res.status(200).json({ success:true, allData:true })
+                    }
+                    else if(category && categoryImage && subCategoryArray.length == 0){
+                       await categoryModel.updateOne(
+                            {_id:categoryId},
+                                {
+                                    category,
+                                    subCategory : subCategoryArray,
+                                    categoryImage 
+                                }
+                            )
+                        return res.status(200).json({ success:true, data:true })
+                    }
+                }else{
+                    fs.unlinkSync(`./public/uploads/category/${oldImage}`)
+                    if(category && categoryImage && subCategoryArray.length > 0){
+                      await categoryModel.updateOne(
+                            {_id:categoryId},
+                                {
+                                    category,
+                                    subCategory : subCategoryArray,
+                                    categoryImage
+                                }
+                            )
+                        return res.status(200).json({ success:true, allData:true })
+                    }
+                    else if(category && categoryImage && subCategoryArray.length == 0){
+                        await categoryModel.updateOne(
+                            {_id:categoryId},
+                                {
+                                    category,
+                                    subCategory : subCategoryArray,
+                                    categoryImage 
+                                }
+                            )
+                        return res.status(200).json({ success:true, data:true })
+                    }
+                }
+            }
+            
+        } catch (error){
+            console.log("category post ",error.message);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+  
 
 
-
-
+ 
 
 
 exports.admin_delete_category = async (req,res)=>{

@@ -5,12 +5,7 @@ let subcategoryArray = []
 
 function toggleDropdown() {
     const dropdown = document.getElementById("dropdownList");
-    dropdown.style.display = 'block'
-}
-
-function hideDropdown() {
-    const dropdown = document.getElementById("dropdownList");
-    dropdown.style.display = 'none'
+    dropdown.style.display = dropdown.style.display ===  'none' ? 'block' : 'none'
 }
 
 function previewImage(input){
@@ -150,7 +145,7 @@ categoryBtn.addEventListener("click", async (event)=>{
                         Swal.fire({
                             position: "center",
                             icon: "success",
-                            title: "Category and subcategory added successfully",
+                            title: "Category and subcategory updated successfully",
                             showConfirmButton: false,
                             timer: 2500
                           });
@@ -164,7 +159,7 @@ categoryBtn.addEventListener("click", async (event)=>{
                         Swal.fire({
                             position: "center",
                             icon: "success",
-                            title: "Category added successfully",
+                            title: "Category updated successfully",
                             showConfirmButton: false,
                             timer: 2500
                           });

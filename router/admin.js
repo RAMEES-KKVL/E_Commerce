@@ -98,11 +98,10 @@ router.delete("/coupons/delete_Coupon",adminController.admin_delete_coupon)
 router.get("/category",adminController.admin_get_category)
 
 router.get("/category/add_Category",adminController.admin_get_addCategory)
-// router.post("/category/add_subcategory", adminController.admin_post_subcategory)
 router.post("/category/add_Category", upload.single("categoryImage"), adminController.admin_post_addCategory)
 
 router.get("/category/edit_Category",adminController.admin_get_editCategory)
-router.patch("/category/edit_Category",adminController.admin_patch_editCategory)         // ?  patch  or post
+router.patch("/category/edit_Category", upload.single("categoryImage"), adminController.admin_patch_editCategory)         
 
 router.delete("/category/delete_Category",adminController.admin_delete_category)
 

@@ -15,7 +15,7 @@
                                 <div class="category_img_div">      
                                     <div class="form-group category_img_centr">
                                         <div class="category_image_space">
-                                            <img src="" alt="" id="imagePreview" style="width: 100%; height: 100%;">
+                                            <img src="/uploads/category/<%= category.categoryImage %>" alt="" id="imagePreview" style="width: 100%; height: 100%;">
                                         </div>
                                        <div class="category_image_buttn">
                                           Choose Image
@@ -26,15 +26,15 @@
 
                                 <div class="form-group">
                                     <label for="categoryName">Category Name</label>
-                                    <input type="text" id="categoryName" name="category" placeholder="Enter category name">
+                                    <input type="text" id="categoryName" name="category" value="<%= category.category %>">
                                 </div>
                                 <div class="form-group">
                                     <label for="categoryName">Sub-Category Name</label>
                                     <div id="subcatError" style="color: brown;"></div>
                                     <div style=" display: flex;">
                                         <div class="subcategoryDropdown" style="width: 100%; display: block; position: relative;">
-                                            <input type="text" id="subcategoryName" name="subCategory" placeholder="Add sub-category"  onclick="toggleDropdown()" style="width: calc(100% - 2.5rem);">
-                                            <div id="dropdownList" class="li_div">
+                                            <input type="text" id="subcategoryName" name="subCategory" placeholder="Add sub-category"  onclick="toggleDropdown()" onfocus="updateSubcategoryList()" style="width: calc(100% - 2.5rem);">
+                                            <div id="dropdownList" class="li_div" sub-Category="<%= JSON.stringify(category.subCategory) %>">
                                                 <ul></ul>
                                             </div>
                                         </div>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div id="errorMessage" style="color: brown; margin-bottom: .5rem;"></div>
                                 <div style="display:flex; justify-content: center;">
-                                    <button type="submit" id="category_submit_btn">Submit</button>
+                                    <button type="submit" id="category_edit_btn" categoryId="<%= category._id %>">Submit</button>
                                 </div>
 
                             </div>
@@ -56,8 +56,10 @@
         </div>
     </div>
 
+
 <%- include("../../end.ejs") %>
-<script src="/js/admin/category.js"></script>
+
+ <script src="/js/admin/editCategory.js"></script>
 
 
 
