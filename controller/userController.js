@@ -100,7 +100,13 @@ exports.get_home = async (req,res)=>{
 
 
 
-exports.get_product = (req,res)=>{}
+exports.get_product = async (req,res)=>{
+    try {
+        res.render("user/pages/productView")
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
