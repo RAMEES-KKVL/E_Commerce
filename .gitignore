@@ -2,3 +2,4 @@
 .env
 copy.css
 page.html
+userSidebar.ejs

@@ -54,10 +54,20 @@ router.delete("/cart/delete_Item",cartController.delete_cart_Item)
 router.get("/wishlist",cartController.get_wishlist)
 router.delete("/wishlist/delete_Item",cartController.delete_wishlist_Item)
 
-router.get("/account",userRouterWeb.get_account)
+
+
+
+
+router.get("/account",userRouterWeb.get_profile)
 router.post("/account/profile",userRouterWeb.post_profile)
-router.get("/account/shipping_Address",userRouterWeb.get_address)
-router.post("/account/shipping_Address",userRouterWeb.post_address)
+
+
+
+
+
+router.get("/account/profile_Edit",userRouterWeb.get_edit_address)
+router.post("/account/profile_Edit",userRouterWeb.post_edit_address)
+
 router.get("/account/orders",userRouterWeb.get_orders)
 
 // router.get("/orders",userRouter)
