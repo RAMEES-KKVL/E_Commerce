@@ -1,93 +1,5 @@
 
 
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-  
-
- 
-
-
-
-
-
-   
-
-
-
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
- 
-
-
-
-
-
-
-
-
- 
-
-
-
-
- 
-
-
-
-
- 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 exports.get_home = async (req,res)=>{
     try {
         res.render("user/pages/userHome")
@@ -112,25 +24,25 @@ exports.get_product = async (req,res)=>{
 
 
 
-exports.get_cart = (req,res)=>{}
 
 
 
 
 
-exports.delete_cart_Item = (req,res)=>{}
 
 
 
 
 
-exports.get_wishlist = (req,res)=>{}
 
 
 
 
 
-exports.delete_wishlist_Item = (req,res)=>{}
+
+
+
+
 
 
 

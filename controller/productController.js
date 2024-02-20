@@ -174,7 +174,6 @@ exports.admin_patch_editProduct = async (req,res)=>{
 
 
 
-// const success = await fs.unlinkSync("./public/uploads/product" + product.productImage)
 
 
 exports.admin_delete_product = async (req,res)=>{

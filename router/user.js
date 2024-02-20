@@ -3,7 +3,7 @@ const router = express.Router()
 
 const userRouter = require("../controller/authController")
 const userRouterWeb = require("../controller/userController")
-
+const cartController = require("../controller/cartController")
 
 
 
@@ -40,11 +40,19 @@ router.get("/product",userRouterWeb.get_product)
 router.get("/category",userRouterWeb.get_category)
 // router.get("/product/payment",userRouter)
 
-router.get("/cart",userRouterWeb.get_cart)
-router.delete("/cart/delete_Item",userRouterWeb.delete_cart_Item)
 
-router.get("/wishlist",userRouterWeb.get_wishlist)
-router.delete("/wishlist/delete_Item",userRouterWeb.delete_wishlist_Item)
+
+
+
+router.get("/cart",cartController.get_cart)
+router.delete("/cart/delete_Item",cartController.delete_cart_Item)
+
+
+
+
+
+router.get("/wishlist",cartController.get_wishlist)
+router.delete("/wishlist/delete_Item",cartController.delete_wishlist_Item)
 
 router.get("/account",userRouterWeb.get_account)
 router.post("/account/profile",userRouterWeb.post_profile)

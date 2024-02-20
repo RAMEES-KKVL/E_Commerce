@@ -1,0 +1,71 @@
+<%- include('../common/header.ejs') %>
+<div class="wrapper wishlist_wrapper">
+
+    <%- include('../common/topnav.ejs') %>
+
+    <!-- LOGIN REMINDER -->
+
+    <div style="" class="login_to_view">
+        <div class="log_frame">
+            <h3>PLEASE LOG IN</h3>
+            <p>Login to view items in your WISHLIST.</p>
+            <img src="#" class="cart_png" alt="">
+            <button onclick="location.href = '/login' " class="login_from_wish_btn">LOGIN</button>
+        </div>
+    </div>
+
+    <div class="content wishlist_content">
+        <div class="my_wishlist_text">
+            My Wishlist 
+            <span class="wish_list_items">
+                <span class="wish_count"> 
+                    Wishlist Count 
+                </span> 
+                Items
+            </span>
+        </div>
+        <div class="wish_frame"> 
+
+            <!-- YOUR WISHLIST IS EMPTY -->
+
+            <div style="" class="cart_is_empty">
+                <div class="empty_frame">
+                    <img src="#" class="cart_empty_png" alt="">
+                    <h3>Your Wishlist is Empty</h3>
+                    <p>Looks like you haven't added anything to your wishlist yet.</p>
+                </div>
+            </div>    
+
+
+             <!-- WISHLIST  -->
+        
+            <div class="product_frame product">
+                <div class="top">
+                    <img src="#" style="width: 10rem; height: 13em;" alt="">
+                    <button class="remove_wish_btn">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
+                </div>
+
+                <div class="center">
+                    <p class="product_name"> Productname </p>
+                    <div class="price_div">
+                        <p class="old_price"><i class="bi bi-currency-rupee"></i>oldprice</p>
+                        <p class="new_price"><i class="bi bi-currency-rupee"></i>newprice</p>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <button class="addto_cart_btn">
+                        MOVE TO CART
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <%- include('../common/footer.ejs') %>
+
+</div>
+<%- include('../../end.ejs') %>
