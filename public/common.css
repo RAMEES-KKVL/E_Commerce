@@ -476,7 +476,7 @@ header a{
 }
 .product_frame{
     position: relative;
-    width: 100%;
+    width: 100% !important;
     margin-top: 1rem;
     height: auto;
 }
@@ -558,7 +558,7 @@ header a{
     padding: 1rem 0;
     width: 100%;
     height: 30%;
-    border-bottom:1px solid rgba(151, 151, 151, 0.411);
+    /* border-bottom:1px solid rgba(151, 151, 151, 0.411); */
 }
 .product_name{
     font-size: .91rem;
@@ -577,6 +577,7 @@ header a{
 .price_div{
     display: flex;
     align-items: center;
+    /* margin-bottom: 1rem; */
     gap: .3rem;
     padding: .5rem 0;
     height: 20%;
@@ -597,6 +598,7 @@ header a{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
     width: 100%;
     height: 15%;
 }
@@ -910,7 +912,7 @@ header a{
     padding: 1rem 0;
     width: 100%;
     height: 30%;
-    border-bottom:1px solid rgba(151, 151, 151, 0.411);
+    /* border-bottom:1px solid rgba(151, 151, 151, 0.411); */
 }
 .product_name{
     font-size: .89rem;
@@ -1387,7 +1389,7 @@ header a{
         align-items: center;
         width: 100%;
         height: 24%;
-        border-bottom:1px solid rgba(151, 151, 151, 0.67);
+        /* border-bottom:1px solid rgba(151, 151, 151, 0.67); */
     }
     .product_name{
         font-size: 1rem;
@@ -2194,5 +2196,81 @@ input{
     }
     .shipped{
       color: rgb(238, 244, 56);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* <<<<<<< ================= SUBCATEGORY ======================= >>>>>>> */
+
+.catProducts_content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem;
+    overflow: scroll;
+
+}
+.product_section{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(15em,1fr));
+    column-gap: 1.8rem;
+    row-gap: 1.8rem;
+    padding: .5rem;
+    width: 100%;
+    height: 100%;
+}
+.bi-heart-fill{
+    color: red;
+    font-size: 1.3rem;
+}
+header{
+    display: flex;
+    width: 100%;
+    height: 3.5em;
+    background-color: #152D35;
+    padding: 0 1rem;
+}
+.catProducts_content::-webkit-scrollbar {
+    width: 0em;
+}
+.catProducts_content::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.catProducts_content::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+
+
+@media screen and (max-width:800px) {
+    .band_img{
+        width: 4.3rem !important;
+        height: 4.3rem !important;
+    }
+    .redmi_png{
+        height: 2.7rem;
+        width: 3rem;
+    }
+    .cat_img_div{
+         width: 8rem;
+         height: 7rem;
+    }
+        .cat_img_div p{
+        font-size: .8rem;
     }
 }

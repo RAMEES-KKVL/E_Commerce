@@ -1,0 +1,63 @@
+<%- include('../common/header.ejs') %>
+<div class="wrapper category_products_wrapper">
+
+    <%- include('../common/topnav.ejs') %>
+    <div class="content catProducts_content">
+
+        <header>
+            <ul>
+                <li><a href="/home">HOME</a></li>
+                <li><a href="#">ALL PRODUCTS</a></li>
+                <li class="category_li">
+                    <a href="#">ALL CATEGORY&nbsp;<i class="bi bi-chevron-down"></i></a>
+                    <table class="drop_bar">
+                        <% categories.forEach(cat =>{ %>
+                        <tr>
+                            <% cat.subCategory.forEach(subCat =>{ %>
+                            <td><a href="#"><%= subCat %></a></td>
+                            <% }) %>
+                        </tr>
+                        <% }) %>
+                    </table>
+                </li>
+                <li class=""><a href="#">MENS</a></li>
+                <li class=""><a href="#">MOBILES</a></li>
+                <li class=""><a href="#">LAPTOPS</a></li>
+            </ul>
+        </header>
+
+
+        <!-- ========================================================================================================= -->
+
+
+        <div class="product_section">
+            <div class="product_frame_grid">
+                <div class="top">
+                    <button class="wish_btn">
+                        <i class="bi wish_icon bi-heart"></i>
+                    </button>
+                    <img src="#" style="width: 85%; height: 90%;" alt="">
+                </div>
+                <div class="center">
+                    <div class="name_div">
+                        <p class="product_name"></p>
+                    </div>
+                    <div class="price_div">
+                        <p class="old_price"><i class="bi bi-currency-rupee"></i></p>
+                        <p class="new_price"><i class="bi bi-currency-rupee"></i></p>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <button class="addto_cart_btn addto_cart_btn">
+                        ADD TO CART
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>                     
+            </div>
+        </div>
+
+    </div>
+
+    <%- include('../common/footer.ejs') %>
+</div>
+<%- include('../../end.ejs') %>

@@ -1,8 +1,21 @@
+const productModel = require("../model/productModel")
+const bannerModel = require("../model/bannerModel")
+const categoryModel = require("../model/categoryModel")
+
+
+
 
 
 exports.get_home = async (req,res)=>{
     try {
-        res.render("user/pages/userHome")
+        const Tshirts = await productModel.find({subCategory:"T-shirts"})
+        const Shirts = await productModel.find({subCategory:"Shirts"})
+        const Shoes = await productModel.find({subCategory:"Shoes"})
+        const Sarees = await productModel.find({subCategory:"Sarees"})
+        const Tops = await productModel.find({subCategory:"Tops"})
+        const Pants = await productModel.find({subCategory:"Pants"})
+        const categories = await categoryModel.find()
+        res.render("user/pages/userHome", {Tshirts, Shirts, Shoes, Sarees, Tops, Pants, categories})
     } catch (error) {
         console.log(error);
     }
@@ -14,7 +27,9 @@ exports.get_home = async (req,res)=>{
 
 exports.get_product = async (req,res)=>{
     try {
-        res.render("user/pages/productView")
+        const id = req.query.product_id
+        const product = await productModel.findOne({_id:id})
+        res.render("user/pages/productView", {product})
     } catch (error) {
         console.log(error);
     }
@@ -48,7 +63,14 @@ exports.get_product = async (req,res)=>{
 
 
 
-exports.get_category = (req,res)=>{}
+exports.get_category = async (req,res)=>{
+    try {
+        const categories = await categoryModel.find()
+        res.render("user/pages/productViewByCategory", {categories})
+    } catch (error) {
+      console.log(error);  
+    }
+}
 
 
 
