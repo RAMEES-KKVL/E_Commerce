@@ -31,16 +31,16 @@
 
 
         <div class="product_section">
-            <% categoryProducts.forEach(product =>{ %>
+            <% products.forEach(product =>{ %>
             <div class="product_frame_grid" onclick="location.href='/product?product_id=<%= product._id %>'">
                 <div class="top">
                     <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
-                        <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                        <i class="bi wishlist_heart<%= product._id %> <%=(()=>{
                                 const listArray = wishlist ? wishlist.products : []
                                 const productId = product._id
                                 const exist = listArray.some(product => product.productId.equals(productId))
                                 return exist ? 'bi-heart-fill' : 'bi-heart'
-                            })() %> ">
+                            })() %>">
                         </i>
                     </button>
                     <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">

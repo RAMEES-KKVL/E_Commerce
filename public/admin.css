@@ -579,7 +579,21 @@ height: 3.4rem !important;
     cursor: pointer;
     color: #363062;
 }
+.user_table .bi-person-fill {
+    cursor: pointer;
+    color: #363062;
+}
+.bi-person-fill-slash{
+    cursor: pointer;
+    color: #363062;
+}
 .user_table .bi-trash-fill:hover {
+    color: darkred;
+}
+.user_table .bi-person-fill:hover {
+    color: green;
+}
+.user_table .bi-person-fill-slash:hover {
     color: darkred;
 }
 

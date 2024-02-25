@@ -16,7 +16,7 @@ function toggleDropdown() {
 
 
 let subcategoryArray = JSON.parse(document.getElementById("dropdownList").getAttribute("sub-Category"))
-console.log(subcategoryArray);
+
 document.getElementById("sub-category_submit_btn").addEventListener("click", async (event)=>{
     event.preventDefault()
 

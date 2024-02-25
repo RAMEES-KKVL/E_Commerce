@@ -14,15 +14,15 @@
                         <% categories.forEach(cat =>{ %>
                         <tr>
                            <% cat.subCategory.forEach(subCat =>{ %>
-                           <td style="color: black;" onclick="location.href='/category?category_Id=<%= cat._id %>'"><a href="#"><%= subCat %></a></td>
+                           <td style="color: black;" onclick="location.href='/subcategory?subcategory_Id=<%= subCat %>'"><a href="#"><%= subCat %></a></td>
                            <% }) %>
                         </tr>
                         <% }) %>
                      </table>
                   </li>
-                  <li class=""><a href="#">MENS</a></li>
-                  <li class=""><a href="#">MOBILES</a></li>
-                  <li class=""><a href="#">LAPTOPS</a></li>
+                  <li class=""><a href="/category?category_name=Mens">MENS</a></li>
+                  <li class=""><a href="/category?category_name=Womens">WOMENS</a></li>
+                  <li class=""><a href="/category?category_name=Electronics">ELECTRONICS</a></li>
                </ul>
             </header>
  
@@ -70,10 +70,16 @@
                   <div class="product_top">MENS SHIRTS</div>
                   <div class="product_bottom">
                      <% Shirts.forEach(product =>{ %>
-                        <div class="product_frame_grid" onclick="window.location.href='/product?product_id=<%= product._id %>'">
+                        <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
                            <div class="top">
-                              <button class="wish_btn" >
-                                 <i class="bi bi-heart"> </i>
+                              <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                 <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                       const listArray = wishlist ? wishlist.products : []
+                                       const productId = product._id;
+                                       const exist = listArray.some(product => product.productId.equals(productId))
+                                       return exist ? 'bi-heart-fill' : 'bi-heart'
+                                    })() %>">
+                                 </i>
                               </button>
                               <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                            </div>
@@ -112,10 +118,16 @@
                   <div class="product_top">MENS T-SHIRTS</div>
                   <div class="product_bottom">
                      <% Tshirts.forEach(product =>{ %> 
-                     <div class="product_frame_grid" onclick="window.location.href='/product?product_id=<%= product._id %>'">
+                     <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
                         <div class="top">
-                           <button class="wish_btn">
-                              <i class="bi bi-heart"> </i>
+                           <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                              <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                    const listArray = wishlist ? wishlist.products : []
+                                    const productId = product._id;
+                                    const exist = listArray.some(product => product.productId.equals(productId))
+                                    return exist ? 'bi-heart-fill' : 'bi-heart'
+                                 })() %>">
+                              </i>
                            </button>
                            <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                         </div>
@@ -197,10 +209,16 @@
                               <div class="product_top">WOMENS SAREE</div>
                               <div class="product_bottom">
                                  <% Sarees.forEach(product =>{ %>
-                                    <div class="product_frame_grid" onclick="window.location.href='/product?product_id=<%= product._id %>'">
+                                    <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
                                        <div class="top">
-                                          <button class="wish_btn" >
-                                             <i class="bi bi-heart"> </i>
+                                          <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                             <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                                   const listArray = wishlist ? wishlist.products : []
+                                                   const productId = product._id;
+                                                   const exist = listArray.some(product => product.productId.equals(productId))
+                                                   return exist ? 'bi-heart-fill' : 'bi-heart'
+                                                })() %>">
+                                             </i>
                                           </button>
                                           <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                                        </div>
@@ -251,10 +269,16 @@
                      <div class="product_top">MENS SHOES</div>
                      <div class="product_bottom">
                         <% Shoes.forEach(product =>{ %>
-                           <div class="product_frame_grid" onclick="window.location.href='/product?product_id=<%= product._id %>'">
+                           <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
                               <div class="top">
-                                 <button class="wish_btn" >
-                                    <i class="bi bi-heart"> </i>
+                                 <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                    <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                          const listArray = wishlist ? wishlist.products : []
+                                          const productId = product._id;
+                                          const exist = listArray.some(product => product.productId.equals(productId))
+                                          return exist ? 'bi-heart-fill' : 'bi-heart'
+                                       })() %>">
+                                    </i>
                                  </button>
                                  <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                               </div>
@@ -344,10 +368,16 @@
                      <div class="product_top">MENS PANTS</div>
                      <div class="product_bottom">
                         <% Pants.forEach(product =>{ %> 
-                           <div class="product_frame_grid" onclick="window.location.href='/product?product_id=<%= product._id %>'">
+                           <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
                               <div class="top">
-                                 <button class="wish_btn">
-                                    <i class="bi bi-heart"> </i>
+                                 <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                    <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                          const listArray = wishlist ? wishlist.products : []
+                                          const productId = product._id;
+                                          const exist = listArray.some(product => product.productId.equals(productId))
+                                          return exist ? 'bi-heart-fill' : 'bi-heart'
+                                       })() %>">
+                                    </i>
                                  </button>
                                  <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                               </div>
@@ -384,10 +414,16 @@
                      <div class="product_top">WOMENS TOPS</div>
                      <div class="product_bottom">
                         <% Tops.forEach(product =>{ %>
-                           <div class="product_frame_grid" onclick="window.location.href='/product?product_id=<%= product._id %>'">
+                           <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
                               <div class="top">
-                                 <button class="wish_btn" >
-                                    <i class="bi bi-heart"> </i>
+                                 <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                    <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                          const listArray = wishlist ? wishlist.products : []
+                                          const productId = product._id;
+                                          const exist = listArray.some(product => product.productId.equals(productId))
+                                          return exist ? 'bi-heart-fill' : 'bi-heart'
+                                       })() %>">
+                                    </i>
                                  </button>
                                  <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                               </div>
@@ -747,3 +783,6 @@
 
 
 <%- include('../../end.ejs') %>
+
+<script src="/js/common.js"></script>
+<script src="/js/user/wishlist.js"></script>

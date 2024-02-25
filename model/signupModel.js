@@ -23,6 +23,10 @@ const schema = {
     createdat : {
         type : Date ,
         default : Date.now
+    },
+    blocked : {
+        type : Boolean,
+        default : false
     }
 }
 

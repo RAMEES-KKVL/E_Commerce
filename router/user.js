@@ -38,6 +38,7 @@ router.get("/home",userRouterWeb.get_home)
 router.get("/product",userRouterWeb.get_product)
 
 router.get("/category",userRouterWeb.get_category)
+router.get("/subcategory",userRouterWeb.get_subcategory)
 // router.get("/product/payment",userRouter)
 
 
@@ -52,6 +53,7 @@ router.delete("/cart/delete_Item",cartController.delete_cart_Item)
 
 
 router.get("/wishlist",cartController.get_wishlist)
+router.patch("/wishlist/patch_Item",cartController.patch_wishlist_Item)
 router.delete("/wishlist/delete_Item",cartController.delete_wishlist_Item)
 
 

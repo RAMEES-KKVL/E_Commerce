@@ -22,7 +22,8 @@
                             <!-- <th style="width: 5rem; max-width: 5rem;">Reg.Date</th> -->
                             <th style="width: 3rem; max-width: 3rem;">Orders</th>
                             <th style="width: 12rem; max-width: 3rem;">Details</th>
-                            <th style="width: 3rem; max-width: 3rem;">Action</th>
+                            <th style="width: 12rem; max-width: 3rem;">Status</th>
+                            <th style="width: 3.5rem; max-width: 5rem;">Action</th>
                         </tr>
                        </thead>
      
@@ -35,7 +36,20 @@
                                 <!-- <td><%= val.createdat %></td> -->
                                 <td><%= 0 %></td>
                                 <td><a href="">link</a></td>
-                                <td> <i class="bi bi-trash-fill " data-id="<%=val._id%>"><a href="#"></a></i><div id="errorMessage"></div> </td>
+                                <td id="user_status<%= val._id %>">
+                                    <%= (()=>{
+                                        const blocked = val.blocked
+                                        return blocked ? 'Blocked' : 'Active';
+                                    })() %>
+                                </td>
+                                <td> 
+                                    <i onclick="blockUser(event,'<%= val._id %>')" style="font-size: 1.2rem;" class="bi block_icon<%= val._id %>
+                                    <%= (()=>{ 
+                                        const blocked = val.blocked
+                                        return blocked ? 'bi-person-fill' : 'bi-person-fill-slash' 
+                                    })() %>"></i>
+                                    <i class="bi bi-trash-fill " data-id="<%=val._id%>"></a></i><div id="errorMessage"></div> 
+                                </td>
                             </tr>
                        <% }) %>
                        
@@ -53,16 +67,31 @@
 <%- include("../../end.ejs") %>
 
 <script>
+ 
+async function blockUser(e,userId){
+    try {
+        const icon = document.querySelector(".block_icon" + userId)
 
-// const deleteBtn = document.querySelector(".bi-trash-fill")
-// const userTr = deleteBtn.closest("tr")
-// const errorMessage = document.getElementById("errorMessage")
+        if(icon.classList.contains("bi-person-fill")){
+            document.getElementById("user_status"+userId).innerHTML = "Active"
+            icon.classList.replace("bi-person-fill","bi-person-fill-slash")
+        }else{
+            icon.classList.replace( "bi-person-fill-slash","bi-person-fill")
+            document.getElementById("user_status"+userId).textContent = "Blocked"
+        }
 
-// const urlParams = new URLSearchParams(window.location.search)
-// console.log(urlParams);
-// const user_id = urlParams.get(encodeURIComponent('user_id'))
-// console.log(user_id);
+        await axios.patch(`/admin/user_list/block?user_id=${userId}`)
 
+    } catch (error) {
+        console.log(error);
+    }
+}  
+
+
+
+</script>
+
+<script>
 
 document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
 
@@ -73,22 +102,64 @@ deleteBtn.addEventListener("click", async (event)=>{
     const errorMessage = document.getElementById("errorMessage")
     try {
         // const url = `/admin/user_List/delete_User?user_id=${encodeURIComponent(user_id)}`
-        const url = `/admin/user_List/delete_User/${userId}`
-        const response = await axios.delete(url)
-        const result = response.data
 
-        if(result.success){
-            userTr.remove()
-        }else{
-            errorMessage.innerHTML = "Failed"
-            setTimeout(() => {
-                errorMessage.innerHTML = "" 
-            }, 4000);
-        }
+        const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+                });
+                swalWithBootstrapButtons.fire({
+
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true,
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-secondary'
+                }}).then( async (result) => {
+                    if (result.isConfirmed) {
+                        swalWithBootstrapButtons.fire({
+                        title: "Deleted!",
+                        text: "User has been deleted.",
+                        icon: "success"
+                        });
+
+                        const url = `/admin/user_List/delete_User/${userId}`
+                        const response = await axios.delete(url)
+                        const result = response.data
+                        
+                        if(result.success){
+                            userTr.remove()
+                        }else{
+                            errorMessage.innerHTML = "Failed"
+                            setTimeout(() => {
+                                errorMessage.innerHTML = "" 
+                            }, 4000);
+                        }
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire({
+                        title: "Cancelled",
+                        text: "Banner deletion cancelled",
+                        icon: "error"
+                        });
+                    }
+                });
+                                
+                        
 
     } catch (error) {
         console.log("user delete ",error.message);
     }
 })
 })
+
 </script>
+

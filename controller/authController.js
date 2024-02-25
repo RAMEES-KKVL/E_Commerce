@@ -140,16 +140,21 @@ exports.post_login = async (req,res)=>{
         const { email, password } = req.body
         const users = await signupModel.find()
         const userExist =  users.find( val => val.email === email)
-        const phone = userExist.phone
         
         if( userExist ){
             const comparePass = await bcrypt.compare(password, userExist.password)
             const verified = userExist.verified
             if ( comparePass ) {
                 if( verified === true ){
-                   return res.status(200).json({success: true, user: true})
+                    if( userExist.blocked === false ){
+                        req.session.user_id = userExist._id
+                        return res.status(200).json({success: true, user: true})
+                    }else{
+                        return res.status(299).json({success: false, error: "Couldn't login due to some secuirity issues...!"})
+                    }
                 }
                 else{
+                    const phone = userExist.phone
                     await client.verify.v2.services.create({friendlyName: "user verification"})
                     await client.verify.v2.services(verifySid).verifications.create({to:`+91${phone}`, channel: "sms"})
                     .then( otpverification => console.log(otpverification.status))
@@ -376,6 +381,7 @@ exports.admin_post_login = async (req,res)=>{
 
             if(comparePass){
                 if(verified === true){
+                    req.session.admin_id = adminExist._id
                     return res.status(200).json({ success:true, admin:true })
                 }else{
                     return res.status(200).json({success:true, verification:true, email:email})

@@ -5,8 +5,8 @@
 
     <!-- LOGIN REMINDER -->
 
-    <div style="" class="login_to_view">
-        <div class="log_frame">
+    <div style=" <%= userExist ? 'display:none' : 'display:block' %>" class="login_to_view">
+        <div class="log_frame" style="display: flex; align-items: center; justify-content: center;">
             <h3>PLEASE LOG IN</h3>
             <p>Login to view items in your WISHLIST.</p>
             <img src="#" class="cart_png" alt="">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="content wishlist_content">
-        <div class="my_wishlist_text">
+        <div class="my_wishlist_text" style="<%= wishlist && wishlist.products.length > 0 ? 'display:block' : 'display:none' %>">
             My Wishlist 
             <span class="wish_list_items">
                 <span class="wish_count"> 
@@ -28,7 +28,12 @@
 
             <!-- YOUR WISHLIST IS EMPTY -->
 
-            <div style="" class="cart_is_empty">
+            <div style="<%= (()=>{
+                const list = wishlist ? wishlist.products : [];
+                return list.length == 0 ? 'display:block' : 'display:none'
+                 })() %>" 
+                 class="cart_is_empty">
+
                 <div class="empty_frame">
                     <img src="#" class="cart_empty_png" alt="">
                     <h3>Your Wishlist is Empty</h3>
@@ -38,29 +43,34 @@
 
 
              <!-- WISHLIST  -->
-        
-            <div class="product_frame product">
-                <div class="top">
-                    <img src="#" style="width: 10rem; height: 13em;" alt="">
-                    <button class="remove_wish_btn">
-                        <i class="bi bi-x-circle"></i>
-                    </button>
-                </div>
 
-                <div class="center">
-                    <p class="product_name"> Productname </p>
-                    <div class="price_div">
-                        <p class="old_price"><i class="bi bi-currency-rupee"></i>oldprice</p>
-                        <p class="new_price"><i class="bi bi-currency-rupee"></i>newprice</p>
+            <% wishlistProducts.forEach(product =>{ %>
+                <div id="wish_pic_remove<%= product.productId._id %>" class="product_frame product" style="height:30rem; <%= (()=>{
+                    const list = wishlist ? wishlist.products : [];
+                    return list.length > 0 ? 'display:block' : 'display:none'
+                    })() %>" onclick="productView(event,'<%= product.productId._id %>')">
+                    <div class="top">
+                        <img src="/uploads/product/<%= product.productId.productImage[0] %>" style="width: 10rem; height: 13em;" alt="">
+                        <button class="remove_wish_btn" onclick="wishDelete(event,'<%= product.productId._id %>')">
+                            <i class="bi bi-x-circle"></i>
+                        </button>
                     </div>
-                </div>
-                <div class="bottom">
-                    <button class="addto_cart_btn">
-                        MOVE TO CART
-                    </button>
-                </div>
-            </div>
 
+                    <div class="center">
+                        <p class="product_name"> <%= product.productId.productName %> </p>
+                        <div class="price_div">
+                            <p class="old_price"><i class="bi bi-currency-rupee"></i><%= product.productId.price %></p>
+                            <p class="new_price"><i class="bi bi-currency-rupee"></i><%= product.productId.price - product.productId.discount %></p>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <button class="addto_cart_btn">
+                            MOVE TO CART
+                        </button>
+                    </div>
+                    <div id="error" style="color: red;"></div>
+                </div>
+            <% }) %>
         </div>
     </div>
 
@@ -69,3 +79,23 @@
 
 </div>
 <%- include('../../end.ejs') %>
+
+<script src="/js/common.js"></script>
+<script>
+
+    async function wishDelete(event, productId){
+        event.stopPropagation()
+        try {
+            const response = await axios.delete(`/wishlist/delete_Item?productId=${productId}`)
+            const result = response.data
+
+            if(result.success){
+                document.getElementById("wish_pic_remove"+productId).remove()
+            }else{
+                document.getElementById("error").innerHTML = "Couldn't delete wishlist item"
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+</script>

@@ -22,6 +22,40 @@ exports.admin_get_userList = async (req,res)=>{
 }
 
 
+exports.admin_block_userList = async (req,res)=>{
+    try {
+        const userId = req.query.user_id
+        const user = await signupModel.findOne({_id:userId})
+
+        if(user.blocked){
+            await signupModel.findOneAndUpdate(
+                {
+                    _id:userId
+                },
+                {$set : 
+                    {
+                        blocked : false
+                    }
+                }
+            )
+        }else{
+            await signupModel.findOneAndUpdate(
+                {
+                    _id:userId
+                },
+                {$set : 
+                    {
+                        blocked : true
+                    }
+                }
+            )
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 
 exports.admin_delete_user = async (req,res)=>{
     try {
