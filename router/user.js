@@ -46,6 +46,8 @@ router.get("/subcategory",userRouterWeb.get_subcategory)
 
 
 router.get("/cart",cartController.get_cart)
+router.patch("/cart/add_Item",cartController.patch_cart_Item)
+router.patch("/cart/updateQuantity",cartController.patch_cart_quantity)
 router.delete("/cart/delete_Item",cartController.delete_cart_Item)
 
 

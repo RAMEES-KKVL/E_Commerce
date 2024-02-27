@@ -15,6 +15,7 @@
     </div>
 
     <div class="content wishlist_content">
+        
         <div class="my_wishlist_text" style="<%= wishlist && wishlist.products.length > 0 ? 'display:block' : 'display:none' %>">
             My Wishlist 
             <span class="wish_list_items">
@@ -31,8 +32,8 @@
             <div style="<%= (()=>{
                 const list = wishlist ? wishlist.products : [];
                 return list.length == 0 ? 'display:block' : 'display:none'
-                 })() %>" 
-                 class="cart_is_empty">
+                })() %>" 
+                class="cart_is_empty">
 
                 <div class="empty_frame">
                     <img src="#" class="cart_empty_png" alt="">

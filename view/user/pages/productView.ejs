@@ -96,13 +96,13 @@
                             
                             <li>
                                 <div style="display: flex; gap: 1rem; align-items: center;">
-                                    <select  name="quantity" style="outline: none; padding: .3rem;">
-                                        <option value="1">Qty:1</option>
-                                        <option value="2">Qty:2</option>
-                                        <option value="3">Qty:3</option>
-                                        <option value="4">Qty:4</option>
-                                        <option value="5">Qty:5</option>
-                                    </select>
+                                    <!-- <select  name="quantity" style="outline: none; padding: .3rem;">
+                                        <option value="1">Qty : 1</option>
+                                        <option value="2">Qty : 2</option>
+                                        <option value="3">Qty : 3</option>
+                                        <option value="4">Qty : 4</option>
+                                        <option value="5">Qty : 5</option>
+                                    </select> -->
                                     <div class="stock_left">Hurry only a few LEFT</div>
                                     <div class="wish_btn_div">
                                         <button class="wish_btn">
@@ -133,9 +133,20 @@
                             <!-- =================================================================== -->
 
                             <li class="btn_li" style="display: flex; height: 3rem; justify-content: space-between; width: 90%;">
-                                <button type="button" class="addto_cart_btn addto_cart_btn">
-                                    ADD TO CART
-                                    <i class="bi bi-plus-lg"></i>
+                                <button type="button" class="addto_cart_btn addto_cart_btn<%= product._id %>" onclick="addtoCart(event,'<%= product._id %>')">
+                                    <%= (()=>{
+                                        const productId = product._id
+                                        const listArray = cart ? cart.products : []
+                                        const exist = listArray.some(product => product.productId.equals(productId))
+                                        return exist ? 'GO TO CART' : 'ADD TO CART'
+                                    })() %>
+                                    <i class="bi add_toCart_plus<%= product._id %> <%= (()=>{
+                                            const productId = product._id
+                                            const listArray = cart ? cart.products : []
+                                            const exist = listArray.some(product => product.productId.equals(productId))
+                                            return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                                        })() %>">
+                                    </i>
                                 </button>
                                 <button type="button">BUY NOW</button>
                             </li>
@@ -154,29 +165,48 @@
 
             <div class="product_top">RELATED PRODUCTS</div>
             <div class="product_bottom">
-               <div class="product_frame_grid">
-                   <div class="top">
-                       <button class="wish_btn_related">
-                           <i class="bi wish_related_pro_icon wish_icon bi-heart"></i>
-                        </button>
-                        <img src="#" style="width: 85%; height: 90%;" alt="">
+                <% relatedProducts.forEach(relatedProduct =>{ %>
+                <div class="product_frame_grid" onclick="productView(event,'<%= relatedProduct._id %>')">
+                    <div class="top">
+                        <button class="wish_btn" onclick="wishlistUpdate(event,'<%= relatedProduct._id %>')">
+                            <i class="bi wishlist_heart<%= relatedProduct._id %> <%= (()=>{
+                                  const listArray = wishlist ? wishlist.products : []
+                                  const productId = relatedProduct._id;
+                                  const exist = listArray.some(product => product.productId.equals(productId))
+                                  return exist ? 'bi-heart-fill' : 'bi-heart'
+                               })() %>">
+                            </i>
+                         </button>
+                        <img src="/uploads/product/<%= relatedProduct.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                     </div>
                     <div class="center">
                         <div class="name_div">
-                            <p class="product_name">Productname</p>
+                            <p class="product_name"><%= relatedProduct.productName %></p>
                         </div>
                         <div class="price_div">
-                            <p class="old_price"><i class="bi bi-currency-rupee"></i>oldprice</p>
-                            <p class="new_price"><i class="bi bi-currency-rupee"></i>newprice</p>
+                            <p class="old_price"><i class="bi bi-currency-rupee"></i><%= relatedProduct.price %></p>
+                            <p class="new_price"><i class="bi bi-currency-rupee"></i><%= relatedProduct.price - relatedProduct.discount %></p>
                         </div>
                     </div>
                     <div class="bottom">
-                        <button class="addto_cart_btn addto_cart_btn">
-                            ADD TO CART 
-                            <i class="bi bi-plus-lg"></i>
+                        <button class="addto_cart_btn addto_cart_btn<%= relatedProduct._id %>" onclick="addtoCart(event,'<%= relatedProduct._id %>')">
+                            <%= (()=>{
+                               const productId = relatedProduct._id
+                               const listArray = cart ? cart.products : []
+                               const exist = listArray.some(product => product.productId.equals(productId))
+                               return exist ? 'GO TO CART' : 'ADD TO CART'
+                            })() %>
+                            <i class="bi add_toCart_plus<%= relatedProduct._id %> <%= (()=>{
+                                  const productId = relatedProduct._id
+                                  const listArray = cart ? cart.products : []
+                                  const exist = listArray.some(product => product.productId.equals(productId))
+                                  return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                               })() %>">
+                            </i>
                         </button>
                     </div>
                 </div>
+                <% }) %>
             </div>
         </div>
 
@@ -204,33 +234,6 @@
 </div>
 <%- include('../../end.ejs') %>
 
-<script>
-
-  function imageClicked(image){
-    document.getElementById("product_image_img_view").src = `/uploads/product/${image}`
-  }
-</script>
-<script>
-
-    function nextImage(imageArray){
-      const imagerArray =JSON.parse(imageArray)
-      const indx =  imagerArray.indexOf(document.getElementById("product_image_img_view").src.split("/").pop())
-      if(indx != -1 && imagerArray[indx + 1] != undefined || null){
-          document.getElementById("product_image_img_view").src = `/uploads/product/${imagerArray[indx + 1]}`
-      }else{
-          document.getElementById("product_image_img_view").src = `/uploads/product/${imagerArray[0]}`
-      }
-    }
-</script>
-<script>
-  function prevImage(Array){
-    const imageArray =JSON.parse(Array)
-    const indx =  imageArray.indexOf(document.getElementById("product_image_img_view").src.split("/").pop())
-    if(indx != -1 && imageArray[indx - 1] != undefined || null){
-        document.getElementById("product_image_img_view").src = `/uploads/product/${imageArray[indx - 1]}`
-    }else{
-        document.getElementById("product_image_img_view").src = `/uploads/product/${imageArray[imageArray.length - 1]}`
-    }
-  }
-  
-</script>
+<script src="/js/user/cart.js"></script>
+<script src="/js/user/wishlist.js"></script>
+<script src="/js/common.js"></script>

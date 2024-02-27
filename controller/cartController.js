@@ -1,11 +1,85 @@
 const { default: mongoose } = require("mongoose");
 const wishlistModel = require("../model/wishlistModel")
+const cartModel = require("../model/cartModel")
 
 
 
 exports.get_cart = async (req,res)=>{
     try {
-        res.render("user/pages/cart")
+        if(req.session){
+            const userId = req.session.user_id 
+            const cart = await cartModel.findOne({userId})
+            const cartProductList = await cartModel.findOne({userId}).populate('products.productId')
+            const cartProducts = cartProductList ? cartProductList : {products:[]}
+            res.render("user/pages/cart", {userId, cart, cartProducts})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+exports.patch_cart_quantity = async (req,res)=>{
+    try {
+        const productId = req.query.product_id
+        const {value} = req.body
+        const updated = await cartModel.findOneAndUpdate(
+            {userId:req.session.user_id, "products.productId" : productId},
+            {$set : 
+                {"products.$.quantity" : value}
+            },
+            {new : true}
+        )
+        if(updated){
+            return res.status(200).json({success : true})
+        }else{
+            return res.status(200).json({success : true})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+exports.patch_cart_Item = async (req,res)=>{
+    try {
+        const user = req.session.user_id
+        const product =  req.query.product_id
+        const userId = new mongoose.Types.ObjectId(user)
+        const productId = new mongoose.Types.ObjectId(product)
+        
+        if(user){
+            const cartExist = await cartModel.findOne({userId})
+            if(cartExist){
+                const productExist = cartExist.products.some(product => product.productId.equals(productId))
+                if(productExist){
+                    return res.status(270).json({success: false, gotoCart: true})
+                }else{
+                    await cartModel.updateOne(
+                        {userId},
+                        {$push : {
+                            products : [
+                                {productId, quantity : 1}
+                            ]
+                        }}
+                    )
+                    return res.status(200).json({success: true})
+                }
+            }else{
+                const newSchema = new cartModel({
+                    userId,
+                    products : [
+                        {productId, quantity: 1}
+                    ]
+                })
+                await newSchema.save()
+                return res.status(200).json({success: true})
+            }
+        }else{
+            return res.status(299).json({success: false, noUser: true})
+        }
     } catch (error) {
         console.log(error);
     }
@@ -15,7 +89,28 @@ exports.get_cart = async (req,res)=>{
 
 
 
-exports.delete_cart_Item = (req,res)=>{}
+
+exports.delete_cart_Item = async (req,res)=>{
+    try {
+        const productId = req.query.product_id
+        const  userId = req.session.user_id
+
+        const deleted = await cartModel.updateOne(
+            {userId},
+            {$pull : {
+                    products : {productId}
+                }
+            }
+        )
+        if(deleted){
+            return res.status(200).json({success : true})
+        }else{
+            return res.status(290).json({success : false})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
@@ -56,28 +151,29 @@ exports.patch_wishlist_Item = async (req,res)=>{
                     await wishlistModel.updateOne(
                         {userId : userId1},
                         {$pull : {
-                            products : { productId:productId1 }
+                            products : 
+                                { productId:productId1 }
                         }
                     })
-                    console.log("wishPull");
                     return res.status(200).json({success: true, wishPull: true})
                 }else{
                     await wishlistModel.updateOne(
                         {userId : userId1},
                         {$push : {
-                            products :[{ productId:productId1 }]
+                            products :
+                                { productId:productId1 }
                         }
                     })
-                    console.log("wishPush");
                     return res.status(200).json({success: true, wishPush: true})
                 }
             }else{
                 const newSchema = new wishlistModel({
                     userId:userId1,
-                    products : [{productId:productId1}]
+                    products : [
+                        {productId : productId1}
+                    ]
                 })
-                newSchema.save()
-                console.log("wishAdded");
+                await newSchema.save()
                 return res.status(200).json({success: true, wishAdded: true})
             }
         }else{
@@ -105,11 +201,10 @@ exports.delete_wishlist_Item = async (req,res)=>{
                 products : {productId}
             }
         })
-        console.log("wishPull");
         if(deleted){
-            res.status(200).json({success : true})
+            return res.status(200).json({success : true})
         }else{
-            res.status(290).json({success : false})
+            return res.status(290).json({success : false})
         }
     } catch (error) {
         console.log(error);

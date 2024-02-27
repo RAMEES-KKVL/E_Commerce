@@ -2,6 +2,7 @@ const productModel = require("../model/productModel")
 const bannerModel = require("../model/bannerModel")
 const categoryModel = require("../model/categoryModel")
 const wishlistModel = require("../model/wishlistModel")
+const cartModel = require("../model/cartModel")
 
 
 
@@ -18,7 +19,8 @@ exports.get_home = async (req,res)=>{
         const Pants = await productModel.find({subCategory:"Pants"})
         const wishlist = await wishlistModel.findOne({userId})
         const categories = await categoryModel.find()
-        res.render("user/pages/userHome", {Tshirts, Shirts, Shoes, Sarees, Tops, Pants, wishlist, categories})
+        const cart = await cartModel.findOne({userId})
+        res.render("user/pages/userHome", {Tshirts, Shirts, Shoes, Sarees, Tops, Pants, wishlist, categories, cart})
     } catch (error) {
         console.log(error);
     }
@@ -32,7 +34,10 @@ exports.get_product = async (req,res)=>{
     try {
         const id = req.query.product_id
         const product = await productModel.findOne({_id:id})
-        res.render("user/pages/productView", {product})
+        const cart = await cartModel.findOne({userId : req.session.user_id})
+        const relatedProducts = await productModel.find({subCategory : product.subCategory})
+        const wishlist = await wishlistModel.findOne({userId : req.session.user_id})
+        res.render("user/pages/productView", {product, cart, relatedProducts, wishlist})
     } catch (error) {
         console.log(error);
     }
@@ -66,7 +71,8 @@ exports.get_category = async (req,res)=>{
         const category = req.query.category_name
         const categoryProducts = await productModel.find({category: category})
         const wishlist = await wishlistModel.findOne({userId: req.session.user_id})
-        res.render("user/pages/productViewByCategory", {categories, categoryProducts, wishlist})
+        const cart = await cartModel.findOne({userId: req.session.user_id})
+        res.render("user/pages/productViewByCategory", {categories, categoryProducts, wishlist, cart})
     } catch (error) {
         console.log(error);
     }
@@ -82,7 +88,8 @@ exports.get_subcategory = async (req,res)=>{
         const products = await productModel.find({subCategory})
         const categories = await categoryModel.find()
         const wishlist = await wishlistModel.findOne({userId: req.session.user_id})
-        res.render("user/pages/productViewBysubCategory", {categories, products, wishlist})
+        const cart = await cartModel.findOne({userId: req.session.user_id})
+        res.render("user/pages/productViewBysubCategory", {categories, products, wishlist, cart})
     } catch (error) {
       console.log(error);  
     }
