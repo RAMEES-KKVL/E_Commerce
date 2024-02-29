@@ -3,9 +3,7 @@ const nodemailer = require("nodemailer")
 const myEmail = process.env.myEmail
 const myPassword = process.env.myPassword
 
-
 const emailFunction = (email,otp)=> {
-
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -28,10 +26,7 @@ const emailFunction = (email,otp)=> {
         } else {
           console.log('Email sent: ' + info.response);
         }
-      });
-
-              
-        
+      });   
     }
    
  module.exports = emailFunction

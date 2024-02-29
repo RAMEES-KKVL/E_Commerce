@@ -11,89 +11,92 @@
             <div class="address_frame">
                 <div class="pro_top">
                     <h3>Profile Details</h3>
-                    <button  style=""> Edit Profile </button>
+                    <button  style="<%= userProfile ? 'display:block' : 'display:none' %>" id="edit_profile_btn" onclick="editProfile(event,'<%= signupData._id %>')"> Edit Profile </button>
                 </div>
-                <div class="form_frame">
-                    <form method="post" id="form" spellcheck="false" enctype="multipart/form-data">
+                <div class="form_frame" style="pointer-events: <%= userProfile ? 'none' : 'all' %>" >
+                    <form id="user_profile_form" spellcheck="false">
                         <div class="top">
                             <div class="top_left">
                                 <label for="username">User Name</label>
-                                <input type="text" style=""  value="">
+                                <input type="text" style="" id="username" name="username" value="<%= signupData.username %>">
                                 <div style="display: flex; gap: 1rem; width: 96%; padding: .5rem 0;">
                                     <span style="display: flex; flex-direction: column; gap: .2rem; width: 50%;">
                                         <label for="firstname" >First Name</label>
-                                        <input type="text" value="" name="firstname" style="width: 100%;" >
+                                        <input type="text" value="<%= userProfile ? userProfile.firstname : '' %>" id="firstname" name="firstname" style="width: 100%;" >
                                     </span>
                                     <span style="display: flex; flex-direction: column; gap: .2rem;  width: 50%;">
                                         <label for="lastname">Last Name</label>
-                                        <input  value="" type="text" name="lastname" style="width: 110%; padding-left: 1rem;" >
+                                        <input  value="<%= userProfile ? userProfile.lastname : '' %>" type="text" id="lastname" name="lastname" style="width: 110%; padding-left: 1rem;" >
                                     </span>
                                 </div>
                                 <label for="email">Email</label>
-                                <input style="" value="" type="text" >
+                                <input style="" id="email" name="email" type="text" value="<%= signupData.email %>">
                             </div>
                             <div class="top_right">
-                                <div class="img_div"><img src="" id="imagePreview" class="product_img" alt=""></div>
-                                <span style="display: flex; flex-direction: column; gap: .2rem;  width: 25%;">
-                                <div class="file_div" style="">
-                                    <span class="choose_file"> CHOOSE </span>
-                                    <input type="file" name="profileimg" class="input_file">
+                                <div class="img_div">
+                                    <img src="/uploads/profile/<%= userProfile ? userProfile.profileImage : '' %>" id="imagePreview" class="product_img" alt="">
                                 </div>
+                                <span style="display: flex; flex-direction: column; gap: .2rem;  width: 25%;">
+                                <div class="file_div" style="<%= userProfile ? 'display:none' : 'display:block' %>" id="choose_img_btn">
+                                    <span class="choose_file"> CHOOSE </span>
+                                    <input type="file" name="profileImage" class="input_file" onchange="previewImage(this)">
+                                </div>
+                                </span>
                             </div>
                         </div>
+                        
                         <div class="bottom" style="padding: 0 1rem;">
                             <div style="display: flex; gap: 1rem; width: 96%; padding: .5rem 0;">
                                 <span style="display: flex; flex-direction: column; gap: .2rem; margin-top: .5rem; width: 55%;">
                                     <label for="dob">Mobile</label>
-                                    <input  style="" value="" type="number" name="mobilenum">
+                                    <input  style="" value="<%= signupData.phone %>" type="number" id="mobile" name="mobile">
                                 </span>
                                 <span style="display: flex; flex-direction: column; gap: .2rem; margin-top: .5rem; width: 40%;">
                                     <label for="dob">DOB</label>
-                                    <input  style="" value="" type="date" name="DOB">
+                                    <input  style="" value="<%= userProfile ? userProfile.DOB.toISOString().substring(0,10) : '' %>" type="date" id="DOB" name="DOB">
                                 </span>
                             </div>
                             <div style="display: flex; gap: 1rem; width: 94%; margin-top: .4rem;">
                                 <span style="display: flex; flex-direction: column; gap: .2rem; width: 27%;">
                                     <label for="country">Country</label>
-                                    <input  value="" type="text" name="country" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
+                                    <input  value="<%= userProfile ? userProfile.country : '' %>" type="text" id="country" name="country" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
                                 </span>
                                 <span style="display: flex; flex-direction: column; gap: .2rem;  width: 25%;">
                                     <label for="state">State</label>
-                                    <input  value="" type="text" name="state" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
+                                    <input  value="<%= userProfile ? userProfile.state : '' %>" type="text" id="state" name="state" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
                                 </span>
                                 <span style="display: flex; flex-direction: column; gap: .2rem;  width: 25%;">
                                     <label for="district">District</label>
-                                    <input  value="" type="text" name="district" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
+                                    <input  value="<%= userProfile ? userProfile.district : '' %>" type="text" id="district" name="district" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
                                 </span>
                                 <span style="display: flex; flex-direction: column; gap: .2rem; width: 19%;">
-                                    <label for="zip">Zip</label>
-                                    <input  value="" type="number" maxlength="8" name="zip" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
+                                    <label for="zip">Pin</label>
+                                    <input  value="<%= userProfile ? userProfile.zip : '' %>" type="number" maxlength="8" id="zip" name="zip" style="font-family: 'Poppisn',sans-serif; height: 2.5rem; outline: none; font-size: .9rem; width: 100%; padding: .4rem;">
                                 </span>
                             </div>
                             <span style="display: flex; flex-direction: column; gap: .2rem; margin-top: .5rem; width: 94%;">
                                 <label for="landmark">Landmark</label>
-                                <input style="" value="" type="text" name="landmark">
+                                <input style="" value="<%= userProfile ? userProfile.landmark : '' %>" type="text" id="landmark" name="landmark">
                             </span>
                             <span style="display: flex; flex-direction: column; gap: .2rem; margin-top: .5rem;">
                                 <label for="address">Address</label>
-                                <textarea name="address" style="height:4rem;"  id="text_area"></textarea>
+                                <textarea name="address" style="height:4rem;"  id="text_area" value=""><%= userProfile ? userProfile.address : '' %></textarea>
                             </span>
-                            <p class="error_msg"></p>
+                            <div id="error_message" style="color: brown; margin-left: 1.8rem;"></div>
                             <span style="display: flex; flex-direction: column; gap: .2rem; margin-top: .5rem;">
-                                <button style="display: block;" type="button" class="update_profile_btn">SAVE PROFILE</button>
+                                <button style="<%= userProfile ? 'display:none' : 'display:block' %>" type="button" class="update_profile_btn" id="addProfile_btn">ADD PROFILE</button>
                             </span>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
-
-        
+     
     </div>
 
     <%- include('../common/footer.ejs') %>
 
 </div>
 <%- include('../../end.ejs') %>
+
+<script src="/js/user/profile.js"></script>

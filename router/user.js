@@ -4,6 +4,7 @@ const router = express.Router()
 const userRouter = require("../controller/authController")
 const userRouterWeb = require("../controller/userController")
 const cartController = require("../controller/cartController")
+const profileUpload = require("../middlewares/multerProfile")
 
 
 
@@ -63,14 +64,14 @@ router.delete("/wishlist/delete_Item",cartController.delete_wishlist_Item)
 
 
 router.get("/account",userRouterWeb.get_profile)
-router.post("/account/profile",userRouterWeb.post_profile)
-
-
+router.post("/account/profile", profileUpload.single("profileImage"), userRouterWeb.post_profile)
 
 
 
 router.get("/account/profile_Edit",userRouterWeb.get_edit_address)
-router.post("/account/profile_Edit",userRouterWeb.post_edit_address)
+router.patch("/account/profile_Edit", profileUpload.single("profileImage"), userRouterWeb.patch_edit_address)
+
+
 
 router.get("/account/orders",userRouterWeb.get_orders)
 

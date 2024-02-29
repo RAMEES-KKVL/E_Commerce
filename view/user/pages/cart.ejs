@@ -8,7 +8,7 @@
      <!-- LOGIN REMINDER -->
 
     <div style="<%= userId ? 'display:none' : 'display:block' %>" class="login_to_view">
-        <div class="log_frame">
+        <div class="log_frame" style="display: flex; justify-content: center;">
             <h3>PLEASE LOG IN</h3>
             <p>Login to view items in your CART</p>
             <img src="#" class="cart_png" alt="">
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="content cart_content">    
+    <div class="content cart_content" style="<%= !userId ? 'display:none' : 'display:block' %>">    
 
         
         <!-- YOU CART IS EMPTY -->

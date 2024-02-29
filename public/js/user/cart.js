@@ -28,6 +28,7 @@ async function deleteCartItem(event, productId){
 
         if(result.success){
             document.querySelector(`.product${productId}`).remove()
+            window.location.reload()
         }else{
             document.getElementById("error").innerHTML = "Couldn't delete cart item"
         }
