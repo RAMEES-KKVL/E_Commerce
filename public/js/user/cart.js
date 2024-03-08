@@ -1,9 +1,10 @@
 async function addtoCart(event, productId){
     event.stopPropagation()
     try {
-        const response = await axios.patch(`/cart/add_Item?product_id=${productId}`)
+        const productSizeElement = document.getElementById("product_Size");
+        const size = productSizeElement ? productSizeElement.value : 'S';
+        const response = await axios.patch(`/cart/add_Item?product_id=${productId}&size=${size}`)
         const result = response.data
-
         if(!result.success){
             if(result.gotoCart){
                 window.location.href = "/cart"
@@ -17,6 +18,8 @@ async function addtoCart(event, productId){
         console.log(error);
     }
 }
+
+
 
 
 async function deleteCartItem(event, productId){
@@ -45,7 +48,6 @@ async function selectQuantity(event, productId){
         try {
             element.preventDefault()
             const value = element.target.value
-            console.log(value);
             const response = await axios.patch(`/cart/updateQuantity?product_id=${productId}`,{value})
             const result = response.data
 
@@ -55,6 +57,5 @@ async function selectQuantity(event, productId){
         } catch (error) {
             console.log(error);
         }
-    });
-    
+    });   
 }

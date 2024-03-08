@@ -11,6 +11,10 @@ const cartElements = {
     quantity : {
         type : Number,
         _id : false
+    },
+    size : {
+        type : String,
+        _id : false
     }
 }
 

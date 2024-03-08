@@ -36,7 +36,8 @@ router.post("/reset_Password",userRouter.post_reset_Password)
 
 router.get("/home",userRouterWeb.get_home)
 
-router.get("/product",userRouterWeb.get_product)
+router.get("/all_Products",userRouterWeb.get_allProducts)
+
 
 router.get("/category",userRouterWeb.get_category)
 router.get("/subcategory",userRouterWeb.get_subcategory)
@@ -71,13 +72,25 @@ router.post("/account/profile", profileUpload.single("profileImage"), userRouter
 router.get("/account/profile_Edit",userRouterWeb.get_edit_address)
 router.patch("/account/profile_Edit", profileUpload.single("profileImage"), userRouterWeb.patch_edit_address)
 
+router.post("/add_deliveryAddress", userRouterWeb.post_add_deliveryAddress)
 
 
 router.get("/account/orders",userRouterWeb.get_orders)
 
-// router.get("/orders",userRouter)
+
+
+
+
+router.get("/product",userRouterWeb.get_product)
+router.post("/product",userRouterWeb.post_product)
+
+
+
 
 router.get("/checkout",userRouterWeb.get_checkout)
+router.patch("/checkout/updateQuantity",userRouterWeb.patch_checkout_quantity)
+router.patch("/checkout/updateSize",userRouterWeb.patch_checkout_size)
+router.delete("/checkout_delete",userRouterWeb.delete_checkout)
 router.post("/checkout",userRouterWeb.post_checkout)
 
 router.get("/payment",userRouterWeb.get_payment)

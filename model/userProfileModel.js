@@ -31,7 +31,7 @@ const userProfileSchema = ({
         required : true
     },
     zip : {
-        type : String,
+        type : Number,
         required : true
     },
     landmark : {
@@ -44,7 +44,8 @@ const userProfileSchema = ({
     },
     profileImage : {
         type : String
-    }
+    },
+    deliveryAddresses : []
 })
 
 module.exports = new mongoose.model("user-profile-datas", userProfileSchema)

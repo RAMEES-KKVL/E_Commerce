@@ -47,6 +47,7 @@ exports.patch_cart_Item = async (req,res)=>{
     try {
         const user = req.session.user_id
         const product =  req.query.product_id
+        const size = req.query.size
         const userId = new mongoose.Types.ObjectId(user)
         const productId = new mongoose.Types.ObjectId(product)
         
@@ -61,7 +62,7 @@ exports.patch_cart_Item = async (req,res)=>{
                         {userId},
                         {$push : {
                             products : [
-                                {productId, quantity : 1}
+                                {productId, quantity : 1, size}
                             ]
                         }}
                     )
@@ -71,7 +72,7 @@ exports.patch_cart_Item = async (req,res)=>{
                 const newSchema = new cartModel({
                     userId,
                     products : [
-                        {productId, quantity: 1}
+                        {productId, quantity: 1, size}
                     ]
                 })
                 await newSchema.save()

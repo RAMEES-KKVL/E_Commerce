@@ -16,8 +16,7 @@
         </div>
     </div>
 
-    <div class="content cart_content" style="<%= !userId ? 'display:none' : 'display:block' %>">    
-
+    <div class="content cart_content" style="<%= !userId ? 'display:none' : 'display:block' %> display: flex;">    
         
         <!-- YOU CART IS EMPTY -->
         <div style="<%= (()=>{
@@ -32,7 +31,7 @@
         </div>
             
             
-        <div class="product_frame" style="margin-top: 0;display: flex; justify-content: start;">
+        <div class="product_frame" style="margin-top: 0; ">
             <!-- CART  -->
             
             <% cartProducts.products.forEach(product =>{ %>
@@ -123,7 +122,7 @@
                 </p>
             </div>
             <div class="btn_div">
-                <button class="place_order_btn">PLACE ORDER</button>
+                <button class="place_order_btn" onclick="" id="cart_product_buy">PLACE ORDER</button>
             </div>
 
         </div>
@@ -139,3 +138,21 @@
 
 <script src="/js/common.js"></script>
 <script src="/js/user/cart.js"></script>
+
+<script>
+
+    document.getElementById("cart_product_buy").addEventListener("click", async (event)=>{
+        event.preventDefault()
+        try {
+            const response = await axios.post("/product")
+            const result = response.data
+
+            if(result.success){
+                window.location.href = '/checkout'
+            } 
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
+</script>

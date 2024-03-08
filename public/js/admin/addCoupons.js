@@ -8,8 +8,9 @@ document.getElementById("coupon_create_button").addEventListener("click", async 
         const maxOrderAmount = document.getElementById("maxOrderAmount").value
         const startingDate = document.getElementById("startingDate").value
         const endingDate = document.getElementById("endingDate").value
+        const availability = document.getElementById("availability").value
 
-        if(!couponName || !couponDiscount || !minOrderAmount || !maxOrderAmount || !startingDate || !endingDate){
+        if(!couponName || !couponDiscount || !minOrderAmount || !maxOrderAmount || !startingDate || !endingDate || !availability){
             document.getElementById("errorMessage").innerHTML = "Please provide required datas"
             setTimeout(() => {
                 document.getElementById("errorMessage").innerHTML = ""
@@ -33,6 +34,7 @@ document.getElementById("coupon_create_button").addEventListener("click", async 
                 document.getElementById("maxOrderAmount").value = ""
                 document.getElementById("startingDate").value = ""
                 document.getElementById("endingDate").value = ""
+                document.getElementById("availability").value = ""
                 
                 Swal.fire({
                     position: "center",

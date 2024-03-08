@@ -1,0 +1,252 @@
+<%- include('../common/header.ejs') %>
+
+<div class="wrapper checkout_wrapper">
+
+   <%- include('../common/topnav.ejs') %>
+
+    <div class="content checkout_content">
+        <div class="checkout_left">
+
+            <!-- ----------------------------------- -->
+
+            <div class="checkout_left_top">
+                <% checkoutProduct.forEach( product =>{ %>
+                <div class="product product<%= product.productId._id %>" onclick="">
+                    <div class="image_sec">
+                        <img src="/uploads/product/<%= product.productId.productImage[0] %>" style="width: 8rem;" alt="">
+                    </div>
+                    <div class="discription_sec">
+                        <p class="product_name"><%= product.productId.productName %> </p>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <select name="quantity" style="outline: none; padding: .3rem;" class="quantity_count<%= product.productId._id %>" onclick="selectQuantity(event, '<%= product.productId._id %>')" >
+                                <option value="<%= product.quantity %>"><%= product.quantity %></option>
+                                <% for(i = 1; i<= product.productId.stock; i++){ %>
+                                    <% if(i == product.quantity ){ continue } %>
+                                        <option value="<%= i %>"><%= i %></option>
+                                <% } %>
+                            </select>
+                            <div class="stock_left"><%= product.productId.stock %> stock Left </div>
+                        </div>
+                        <div style="display: flex; gap: .7rem; align-items: center;">
+                            <p class="old_price">
+                                <i class="bi bi-currency-rupee"></i>
+                                <%= product.productId.price * product.quantity %>
+                            </p>
+                            <p class="new_price">
+                                <i class="bi bi-currency-rupee"></i>
+                                <%= (product.productId.price - product.productId.discount) * product.quantity %>
+                            </p>
+                            <!-- <p class="discount"> </p> -->
+                        </div>
+                        <div class="color_size">
+                            <div class="size_li">
+                                <p style="font-family: 'Poppins',sans-serif; font-weight: 500;font-size: .98rem; color: black;">SIZE :</p>
+                                <!-- <span class="label_span" onclick="selectSize(event)"> -->
+                                    <!-- <input id=" size" value=" size" class="size" name="size" type="radio" >
+                                    <label for=" size" > size </label> -->
+                                    <!-- </span> -->
+                                    <select name="size" id="" class="size_select<%= product.productId._id %>" onclick="selectSize(event, '<%= product.productId._id %>')">
+                                        <option value="<%= product.size %>"><%= product.size %></option>
+                                    <% product.productId.size.forEach(size =>{ %>
+                                        <option value="<%= size %>"><%= size %></option>
+                                    <% }) %>
+                                    </select>
+                            </div>
+                            
+                            <!-- ------------------------------------- -->
+                            
+                            <div class="color_li">
+                                <p style="font-family: 'Poppins',sans-serif;color: black;font-size: .93rem;">COLOR :</p>
+                                <span style="background-color:<%= product.productId.colour %>" class="label_span_color" onclick="" >
+                                    <input  id="color" name="color" value="<%= product.productId.colour %>" type="radio" >
+                                    <label for="color" ></label>
+                                </span>
+                            </div>
+                        </div>
+                        <li style="display: flex; gap: .7rem; align-items: center; height: 2rem;">
+                            <div style="display: flex; align-items: center; font-family: 'sans-serif'; ">Return
+                                <i class="bi bi-check"></i>
+                                <i class="bi bi-x"></i>
+                            </div>
+                        </li>                     
+                    </div>
+                    <div class="delete_section">
+                        <div style="margin-bottom: 1rem;">
+                            <button onclick="deleteFromcheckout(event,'<%= product.productId._id %>')">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+
+            <!-- ----------------------------------- -->
+            
+            <div class="checkout_left_bottom">
+                <div class="checkouts_frame_bottom_frame checkouts_frame_bottom_payment">
+                    <h3>PAYMENT METHODS</h3>
+                    <div class="payment_divs"><div class="payment_icon"><img class="payment_logo_png" src="" alt=""></div><label for="upi">UPI</label><input id="upi" name="payment" type="radio"></div>
+                    <div class="payment_divs"><div class="payment_icon"><img class="payment_logo_png" src="" alt=""></div><label for="card">CARD</label><input id="card" name="payment" type="radio"></div>
+                    <div class="payment_divs"><div class="payment_icon"><img class="payment_logo_png" src="" alt=""></div><label for="cashondelivery">CASH ON DELIVERY</label><input id="cashondelivery" name="payment" type="radio"></div>
+                </div>
+                <div class="checkouts_frame_bottom_frame checkouts_frame_bottom_coupon">
+                    <h3>COUPON</h3> <div id="error_mssg" style="color: red;"></div>
+                    <div class="coupon_input_frame" coupons="<%= JSON.stringify(coupons) %>">
+                        <input type="text" id="custom_coupon_name">
+                        <button class="coupon_check_btn" onclick="customCoupon()">SELECT</button>
+                    </div>
+                    <ul class="coupon_ul">
+                        <% coupons.forEach(coupon =>{ %>
+                            <% if(coupon.availability == "AllUsers" && checkoutProduct.reduce((acc, value) => { return acc += (value.productId.price - value.productId.discount) * value.quantity}, 0) >= coupon.minOrderAmount && checkoutProduct.reduce((acc, value) => { return acc += (value.productId.price - value.productId.discount) * value.quantity}, 0) <= coupon.maxOrderAmount) { %>
+                                <li onclick="applyCoupon(event,'<%= coupon.couponDiscount %>','<%= coupon.couponName %>')"><%= coupon.couponName %><span>save <i class="bi bi-currency-rupee"></i><%= coupon.couponDiscount %></span></li>
+                            <% } %>
+                        <% }) %>
+                    </ul>
+                </div>
+
+                <div class="checkouts_frame_bottom_frame checkouts_frame_bottom_adress" style="overflow-y: auto;">
+                    <h3>SELECT ADDRESS</h3>
+                    <% address.forEach(deliveryAddress =>{ %>
+                        <div class="payment_divs select_adress_div">
+                            <input id="add1" name="payment" type="radio" value="<%= deliveryAddress.address %>" onclick="selectAddress(event, '<%= JSON.stringify(deliveryAddress) %>')">
+                            <label for="add1" style="overflow: auto;"><%= deliveryAddress.address ? deliveryAddress.address : '' %></label>
+                        </div>
+                    <% }) %>
+                </div> 
+            </div>
+        </div>
+        
+        <div class="checkout_right">
+            <div class="checkouts_frame checkout_adress_frame" style="pointer-events: none;">
+                <h3>ADDRESS</h3>
+                <div class="adress_frame">
+                    <div style="display: flex;justify-content: space-between; width: 100%;">
+                        <span style="display: flex; flex-direction: column;gap: .2rem; width: 50%;">
+                            <label for="firstname" >First Name</label>
+                            <input type="text"  value="<%= profileData ? profileData.firstname : '' %>"  name="firstname" style="width: 100%;" >
+                        </span>
+                        <span style="display: flex; flex-direction: column;gap: .2rem;  width: 48%;">
+                            <label for="lastname">Last Name</label>
+                            <input  type="text" value="<%= profileData ? profileData.lastname : '' %>" name="lastname" style="width: 100%; padding-left: 1rem" >
+                        </span>
+                    </div>
+                    <span style="display: flex; flex-direction: column;gap: .2rem;  width: 100%;">
+                        <label for="lastname">Mobile</label>  
+                        <input  type="text" value="<%= signupData ? signupData.phone : '' %>" name="mobilenum" style="width: 100%; padding-left: 1rem" >
+                    </span>
+                    <div style="display: flex;justify-content: space-between; width: 100%;">
+                        <span style="display: flex; flex-direction: column;gap: .2rem; width: 50%;">
+                            <label for="firstname" >Country</label>
+                            <input type="text" value="<%= profileData ? profileData.country : '' %>"  name="country" style="width: 100%;" >
+                        </span>
+                        <span style="display: flex; flex-direction: column;gap: .2rem;  width: 48%;">
+                            <label for="lastname">State</label>
+                            <input  type="text" value="<%= profileData ? profileData.state : '' %>" name="state" style="width: 100%; padding-left: 1rem" >
+                        </span>
+                    </div>  
+                    <div style="display: flex;justify-content: space-between; width: 100%;">
+                        <span style="display: flex; flex-direction: column;gap: .2rem; width: 78%;">
+                            <label for="firstname" >District</label>
+                            <input type="text" value="<%= profileData ? profileData.district : '' %>"  name="district" style="width: 100%;" >
+                        </span>
+                        <span style="display: flex; flex-direction: column;gap: .2rem;  width: 20%;">
+                            <label for="lastname">Pin</label>
+                            <input  type="text" value="<%= profileData ? profileData.zip : '' %>" name="zip" style="width: 100%; padding-left: 1rem" >
+                        </span>
+                    </div>  
+                    <span style="display: flex; flex-direction: column;gap: .2rem;  width: 100%;">
+                        <label for="lastname">Address</label>  
+                        <textarea name="address" class="adress_text_area"><%= profileData ? profileData.address : '' %></textarea>
+                    </span>
+                </div> 
+            </div>
+            <div class="checkouts_frame checkouts_frame_add_new_address">
+                <div class="add_new_adress">
+                    ADD NEW ADDRESS
+                    <button class="droup_right_btn" onclick="dropDown()">
+                        <i class="bi plus_btn bi-plus"></i>
+                    </button>
+                </div>
+                <form id="adrress_form" method="post" class="adress_form">
+                    <div class="adress_frame adrees_add_drop">
+                        <div style="display: flex;justify-content: space-between; width: 100%;">
+                            <span style="display: flex; flex-direction: column;gap: .2rem; width: 50%;">
+                                <label for="firstname" >First Name</label>
+                                <input type="text" id="newFirstname" name="firstname" style="width: 100%;" >
+                            </span>
+                            <span style="display: flex; flex-direction: column;gap: .2rem;  width: 48%;">
+                                <label for="lastname">Last Name</label>
+                                <input  type="text" id="newLastname" name="lastname" style="width: 100%; padding-left: 1rem" >
+                            </span>
+                        </div>
+                        <span style="display: flex; flex-direction: column;gap: .2rem;  width: 100%;">
+                            <label for="lastname">Mobile</label>  
+                            <input  type="number" id="newPhone" name="phone" style="width: 100%; padding-left: 1rem" >
+                        </span>
+                        <div style="display: flex;justify-content: space-between; width: 100%;">
+                            <span style="display: flex; flex-direction: column;gap: .2rem; width: 50%;">
+                                <label for="firstname">Country</label>
+                                <input type="text" id="newCountry"  name="country" style="width: 100%;" >
+                            </span>
+                            <span style="display: flex; flex-direction: column;gap: .2rem;  width: 48%;">
+                                <label for="lastname">State</label>
+                                <input  type="text" id="newState" name="state" style="width: 100%; padding-left: 1rem" >
+                            </span>
+                        </div>  
+
+                        <div style="display: flex;justify-content: space-between; width: 100%;">
+                            <span style="display: flex; flex-direction: column;gap: .2rem; width: 78%;">
+                                <label for="firstname" >District</label>
+                                <input type="text" id="newDistrict" name="district" style="width: 100%;" >
+                            </span>
+                            <span style="display: flex; flex-direction: column;gap: .2rem;  width: 20%;">
+                                <label for="lastname">Pin</label>
+                                <input  type="number" id="newPin" name="zip" style="width: 100%; padding-left: 1rem" >
+                            </span>
+                        </div>  
+          
+                        <span style="display: flex; flex-direction: column;gap: .2rem;  width: 100%;">
+                            <label for="lastname">Address</label>   
+                            <textarea name="address" id="newAddress" class="adress_text_area" style="height: 1%;"></textarea>
+                        </span>
+                        <p class="error_msg" id="newError_message"></p>
+                        <input class="add_new_btn" onclick="addNewAddress(event)" type="button" value="ADD" style="margin-bottom: 2rem;"> 
+                    </div>
+                </form>
+            </div>
+  
+            <div class="checkouts_frame checkout_total_price">
+                <h3>SUMMARY</h3>
+                <div class="summary_frame">
+                    <p>Subtotal 
+                        <span>
+                            <i class="bi bi-currency-rupee"></i>
+                            <span class="sub_total">
+                                <%= checkoutProduct.reduce((acc, value) => { return acc += (value.productId.price - value.productId.discount) * value.quantity}, 0) %>
+                            </span>
+                        </span>
+                    </p>
+                    <p>Shipping <span style="color: rgb(0, 160, 0);">FREE</span></p>
+                    <p>Coupon <span class="coupon_price">Nill</span></p>
+                    <p>Order Total 
+                        <span>
+                            <i class="bi bi-currency-rupee"></i>
+                            <span class="order_total">
+                                <%= checkoutProduct.reduce((acc, value) => { return acc += ((value.productId.price - value.productId.discount) * value.quantity) }, 0) %>
+                            </span>
+                        </span>
+                    </p>
+                    <button onclick="" class="proceed_btn">PROCEED</button>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+   <%- include('../common/footer.ejs') %>
+
+</div>
+
+<%- include('../../end.ejs') %>
+
+<script src="/js/user/checkout.js"></script>

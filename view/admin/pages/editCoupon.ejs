@@ -36,6 +36,14 @@
                                     <label for="endingDate">Ending Date</label>
                                     <input type="date" id="endingDate" name="endingDate" value="<%= coupon.endingDate %>">
                                 </div>
+                                <div class="form-group">
+                                    <label for="availability">Availability</label>
+                                    <select name="availability" id="availability">
+                                        <option value="<%= coupon.availability %>" selected><%= coupon.availability %></option>
+                                        <option value="LimitedUsers">Limited Users</option>
+                                        <option value="AllUsers"> All Users</option>
+                                    </select>
+                                </div>
 
                                 <div id="errorMessage" style="color: brown; margin-bottom: 1rem;"></div>
                                 <button type="submit" id="coupon_edit_button" coupon-id="<%= coupon._id %>">Edit Coupon</button>
@@ -64,10 +72,11 @@
             const couponDiscount = document.getElementById("couponDiscount").value.trim()
             const minOrderAmount = document.getElementById("minOrderAmount").value
             const maxOrderAmount = document.getElementById("maxOrderAmount").value
-            const startingDate = document.getElementById("startingDate").value.trim()
+            const startingDate = document.getElementById("startingDate").value
             const endingDate = document.getElementById("endingDate").value
+            const availability = document.getElementById("availability").value
 
-            if(!couponName || !couponDiscount || !minOrderAmount || !maxOrderAmount || !startingDate || !endingDate){
+            if(!couponName || !couponDiscount || !minOrderAmount || !maxOrderAmount || !startingDate || !endingDate || !availability){
                 document.getElementById("errorMessage").innerHTML = "Provide required datas"
                 setTimeout(() => {
                     document.getElementById("errorMessage").innerHTML = ""

@@ -105,7 +105,7 @@ exports.admin_get_addCoupon = (req,res)=>{
 
 exports.admin_post_addCoupon = async (req,res)=>{
     try {
-        const { couponName, couponDiscount, minOrderAmount, maxOrderAmount, startingDate, endingDate } = req.body
+        const { couponName, couponDiscount, minOrderAmount, maxOrderAmount, startingDate, endingDate, availability } = req.body
         const exist = await couponModel.findOne({couponName})
         
         if(exist){
@@ -117,7 +117,8 @@ exports.admin_post_addCoupon = async (req,res)=>{
                 minOrderAmount,
                 maxOrderAmount,
                 startingDate,
-                endingDate
+                endingDate,
+                availability
             })
             await newSchema.save()
             return res.status(200).json({ success: true })
@@ -126,6 +127,7 @@ exports.admin_post_addCoupon = async (req,res)=>{
         console.log(error); 
     }
 }
+
 
 exports.admin_edit_Coupon = async (req,res)=>{
     try {
@@ -137,9 +139,10 @@ exports.admin_edit_Coupon = async (req,res)=>{
     }
 } 
  
+
 exports.admin_patch_coupon = async (req,res)=>{
     try {
-        const {couponName, couponDiscount, minOrderAmount, maxOrderAmount, startingDate, endingDate} = req.body
+        const {couponName, couponDiscount, minOrderAmount, maxOrderAmount, startingDate, endingDate, availability} = req.body
         const couponId = req.query.couponId
         const couponUpdate = await couponModel.findOneAndUpdate(
             {_id:couponId},
@@ -149,7 +152,8 @@ exports.admin_patch_coupon = async (req,res)=>{
                 minOrderAmount,
                 maxOrderAmount,
                 startingDate,
-                endingDate
+                endingDate,
+                availability
             }})
 
         if(couponUpdate){

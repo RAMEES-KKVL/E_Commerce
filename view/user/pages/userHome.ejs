@@ -29,22 +29,23 @@
  
              <!-- ========================================================================================================= -->
  
- 
              <div class="banner">
-                <button class="prev_banner"><i class="bi banner_chevron bi-chevron-left"></i></button>
+               <% banners.forEach(banner =>{ %>
+               <button class="prev_banner"><i class="bi banner_chevron bi-chevron-left"></i></button>
                 
  
-                <div class="banner_sub_div">
-                <img src=""  style="width: 45%;">
-                <div class="banner_text_frame">
-                     <h2></h2>
-                     <h4></h4>
-                     <h5><i class="bi bi-currency-rupee"></i></h5>
-                </div>
-                </div>
+               <div class="banner_sub_div">
+               <img src="/uploads/banner/<%= banner.bannerImage %>"  style="width: 45%;">
+               <div class="banner_text_frame">
+                  <h2><%= banner.bannerName %></h2>
+                  <h4><%= banner.bannerHeading %></h4>
+                  <h5><i class="bi bi-currency-rupee"><%= banner.offerPrice %></i></h5>
+               </div>
+               </div>
  
                      
                 <button class="next_banner"><i class="bi banner_chevron bi-chevron-right"></i></button>
+                <% }) %>
              </div>
  
              <!-- ========================================================================================================= -->
@@ -52,12 +53,16 @@
                  <!-- ------------------------- CATEGORY --------------------------- -->
  
  
- 
-             <div class="category_div">
-                   <div class="category_frame"><div class="cat_img_div"><img class="cat_img" src="" alt=""><p></p></div></div>
-            
-                </div>
-                
+               <div class="category_div">
+                  <% categories.forEach(category =>{ %>
+                  <div class="category_frame">
+                     <div class="cat_img_div" onclick="window.location.href='category?category_name=<%= category.category %>'">
+                        <img class="cat_img" src="/uploads/category/<%= category.categoryImage %>" alt="">
+                        <p></p>
+                     </div>
+                  </div>
+                  <% }) %>
+               </div>
              
                 
                 

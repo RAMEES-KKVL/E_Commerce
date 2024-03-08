@@ -18,10 +18,17 @@ const schema = {
         required : true
     },
     startingDate : {
-        type : String,
+        type : Date,
         required : true
     },
     endingDate : {
+        type : Date,
+        required : true,
+        index : {
+            expires : 0
+        }
+    },
+    availability : {
         type : String,
         required : true
     }

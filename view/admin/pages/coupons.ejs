@@ -26,6 +26,7 @@
                                     <th>Maximum Amount</th>                                                                              
                                     <th>Starting Date</th>
                                     <th>Ending Date</th>
+                                    <th>Availability</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -39,8 +40,9 @@
                                         <td> <%= coupon.couponDiscount %> </td>
                                         <td> <%= coupon.minOrderAmount %> </td>
                                         <td> <%= coupon.maxOrderAmount %> </td>
-                                        <td> <%= coupon.startingDate %> </td>
-                                        <td> <%= coupon.endingDate %> </td>
+                                        <td> <%= coupon.startingDate.toDateString() %> </td>
+                                        <td> <%= coupon.endingDate.toDateString() %> </td>
+                                        <td> <%= coupon.availability %> </td>
                                         <td>
                                             <i class="bi bi-pencil-square" onclick="location.href= '/admin/coupons/edit_Coupon?couponId=<%= coupon._id %>'"></i>
                                         </td>

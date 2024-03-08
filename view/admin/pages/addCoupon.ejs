@@ -36,6 +36,14 @@
                                     <label for="endingDate">Ending Date</label>
                                     <input type="date" id="endingDate" name="endingDate">
                                 </div>
+                                <div class="form-group">
+                                    <label for="availability">Availability</label>
+                                    <select name="availability" id="availability">
+                                        <option value="" selected disabled>Select Availability</option>
+                                        <option value="LimitedUsers">Limited Users</option>
+                                        <option value="AllUsers"> All Users</option>
+                                    </select>
+                                </div>
 
                                 <div id="errorMessage" style="color: brown; margin-bottom: 1rem;"></div>
                                 <button type="submit" id="coupon_create_button">Create Coupon</button>

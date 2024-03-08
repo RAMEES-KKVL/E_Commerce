@@ -3,7 +3,7 @@
     <%- include('../common/topnav.ejs') %>
     
     
-    <form action="" style="width: 100%;">
+    <form id="singleProductForm" style="width: 100%;">
         <div class="content productopen_content" >
             <div class="main_frame">
                     <div class="product_frame" style="margin-top: 0px; height: 100%;">
@@ -28,12 +28,12 @@
                         </div>
                     </div>
                     <div class="product_detail_frame">
-                        <ul>
-
+                        
+                        <ul class="list-container">
                             <li style="font-size: 1.3rem; font-family: 'Poppins',sans-serif; font-weight: 600; color: white; ">
                                 <%= product.productName %>
                             </li>
-                            <li style="display: flex; gap: .7rem; align-items: center; margin-top: .5rem;">
+                            <li newPrice="<%= product.price - product.discount %>" price="<%= product.price %>" style="display: flex; gap: .7rem; align-items: center; margin-top: .5rem;">
                                 <p class="old_price">
                                     <i class="bi bi-currency-rupee"></i>
                                     <%= product.price %>
@@ -74,21 +74,22 @@
                                 <p style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgb(255, 255, 255);">
                                     SIZE :
                                 </p>
-                                <span class="label_span">
-                                    <input id="" value="" name="size" type="radio" >
-                                    <label for="" > <%= product.size %> </label>
-                                </span>
-                            </li>
-
+                                <select name="size" id="product_Size" onclick="">
+                                    <% product.size.forEach((size)=>{ %>
+                                        <option id="crsize" value="<%= size %>"><%= size %></option>
+                                    <% }) %>
+                                </select>
+                                </li>
+                                    
                             <!-- ======================================== -->
 
                             <li class="color_li">
                                 <p style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(255, 255, 255, 0.947);">
                                     COLOR :
                                 </p>
-                                <span style="background-color:white;" class="label_span_color">
-                                    <input  id="" name="color" value="" type="radio" >
-                                    <label for="" ><%= product.colour %></label>
+                                <span style="background-color:<%= product.colour %>;" class="label_span_color">
+                                    <input  id="product_colour" name="color" value="<%= product.colour %>" type="radio" >
+                                    <label for=""></label>
                                 </span>
                             </li>
                             
@@ -96,13 +97,6 @@
                             
                             <li>
                                 <div style="display: flex; gap: 1rem; align-items: center;">
-                                    <!-- <select  name="quantity" style="outline: none; padding: .3rem;">
-                                        <option value="1">Qty : 1</option>
-                                        <option value="2">Qty : 2</option>
-                                        <option value="3">Qty : 3</option>
-                                        <option value="4">Qty : 4</option>
-                                        <option value="5">Qty : 5</option>
-                                    </select> -->
                                     <div class="stock_left">Hurry only a few LEFT</div>
                                     <div class="wish_btn_div">
                                         <button class="wish_btn">
@@ -148,13 +142,13 @@
                                         })() %>">
                                     </i>
                                 </button>
-                                <button type="button">BUY NOW</button>
+                                <button type="submit" id="singleProductBuy" productId="<%= product._id %>">BUY NOW</button>
                             </li>
                         
                         </ul>
 
                     </div>
-                </form>
+    </form>
 
             </div>                  
         </div>
@@ -237,3 +231,14 @@
 <script src="/js/user/cart.js"></script>
 <script src="/js/user/wishlist.js"></script>
 <script src="/js/common.js"></script>
+<script src="/js/user/productBuy.js"></script>
+
+<script>
+    // function getSize(event, productId){
+    //     document.querySelector(".product_size_picker").addEventListener("select", async (event)=>{
+    //         const size = event.target.value
+    //         console.log(productId);
+    //         console.log(size);
+    //     })
+    // }
+</script>
