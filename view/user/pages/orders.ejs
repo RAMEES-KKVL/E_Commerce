@@ -17,24 +17,28 @@
                 </thead>
              
                 <tbody>
-                    <tr class="td_tr">
-                        <td class="product_td">
-                            <div class="img_section">
-                                <img src="#" style="height: 6rem; width: 5rem;" alt="">
-                            </div>
-                            <div class="product_details">
-                                <p class="order_product_name">Iphone 15 pro</p>
-                                <p class="order_size">Size : <span style="font-size: 1.1rem;">s</span></p>
-                                <p class="order_color">Color : <span>black</span></p>
-                            </div>
-                        </td>
-                        <td>6345934676874549</td>
-                        <td style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(255, 0, 0, 0.748);">
-                            <i class="bi bi-currency-rupee"></i>12,432
-                        </td>
-                        <td style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(0, 0, 0, 0.748);">12-04-2024</td>
-                        <td class="status delivered">DELIVERED</td>
-                    </tr>
+                    <% orders.forEach(order =>{ %>
+                        <% order.productId.forEach(product =>{ %>
+                            <tr class="td_tr" onclick="orderOpen('<%= order._id %>','<%= product.productId._id %>')">
+                                <td class="product_td">
+                                    <div class="img_section">
+                                        <img src="/uploads/product/<%= product.productId.productImage[0] %>" style="height: 6rem; width: 5rem;" alt="">
+                                    </div>
+                                    <div class="product_details">
+                                        <p class="order_product_name"><%= product.productId.productName %></p>
+                                        <p class="order_size">Size : <span style="font-size: 1.1rem;"><%= product.size %></span></p>
+                                        <p class="order_color">Quantity : <span><%= product.quantity %></span></p>
+                                    </div>
+                                </td>
+                                <td><%= order._id %></td>
+                                <td style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(255, 0, 0, 0.748);">
+                                    <i class="bi bi-currency-rupee"></i><%= product.productId.price %>
+                                </td>
+                                <td style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(0, 0, 0, 0.748);"><%= order.orderDate.toDateString() %></td>
+                                <td class="status delivered"><%= order.orderStatus %></td>
+                            </tr>
+                        <% }) %>
+                    <% }) %>
                 </tbody>
 
             </table>
@@ -45,3 +49,13 @@
 </div>
 <%- include('../common/footer.ejs') %>
 <%- include('../../end.ejs') %>
+
+<script>
+    async function orderOpen(orderId,productId){
+        try {
+            window.location.href = `/account/orderOpen?orderId=${orderId}&productId=${productId}`
+        } catch (error) {
+            console.log(error);
+        }
+    }
+</script>

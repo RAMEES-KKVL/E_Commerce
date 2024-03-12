@@ -409,7 +409,29 @@ exports.post_add_deliveryAddress = async (req,res) =>{
 
 exports.get_orders = async (req,res)=>{
     try {
-        res.render("user/pages/orders")
+        if(req.session.user_id){
+            const userOrder = await orderModel.findOne({userId:req.session.user_id}).populate("orders.productId.productId")
+            const orders = userOrder.orders
+            res.render('user/pages/orders',{orders})
+        }else{
+            res.redirect("/login")
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+exports.get_orderOpen = async (req,res)=>{
+    try {
+        const {orderId, productId} = req.query
+        const userOrders = await orderModel.findOne({userId : req.session.user_id}).populate("orders.productId.productId")
+        const order = userOrders.orders.find(order => order._id == orderId)
+        const profileDetails = await userProfileModel.findOne({userId : req.session.user_id})
+        const address = profileDetails.deliveryAddresses.find(address => address._id == order.deliveryAddress)
+        const product = order.productId.find(product => product.productId._id == productId)
+        res.render("user/pages/orderOpen", {orderId, product, address})
     } catch (error) {
         console.log(error);
     }
@@ -604,40 +626,55 @@ exports.post_cod_otp = async (req,res)=>{
         const userOtp = one + two + three + four + five + six
         if(otp == userOtp){
             const prArray = req.session.orders
+            prArray.orderStatus = "Confirmed"
             const orderList = await orderModel.findOne({userId : req.session.user_id})
             if(!orderList){
                 const saved = await orderModel.create(orders)
                 if(saved){
-                    prArray.productId.map(async (productArray) =>{
-                        const productId = productArray.productId._id
-                        const quantity = productArray.quantity
-                        const productExist = await productModel.findOne({_id : productId})
-                        const oldStock = productExist.stock
-                        const currentStock = oldStock - quantity
-
-                        await cartModel.findOneAndUpdate(
-                            {
-                                userId : req.session.user_id
-                            },
-                            {
-                                $pull : {
-                                    products : {productId}
-                                }
+                    const pushed = await orderModel.findOneAndUpdate(
+                        {
+                            userId : req.session.user_id
+                        },
+                        {
+                            $push : {
+                                orders : prArray
                             }
-                        )
+                        }
+                    )
+                    if(pushed){
+                        prArray.productId.map(async (productArray) =>{
+                            const productId = productArray.productId._id
+                            const quantity = productArray.quantity
+                            const productExist = await productModel.findOne({_id : productId})
+                            const oldStock = productExist.stock
+                            const currentStock = oldStock - quantity
 
-                        await productModel.findOneAndUpdate(
-                            {
-                                _id : productId
-                            },
-                            {
-                                $set : {
-                                    stock : currentStock
+                            await cartModel.findOneAndUpdate(
+                                {
+                                    userId : req.session.user_id
+                                },
+                                {
+                                    $pull : {
+                                        products : {productId}
+                                    }
                                 }
-                            }
-                        )
-                    })
-                    return res.status(200).json({success : true})
+                            )
+
+                            await productModel.findOneAndUpdate(
+                                {
+                                    _id : productId
+                                },
+                                {
+                                    $set : {
+                                        stock : currentStock
+                                    }
+                                }
+                            )
+                        })
+                        return res.status(200).json({success : true})
+                    }else{
+                        return res.status(279).json({success : false, failedCreation : true})
+                    }
                 }else{
                     return res.status(279).json({success : false, failedCreation : true})
                 }

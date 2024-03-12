@@ -7,6 +7,14 @@ const products = {
         type : schema.Types.ObjectId,
         required : true,
         ref : 'product-list'
+    },
+    quantity : {
+        type : Number,
+        _id : false
+    },
+    size : {
+        type : String,
+        _id : false
     }
 }
 
