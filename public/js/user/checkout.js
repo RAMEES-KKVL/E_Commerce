@@ -185,8 +185,8 @@ async function addNewAddress(event){
                 const newAddressDiv = document.createElement("div")
                 newAddressDiv.classList.add("payment_divs", "select_adress_div")
                 newAddressDiv.innerHTML = `
-                    <input id="" name="payment" type="radio" value="${formData.address}" onclick="selectAddress(event, '${JSON.stringify(formData)}')">
-                    <label for="add">${formData.address}</label>` 
+                    <input id="${formData.address}" class="delivery_adrress" name="delivery_Address" type="radio" value="${formData.address}">
+                    <label for="add" style="overflow: auto;">${formData.address}</label>` 
                 addressList.appendChild(newAddressDiv)
             }
         }

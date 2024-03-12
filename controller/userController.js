@@ -6,10 +6,11 @@ const cartModel = require("../model/cartModel")
 const userProfileModel = require("../model/userProfileModel")
 const signupModel = require("../model/signupModel")
 const couponModel = require("../model/couponModel")
+const orderModel = require("../model/orderModel")
 const fs = require("fs")
 
 const { Types, default: mongoose } = require('mongoose')
-const { log } = require("console")
+const emailCOD = require("../utilities/emailCOD")
 
 
 
@@ -304,8 +305,12 @@ exports.patch_edit_address = async (req,res)=>{
                 }}
             )
             if(update && updated){
-                fs.unlinkSync(`./public/uploads/profile/${oldProfile.profileImage}`)
-                return res.status(200).json({success : true, newImg : true})
+                if(oldProfile.profileImage){
+                    fs.unlinkSync(`./public/uploads/profile/${oldProfile.profileImage}`)
+                    return res.status(200).json({success : true, newImg : true})
+                }else{
+                    return res.status(200).json({success : true, newImg : true})
+                }
             }else{
                 return res.status(289).json({success : false})
             }
@@ -548,11 +553,147 @@ exports.delete_checkout = async (req,res)=>{
 
 
 
+let otp
+exports.post_checkout = async (req,res)=>{
+    try {
+        if(req.session.user_id){
+            const {paymentMethod, productArray, orderTotal}= req.body
+            const deliveryAddress = JSON.parse(req.body.delivery_Address)
+            const currentDate = new Date()
+            const deliveryDate = new Date(currentDate);
+            deliveryDate.setDate(currentDate.getDate() + 5);
+            const orders = {
+                userId : req.session.user_id,
+                totalAmount : orderTotal,
+                paymentMethod,
+                orderDate : currentDate,
+                deliveryDate,
+                deliveryAddress,
+                orderStatus : "Pending",
+                productId : productArray
+            }
+            req.session.orders = orders
 
-exports.post_checkout = (req,res)=>{}
+            if(paymentMethod === 'cashondelivery'){
+                const signupData = await signupModel.findOne({_id : req.session.user_id})
+                otp = Math.floor(100000 + Math.random() * 900000)
+                emailCOD(signupData.email, otp)
+                return res.status(200).json({success : true, COD : true})
+            }
+            else if(paymentMethod === 'upi'){}
+            else if(paymentMethod === 'card'){}
+        }
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 
+
+exports.get_cod_otp = (req,res)=>{
+    res.render("user/pages/CODotp")
+}
+
+
+exports.post_cod_otp = async (req,res)=>{
+    try {
+        const {one, two, three, four, five, six} = req.body
+        const userOtp = one + two + three + four + five + six
+        if(otp == userOtp){
+            const prArray = req.session.orders
+            const orderList = await orderModel.findOne({userId : req.session.user_id})
+            if(!orderList){
+                const saved = await orderModel.create(orders)
+                if(saved){
+                    prArray.productId.map(async (productArray) =>{
+                        const productId = productArray.productId._id
+                        const quantity = productArray.quantity
+                        const productExist = await productModel.findOne({_id : productId})
+                        const oldStock = productExist.stock
+                        const currentStock = oldStock - quantity
+
+                        await cartModel.findOneAndUpdate(
+                            {
+                                userId : req.session.user_id
+                            },
+                            {
+                                $pull : {
+                                    products : {productId}
+                                }
+                            }
+                        )
+
+                        await productModel.findOneAndUpdate(
+                            {
+                                _id : productId
+                            },
+                            {
+                                $set : {
+                                    stock : currentStock
+                                }
+                            }
+                        )
+                    })
+                    return res.status(200).json({success : true})
+                }else{
+                    return res.status(279).json({success : false, failedCreation : true})
+                }
+            }else{
+                const pushed = await orderModel.findOneAndUpdate(
+                    {
+                        userId : req.session.user_id
+                    },
+                    {
+                        $push : {
+                            orders : prArray
+                        }
+                    }
+                )
+                if(pushed){
+                    prArray.productId.map(async (productArray) =>{
+                            const productId = productArray.productId._id
+                            const quantity = productArray.quantity
+                            const productExist = await productModel.findOne({_id : productId})
+                            const oldStock = productExist.stock
+                            const currentStock = oldStock - quantity
+
+                            await cartModel.findOneAndUpdate(
+                                {
+                                    userId : req.session.user_id
+                                },
+                                {
+                                    $pull : {
+                                        products : {productId}
+                                    }
+                                }
+                            )
+
+                            await productModel.findOneAndUpdate(
+                                {
+                                    _id : productId
+                                },
+                                {
+                                    $set : {
+                                        stock : currentStock
+                                    }
+                                }
+                            )
+                    })
+                    return res.status(200).json({success : true})
+                }else{
+                    return res.status(279).json({success : false, failedCreation : true})
+                }
+            }
+        }else{
+            return res.status(289).json({success : false, otp : true})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 exports.get_payment = (req,res)=>{}

@@ -2,6 +2,33 @@ const mongoose = require("mongoose")
 
 const schema = mongoose.Schema
 
+const shortAddress = ({
+    firstname : {
+        type : String
+    },
+    lastname : {
+        type : String
+    },
+    phone : {
+        type : Number 
+    },
+    district : {
+        type : String
+    },
+    state : {
+        type : String 
+    },
+    country : {
+        type : String
+    },
+    zip : {
+        type : Number
+    },
+    address : {
+        type : String
+    }
+})
+
 const userProfileSchema = ({
     userId : {
         type : mongoose.Types.ObjectId
@@ -45,7 +72,7 @@ const userProfileSchema = ({
     profileImage : {
         type : String
     },
-    deliveryAddresses : []
+    deliveryAddresses : [shortAddress]
 })
 
 module.exports = new mongoose.model("user-profile-datas", userProfileSchema)

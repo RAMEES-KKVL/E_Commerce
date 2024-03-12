@@ -9,7 +9,7 @@
 
             <!-- ----------------------------------- -->
 
-            <div class="checkout_left_top">
+            <div class="checkout_left_top" checkout-Product="<%= JSON.stringify(checkoutProduct) %>">
                 <% checkoutProduct.forEach( product =>{ %>
                 <div class="product product<%= product.productId._id %>" onclick="">
                     <div class="image_sec">
@@ -40,17 +40,14 @@
                         </div>
                         <div class="color_size">
                             <div class="size_li">
-                                <p style="font-family: 'Poppins',sans-serif; font-weight: 500;font-size: .98rem; color: black;">SIZE :</p>
-                                <!-- <span class="label_span" onclick="selectSize(event)"> -->
-                                    <!-- <input id=" size" value=" size" class="size" name="size" type="radio" >
-                                    <label for=" size" > size </label> -->
-                                    <!-- </span> -->
+                                <p style="font-family: 'Poppins',sans-serif; font-weight: 500;font-size: .98rem; color: black;">SIZE :
                                     <select name="size" id="" class="size_select<%= product.productId._id %>" onclick="selectSize(event, '<%= product.productId._id %>')">
                                         <option value="<%= product.size %>"><%= product.size %></option>
                                     <% product.productId.size.forEach(size =>{ %>
                                         <option value="<%= size %>"><%= size %></option>
                                     <% }) %>
                                     </select>
+                                </p>
                             </div>
                             
                             <!-- ------------------------------------- -->
@@ -86,9 +83,19 @@
             <div class="checkout_left_bottom">
                 <div class="checkouts_frame_bottom_frame checkouts_frame_bottom_payment">
                     <h3>PAYMENT METHODS</h3>
-                    <div class="payment_divs"><div class="payment_icon"><img class="payment_logo_png" src="" alt=""></div><label for="upi">UPI</label><input id="upi" name="payment" type="radio"></div>
-                    <div class="payment_divs"><div class="payment_icon"><img class="payment_logo_png" src="" alt=""></div><label for="card">CARD</label><input id="card" name="payment" type="radio"></div>
-                    <div class="payment_divs"><div class="payment_icon"><img class="payment_logo_png" src="" alt=""></div><label for="cashondelivery">CASH ON DELIVERY</label><input id="cashondelivery" name="payment" type="radio"></div>
+                    <div id="error_payment" style="color: brown; padding-left: 1rem;"></div>
+                    <div class="payment_divs">
+                        <label for="upi">UPI</label>
+                        <input id="upi" class="payment_method" name="payment" type="radio">
+                    </div>
+                    <div class="payment_divs">
+                        <label for="card">CARD</label>
+                        <input id="card" class="payment_method" name="payment" type="radio">
+                    </div>
+                    <div class="payment_divs">
+                        <label for="cashondelivery">CASH ON DELIVERY</label>
+                        <input id="cashondelivery" class="payment_method" name="payment" type="radio">
+                    </div>
                 </div>
                 <div class="checkouts_frame_bottom_frame checkouts_frame_bottom_coupon">
                     <h3>COUPON</h3> <div id="error_mssg" style="color: red;"></div>
@@ -107,9 +114,10 @@
 
                 <div class="checkouts_frame_bottom_frame checkouts_frame_bottom_adress" style="overflow-y: auto;">
                     <h3>SELECT ADDRESS</h3>
+                    <div id="error_address" style="color: brown; padding-left: .5rem;"></div>
                     <% address.forEach(deliveryAddress =>{ %>
                         <div class="payment_divs select_adress_div">
-                            <input id="add1" name="payment" type="radio" value="<%= deliveryAddress.address %>" onclick="selectAddress(event, '<%= JSON.stringify(deliveryAddress) %>')">
+                            <input id="<%= JSON.stringify(deliveryAddress) %>" class="delivery_adrress" name="delivery_Address" type="radio" value="<%= deliveryAddress.address %>">
                             <label for="add1" style="overflow: auto;"><%= deliveryAddress.address ? deliveryAddress.address : '' %></label>
                         </div>
                     <% }) %>
@@ -250,3 +258,58 @@
 <%- include('../../end.ejs') %>
 
 <script src="/js/user/checkout.js"></script>
+<script src="/js/user/orderPlacement.js"></script>
+
+<script>
+    document.querySelector(".proceed_btn").addEventListener("click", async (event)=>{
+    event.preventDefault()
+        try {
+            const paymentInputs = document.querySelectorAll('.payment_method')
+            let selectedPaymentMethod
+            paymentInputs.forEach(input =>{
+                if(input.checked){
+                    selectedPaymentMethod = input.id
+                }
+            })
+            if(!selectedPaymentMethod){
+                document.getElementById("error_payment").innerHTML = "Choose Payment Method"
+                setTimeout(() => {
+                    document.getElementById("error_payment").innerHTML = ""
+                }, 2500);
+            } 
+
+            const addressInputs = document.querySelectorAll(".delivery_adrress")
+            let selectedAddress 
+            addressInputs.forEach(input =>{
+                if(input.checked){
+                    selectedAddress = input.id
+                }
+            })
+            if(!selectedAddress){
+                document.getElementById("error_address").innerHTML = "Choose address"
+                setTimeout(() => {
+                    document.getElementById("error_address").innerHTML = ""
+                }, 2500);
+            }
+            
+            const products = JSON.parse(document.querySelector(".checkout_left_top").getAttribute("checkout-Product"))
+            const orderTotal = document.querySelector(".order_total").innerHTML.trim()
+            const response = await axios.post(`/checkout`, {
+                    paymentMethod: selectedPaymentMethod,
+                    productArray: products,
+                    delivery_Address: selectedAddress,
+                    orderTotal
+                }
+            )
+            const result = response.data
+
+            if(result.success){
+                if(result.COD){
+                    window.location.href = "/cod_otp"
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    })
+</script>

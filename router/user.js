@@ -93,6 +93,10 @@ router.patch("/checkout/updateSize",userRouterWeb.patch_checkout_size)
 router.delete("/checkout_delete",userRouterWeb.delete_checkout)
 router.post("/checkout",userRouterWeb.post_checkout)
 
+
+router.get("/cod_otp",userRouterWeb.get_cod_otp)
+router.post("/cod_otp",userRouterWeb.post_cod_otp)
+
 router.get("/payment",userRouterWeb.get_payment)
 router.post("/payment",userRouterWeb.post_payment)
 
