@@ -35,7 +35,7 @@
                                     <i class="bi bi-currency-rupee"></i><%= product.productId.price %>
                                 </td>
                                 <td style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(0, 0, 0, 0.748);"><%= order.orderDate.toDateString() %></td>
-                                <td class="status delivered"><%= order.orderStatus %></td>
+                                <td class="status delivered"><%= product.orderStatus %></td>
                             </tr>
                         <% }) %>
                     <% }) %>

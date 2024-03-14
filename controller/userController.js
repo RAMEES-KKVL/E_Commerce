@@ -749,7 +749,6 @@ exports.post_checkout = async (req,res)=>{
                 orderDate : currentDate,
                 deliveryDate,
                 deliveryAddress,
-                orderStatus : "Pending",
                 productId : productArray
             }
             req.session.orders = orders
@@ -760,8 +759,10 @@ exports.post_checkout = async (req,res)=>{
                 emailCOD(signupData.email, otp)
                 return res.status(200).json({success : true, COD : true})
             }
-            else if(paymentMethod === 'upi'){}
-            else if(paymentMethod === 'card'){}
+            else if(paymentMethod === 'online'){
+
+            }
+           
         }
     } catch (error) {
         console.log(error);
@@ -782,7 +783,9 @@ exports.post_cod_otp = async (req,res)=>{
         const userOtp = one + two + three + four + five + six
         if(otp == userOtp){
             const prArray = req.session.orders
-            prArray.orderStatus = "Confirmed"
+            prArray.productId.map(item =>{
+               return item.orderStatus = "Confirmed"
+            })
             const orderList = await orderModel.findOne({userId : req.session.user_id})
             if(!orderList){
                 const saved = await orderModel.create(prArray)
@@ -882,6 +885,45 @@ exports.post_cod_otp = async (req,res)=>{
             }
         }else{
             return res.status(289).json({success : false, otp : true})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+exports.patch_cancelOrder = async (req,res)=>{
+    try {
+        const {productId, orderId} = req.body
+        const update = await orderModel.findOneAndUpdate(
+            {
+                userId : req.session.user_id,
+                "orders._id" : orderId,
+                "orders.productId.productId" : productId
+            },
+            {
+                $set : {
+                    'orders.$[order].productId.$[product].orderStatus' : 'Cancelled'
+                }
+            },
+            {
+                arrayFilters : [
+                    {
+                        'order._id' : orderId
+                    },
+                    {
+                        'product.productId' : productId
+                    }
+                ],
+                new : true
+            }
+        )
+        console.log(update);
+        if(update){
+            return res.status(200).json({success : true})
+        }else{
+            return res.status(289).json({success : false})
         }
     } catch (error) {
         console.log(error);

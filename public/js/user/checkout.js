@@ -229,6 +229,9 @@ document.querySelector(".proceed_btn").addEventListener("click", async (event)=>
             }
             
             const products = JSON.parse(document.querySelector(".checkout_left_top").getAttribute("checkout-Product"))
+            products.forEach(item => {
+                item.orderStatus = 'Pending'
+            });
             const orderTotal = document.querySelector(".order_total").innerHTML.trim()
             const response = await axios.post(`/checkout`, {
                     paymentMethod: selectedPaymentMethod,

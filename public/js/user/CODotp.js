@@ -70,7 +70,7 @@ document.getElementById("cod_Otp_bttn").addEventListener("click", async (event)=
                         document.getElementById("error_message").innerHTML = ""
                     }, 4000);
                 }
-                else if(failedCreation){
+                else if(result.failedCreation){
                     document.getElementById("error_message").innerHTML = "Couldn't place order"
                     setTimeout(() => {
                         document.getElementById("error_message").innerHTML = ""

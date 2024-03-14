@@ -100,6 +100,8 @@ router.post("/checkout",userRouterWeb.post_checkout)
 router.get("/cod_otp",userRouterWeb.get_cod_otp)
 router.post("/cod_otp",userRouterWeb.post_cod_otp)
 
+router.patch("/cancelOrder",userRouterWeb.patch_cancelOrder)
+
 router.get("/payment",userRouterWeb.get_payment)
 router.post("/payment",userRouterWeb.post_payment)
 

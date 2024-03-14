@@ -48,6 +48,10 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="order_cancel_Button" style="display: flex; justify-content: space-between; align-items: center; width: 47%;">
+                            <div id="error_cancelOrder" style="color: brown; font-size: large;"></div>
+                            <button class="order_cancel_button" onclick="cancelOrder(event,'<%= product.productId._id %>','<%= orderId %>')">Cancel Order</button>
+                        </div>
                     </div>
                 </div>
 
@@ -69,3 +73,32 @@
 
 <script src="/js/user/count.js"></script>
 
+
+<script>
+    async function cancelOrder(event, productId, orderId){
+        try {
+            const response = await axios.patch("/cancelOrder",{productId, orderId})
+            const result = response.data
+
+            if(result.success){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Order cancelled successfully",
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+                setTimeout(() => {
+                    window.location.href = "/account/orders"
+                }, 2500);
+            }else{
+                document.getElementById("error_cancelOrder").innerHTML = "Cancellation Failed"
+                setTimeout(() => {
+                    document.getElementById("error_cancelOrder").innerHTML = ""
+                }, 4000);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+</script>

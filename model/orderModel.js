@@ -15,6 +15,11 @@ const products = {
     size : {
         type : String,
         _id : false
+    },
+    orderStatus : {
+        type : String,
+        required : true,
+        _id : false
     }
 }
 
@@ -36,10 +41,6 @@ const orderDetails = {
         required : true
     },
     deliveryAddress : {
-        type : String,
-        required : true
-    },
-    orderStatus : {
         type : String,
         required : true
     },
