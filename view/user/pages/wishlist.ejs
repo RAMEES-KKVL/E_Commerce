@@ -82,6 +82,8 @@
 <%- include('../../end.ejs') %>
 
 <script src="/js/common.js"></script>
+<script src="/js/user/count.js"></script>
+
 <script>
 
     async function wishDelete(event, productId){
@@ -92,6 +94,7 @@
 
             if(result.success){
                 document.getElementById("wish_pic_remove"+productId).remove()
+                document.querySelector(".wish_count_top").innerHTML = Number(document.querySelector(".wish_count_top").innerHTML) - 1
             }else{
                 document.getElementById("error").innerHTML = "Couldn't delete wishlist item"
             }

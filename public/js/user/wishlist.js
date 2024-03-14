@@ -9,9 +9,11 @@ async function wishlistUpdate(event, productId){
 
             if(icon.classList.contains('bi-heart')){
                 icon.classList.replace('bi-heart','bi-heart-fill')
-            }else(
+                document.querySelector(".wish_count_top").innerHTML = Number(document.querySelector(".wish_count_top").innerHTML) + 1
+            }else{
                 icon.classList.replace('bi-heart-fill','bi-heart')
-            )
+                document.querySelector(".wish_count_top").innerHTML = Number(document.querySelector(".wish_count_top").innerHTML) - 1
+            }
         }else{
             location.href = "/wishlist"
         }

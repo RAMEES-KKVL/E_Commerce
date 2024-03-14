@@ -36,6 +36,8 @@ router.post("/reset_Password",userRouter.post_reset_Password)
 
 router.get("/home",userRouterWeb.get_home)
 
+router.get("/count",userRouterWeb.get_count)
+
 router.get("/all_Products",userRouterWeb.get_allProducts)
 
 

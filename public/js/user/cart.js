@@ -13,6 +13,7 @@ async function addtoCart(event, productId){
             }
         }else{
             document.querySelector(".addto_cart_btn" + productId).innerHTML = "GO TO CART <i class='bi bi-arrow-right-short'></i>"
+            document.querySelector(".cart_count").innerHTML = Number(document.querySelector(".cart_count").innerHTML) + 1
         }
     } catch (error) {
         console.log(error);

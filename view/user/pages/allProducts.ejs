@@ -1,0 +1,140 @@
+<%- include('../common/header.ejs') %>
+<div class="wrapper allproducts_wrapper">
+
+    <div class="loading_screen"><img src="#" class="loading_gif" alt=""></div>
+    <%- include('../common/topnav.ejs') %>
+
+        <div class="all_products_content">
+            <section class="top_sec">
+                <h4>FILTERS</h4>
+                <div class="sort_by_div">
+                    <p class="sort_recomended"><%= currentFilter ? currentFilter === 'Low to High' ? 'Low to High' : currentFilter === 'High to Low' ? 'High to Low' : 'Sort By : Recomended' : 'Sort By : Recomended' %><i class="bi bi-chevron-down"></i></p>
+                    <ul class="sort_ul">
+                        <li onclick="filterProducts('Low to High')">Low to High</a></li>
+                        <li onclick="filterProducts('High to Low')">High to Low</li>
+                    </ul>
+                </div>
+            </section>
+            <div class="bottom_products_div">
+                <form action="">
+                    <div class="filter_section">
+                        <div class="filter_sec cat_sec">
+                            <h4>Category</h4>
+                            <ul>
+                                <li onclick="filterView('all')"><input type="checkbox"  class="input_cat" value="HOME" name="category" id="home" <%= currentFilter ? currentFilter ==='all' ? 'checked' : '' : 'checked'  %>><label for="home">ALL PRODUCTS</label></li>
+                                <li onclick="filterView('Mens')"><input type="checkbox"  class="input_cat" value="MENS" name="category" id="mens" <%= currentFilter ==='Mens' ? 'checked' : '' %>><label for="mens">MENS</label></li>
+                                <li onclick="filterView('Womens')"><input type="checkbox"  class="input_cat" value="WOMENS" name="category" id="womens" <%= currentFilter ==='Womens' ? 'checked' : '' %>><label for="womens">WOMENS</label></li>
+                                <li onclick="filterView('Kids')"><input type="checkbox"  class="input_cat" value="KIDS" name="category" id="kids" <%= currentFilter ==='Kids' ? 'checked' : '' %>><label for="kids">KIDS</label></li>
+                                <li onclick="filterView('Electronics')"><input type="checkbox"  class="input_cat" value="ELECTRONICS" name="category" id="electronics" <%= currentFilter ==='Electronics' ? 'checked' : '' %>><label for="electronics">ELECTRONICS</label></li>
+                            </ul>
+                        </div>
+                        <div class="filter_sec price_sec">
+                            <h4>Price</h4>
+                            <ul>
+                                <li><input onclick="filterView(500)" type="checkbox" class="input_price" value="500" name="price" id="500" <%= currentFilter === '500' ? 'checked' : '' %>><label for="500">Under ₹500</label></li>
+                                <li><input onclick="filterView(1000)" type="checkbox" class="input_price" value="1000" name="price" id="1000" <%= currentFilter === '1000' ? 'checked' : '' %>><label for="1000">₹500 - ₹1000</label></li>
+                                <li><input onclick="filterView(1500)" type="checkbox" class="input_price" value="1500" name="price" id="1500" <%= currentFilter === '1500' ? 'checked' : '' %>><label for="1500">₹1000 - ₹1500</label></li>
+                                <li><input onclick="filterView(2500)" type="checkbox" class="input_price" value="2500" name="price" id="2500" <%= currentFilter === '2500' ? 'checked' : '' %>><label for="2500">₹1500 - ₹2500</label></li>
+                                <li><input onclick="filterView(3000)" type="checkbox" class="input_price" value="3000" name="price" id="3000" <%= currentFilter === '3000' ? 'checked' : '' %>><label for="3000">Over ₹2,500</label></li>
+                            </ul>
+                        </div>
+                        <div class="filter_sec color_sec" style="overflow: auto;">
+                            <h4>Color</h4>
+                            <ul style="overflow: auto;">
+                                <li><input onclick="filterView('ff0000')" type="radio" class="input_color" value="red" name="color" id="red" <%= currentFilter === 'ff0000' ? 'checked' : '' %>><label for="red"><span style="background-color: #ff0000" class="color_balls"></span>Red</label></li>
+                                <li><input onclick="filterView('00ff00')" type="radio" class="input_color" value="green" name="color" id="green" <%= currentFilter === '00ff00' ? 'checked' : '' %>><label for="green"><span style="background-color: #00ff00" class="color_balls"></span>Green</label></li>
+                                <li><input onclick="filterView('ffffff')" type="radio" class="input_color" value="yellow" name="color" id="yellow" <%= currentFilter === 'ffffff' ? 'checked' : '' %>><label for="yellow"><span style="background-color: #ffffff" class="color_balls"></span>White</label></li>
+                                <li><input onclick="filterView('0000ff')" type="radio" class="input_color" value="blue" name="color" id="blue" <%= currentFilter === '0000ff' ? 'checked' : '' %>><label for="blue"><span style="background-color: #0000ff" class="color_balls"></span>Blue</label></li>
+                                <li><input onclick="filterView('ffea00')" type="radio" class="input_color" value="olive" name="color" id="olive" <%= currentFilter === 'ffea00' ? 'checked' : '' %>><label for="olive"><span style="background-color: #ffea00" class="color_balls"></span>Yellow</label></li>
+                                <li><input onclick="filterView('0000ff')" type="radio" class="input_color" value="blue" name="color" id="blue" <%= currentFilter === '0000ff' ? 'checked' : '' %>><label for="blue"><span style="background-color: #0000ff" class="color_balls"></span>Blue</label></li>
+                                <li><input onclick="filterView('ffea00')" type="radio" class="input_color" value="olive" name="color" id="olive" <%= currentFilter === 'ffea00' ? 'checked' : '' %>><label for="olive"><span style="background-color: #ffea00" class="color_balls"></span>Yellow</label></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="product_section" style="overflow: auto; height: 92%;" id="all_products_attribute">
+                    <%= products.length == 0 ? 'Products not Available' : ''%>
+                    <% products.forEach(product =>{ %>
+                        <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
+                            <div class="top">
+                            <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                        const listArray = wishlist ? wishlist.products : []
+                                        const productId = product._id;
+                                        const exist = listArray.some(product => product.productId.equals(productId))
+                                        return exist ? 'bi-heart-fill' : 'bi-heart'
+                                    })() %>">
+                                </i>
+                            </button>
+                            <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
+                            </div>
+                            <div class="center">
+                            <div class="name_div" style="overflow: hidden; max-height: 3.6em; line-height: 1.2em; align-items: start;">
+                                <p class="product_name"><%= product.productName %></p>
+                            </div>
+                            <div class="price_div">
+                                <p class="old_price"><i class="bi bi-currency-rupee"><%= product.price %></i></p>
+                                <p class="new_price"><i class="bi bi-currency-rupee"></i><%= product.price - product.discount %></p>
+                            </div>
+                            </div>
+                            <div class="bottom">
+                            <button class="addto_cart_btn addto_cart_btn<%= product._id %>" onclick="addtoCart(event,'<%= product._id %>')">
+                                <%= (()=>{
+                                    const productId = product._id
+                                    const listArray = cart ? cart.products : []
+                                    const exist = listArray.some(product => product.productId.equals(productId))
+                                    return exist ? 'GO TO CART' : 'ADD TO CART'
+                                })() %>
+                                <i class="bi add_toCart_plus<%= product._id %> <%= (()=>{
+                                        const productId = product._id
+                                        const listArray = cart ? cart.products : []
+                                        const exist = listArray.some(product => product.productId.equals(productId))
+                                        return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                                    })() %>">
+                                </i>
+                            </button>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="pagination_div">
+            <div class="link_pagination">
+                <button class="back_btn" onclick="prev()"><i class="bi bi-chevron-left"></i></button>
+                <div class="links">
+                    <button class="page_btn active_link" onclick="active()" value="1">1</button>
+                    <button class="page_btn" onclick="active()" value="2">2</button>
+                    <button class="page_btn" onclick="active()" value="3">3</button>
+                    <button class="page_btn" onclick="active()" value="4">4</button>
+                    <button class="page_btn" onclick="active()" value="5">5</button>
+                    <button class="page_btn" onclick="active()" value="6">6</button>
+                    <button class="page_btn" onclick="active()" value="7">7</button>
+                </div>
+                <button class="next_btn" onclick="next()"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        </div>
+
+    <%- include('../common/footer.ejs') %>
+
+</div>
+
+<%- include('../../end.ejs') %>
+
+<script src="/js/common.js"></script>
+<script src="/js/user/wishlist.js"></script>
+<script src="/js/user/cart.js"></script>
+<script src="/js/user/count.js"></script>
+
+<script>
+    function filterView(category){
+        window.location.href = `/all_Products?category=${category}`
+    }
+
+    function filterProducts(range){
+        window.location.href = `/all_Products?range=${range}`
+    }
+</script>

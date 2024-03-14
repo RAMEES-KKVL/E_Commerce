@@ -11,7 +11,7 @@ const fs = require("fs")
 
 const { Types, default: mongoose } = require('mongoose')
 const emailCOD = require("../utilities/emailCOD")
-
+ 
 
 
 exports.get_home = async (req,res)=>{
@@ -34,9 +34,163 @@ exports.get_home = async (req,res)=>{
 }
 
 
+exports.get_count = async (req,res)=>{
+    try {
+        const cart = await cartModel.findOne({userId : req.session.user_id})
+        const wishlist = await wishlistModel.findOne({userId : req.session.user_id})
+        const cartCount = cart ? cart.products.length : 0
+        const wishlistCount = wishlist ? wishlist.products.length : 0
+        return res.status(200).json({cartCount, wishlistCount})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
 exports.get_allProducts = async (req,res)=>{
     try {
-        res.render("user/pages/allProducts")
+        let products = []
+        const currentFilter = req.query ? req.query.category ? req.query.category :  req.query.range : "" 
+        const wishlist = await wishlistModel.findOne({userid : req.session.user_id})
+        const cart = await cartModel.findOne({userid : req.session.user_id})
+        if(req.query.category){
+            const category = req.query.category
+            if(category === "all"){
+                products = await productModel.find()
+            }
+            else if(category == 500){
+                products = await productModel.find(
+                    {
+                        $expr : {
+                            $lt : [
+                                {
+                                    $subtract : [
+                                        "$price" , "$discount"
+                                    ]
+                                }, 500
+                            ]
+                        }
+                    }
+                )
+            }
+            else if(category == 1000){
+                products = await productModel.find(
+                    {
+                        $expr : {
+                            $and : [
+                                { $gte : [{ $subtract: ["$price", "$discount"] }, 500] },
+                                { $lt : [{ $subtract: ["$price", "$discount"] }, 1000] }
+                            ]
+                        }
+                    }
+                )
+            }
+            else if(category == 1500){
+                products = await productModel.find(
+                    {
+                        $expr : {
+                            $and : [
+                                { $gte : [{ $subtract: ["$price", "$discount"] }, 1000] },
+                                { $lt : [{ $subtract: ["$price", "$discount"] }, 1500] }
+                            ]
+                        }
+                    }
+                )
+            }
+            else if(category == 2500){
+                products = await productModel.find(
+                    {
+                        $expr : {
+                            $and : [
+                                { $gte : [{ $subtract: ["$price", "$discount"] }, 1500] },
+                                { $lt : [{ $subtract: ["$price", "$discount"] }, 2500] }
+                            ]
+                        }
+                    }
+                )
+            }
+            else if(category == 3000){
+                products = await productModel.find(
+                    {
+                        $expr : {
+                            $gte : [
+                                {
+                                    $subtract : [
+                                        "$price" , "$discount"
+                                    ]
+                                }, 2500
+                            ]
+                        }
+                    }
+                )
+            }
+            else if(category == 'ff0000'){
+                const colour = '#'+category
+                products = await productModel.find(
+                    {
+                        colour : colour
+                    }
+                )
+            }
+            else if(category == '00ff00'){
+                const colour = '#'+category
+                products = await productModel.find(
+                    {
+                        colour : { $in : [colour] }
+                    }
+                )
+            }
+            else if(category == 'ffffff'){
+                const colour = '#'+category
+                products = await productModel.find(
+                    {
+                        colour : { $in : [colour] }
+                    }
+                )
+            }
+            else if(category == '0000ff'){
+                const colour = '#'+category
+                products = await productModel.find(
+                    {
+                        colour : { $in : [colour] }
+                    }
+                )
+            }
+            else if(category == 'ffea00'){
+                const colour = '#'+category
+                products = await productModel.find(
+                    {
+                        colour : { $in : [colour] }
+                    }
+                )
+            }else{
+                const CategoryProducts = await productModel.find({category})
+                products = CategoryProducts
+            }
+        }else if(req.query.range){
+            if(req.query.range === 'Low to High'){
+                products = await productModel.find().sort({
+                    price : 1
+                })
+            }else if(req.query.range === 'High to Low'){
+                products = await productModel.find().sort({
+                    price : -1
+                })
+            }
+        }else if(req.query.search){
+            products = await productModel.find(
+                {
+                    productName : {
+                        $regex : req.query.search
+                    }
+                }
+            )
+        }else{
+            products = await productModel.find()
+        }
+        res.render("user/pages/allProducts", {products, wishlist, cart , currentFilter})
     } catch (error) {
         console.log(error);
     }
@@ -425,13 +579,17 @@ exports.get_orders = async (req,res)=>{
 
 exports.get_orderOpen = async (req,res)=>{
     try {
-        const {orderId, productId} = req.query
-        const userOrders = await orderModel.findOne({userId : req.session.user_id}).populate("orders.productId.productId")
-        const order = userOrders.orders.find(order => order._id == orderId)
-        const profileDetails = await userProfileModel.findOne({userId : req.session.user_id})
-        const address = profileDetails.deliveryAddresses.find(address => address._id == order.deliveryAddress)
-        const product = order.productId.find(product => product.productId._id == productId)
-        res.render("user/pages/orderOpen", {orderId, product, address})
+        if(req.session.user_id){
+            const {orderId, productId} = req.query
+            const userOrders = await orderModel.findOne({userId : req.session.user_id}).populate("orders.productId.productId")
+            const order = userOrders.orders.find(order => order._id == orderId)
+            const profileDetails = await userProfileModel.findOne({userId : req.session.user_id})
+            const address = profileDetails.deliveryAddresses.find(address => address._id == order.deliveryAddress)
+            const product = order.productId.find(product => product.productId._id == productId)
+            res.render("user/pages/orderOpen", {orderId, product, address})
+        }else{
+            res.redirect("/login")
+        }
     } catch (error) {
         console.log(error);
     }
@@ -605,8 +763,6 @@ exports.post_checkout = async (req,res)=>{
             else if(paymentMethod === 'upi'){}
             else if(paymentMethod === 'card'){}
         }
-
-
     } catch (error) {
         console.log(error);
     }
@@ -629,7 +785,7 @@ exports.post_cod_otp = async (req,res)=>{
             prArray.orderStatus = "Confirmed"
             const orderList = await orderModel.findOne({userId : req.session.user_id})
             if(!orderList){
-                const saved = await orderModel.create(orders)
+                const saved = await orderModel.create(prArray)
                 if(saved){
                     const pushed = await orderModel.findOneAndUpdate(
                         {
