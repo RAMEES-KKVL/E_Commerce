@@ -53,13 +53,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
 
-
-
         // Creating chart for products
         const productGraph = document.getElementById('myChartProducts')
         const productData = response.data.productData
-        console.log(productData);
-
                 
         // Prepare data for Chart.js
         const categoryLabels = Object.keys(productData);

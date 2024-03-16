@@ -197,58 +197,58 @@ async function addNewAddress(event){
 
 // FUNCTION FOR ORDERING PRODUCTS FROM CHECKOUT PAGE 
 
-document.querySelector(".proceed_btn").addEventListener("click", async (event)=>{
-    event.preventDefault()
-        try {
-            const paymentInputs = document.querySelectorAll('.payment_method')
-            let selectedPaymentMethod
-            paymentInputs.forEach(input =>{
-                if(input.checked){
-                    selectedPaymentMethod = input.id
-                }
-            })
-            if(!selectedPaymentMethod){
-                document.getElementById("error_payment").innerHTML = "Choose Payment Method"
-                setTimeout(() => {
-                    document.getElementById("error_payment").innerHTML = ""
-                }, 2500);
-            } 
+// document.querySelector(".proceed_btn").addEventListener("click", async (event)=>{
+//     event.preventDefault()
+//         try {
+//             const paymentInputs = document.querySelectorAll('.payment_method')
+//             let selectedPaymentMethod
+//             paymentInputs.forEach(input =>{
+//                 if(input.checked){
+//                     selectedPaymentMethod = input.id
+//                 }
+//             })
+//             if(!selectedPaymentMethod){
+//                 document.getElementById("error_payment").innerHTML = "Choose Payment Method"
+//                 setTimeout(() => {
+//                     document.getElementById("error_payment").innerHTML = ""
+//                 }, 2500);
+//             } 
 
-            const addressInputs = document.querySelectorAll(".delivery_adrress")
-            let selectedAddress 
-            addressInputs.forEach(input =>{
-                if(input.checked){
-                    selectedAddress = input.id
-                }
-            })
-            if(!selectedAddress){
-                document.getElementById("error_address").innerHTML = "Choose address"
-                setTimeout(() => {
-                    document.getElementById("error_address").innerHTML = ""
-                }, 2500);
-            }
+//             const addressInputs = document.querySelectorAll(".delivery_adrress")
+//             let selectedAddress 
+//             addressInputs.forEach(input =>{
+//                 if(input.checked){
+//                     selectedAddress = input.id
+//                 }
+//             })
+//             if(!selectedAddress){
+//                 document.getElementById("error_address").innerHTML = "Choose address"
+//                 setTimeout(() => {
+//                     document.getElementById("error_address").innerHTML = ""
+//                 }, 2500);
+//             }
             
-            const products = JSON.parse(document.querySelector(".checkout_left_top").getAttribute("checkout-Product"))
-            products.forEach(item => {
-                item.orderStatus = 'Pending'
-            });
-            const orderTotal = document.querySelector(".order_total").innerHTML.trim()
-            const response = await axios.post(`/checkout`, {
-                    paymentMethod: selectedPaymentMethod,
-                    productArray: products,
-                    delivery_Address: selectedAddress,
-                    orderTotal
-                }
-            )
-            const result = response.data
+//             const products = JSON.parse(document.querySelector(".checkout_left_top").getAttribute("checkout-Product"))
+//             products.forEach(item => {
+//                 item.orderStatus = 'Pending'
+//             });
+//             const orderTotal = document.querySelector(".order_total").innerHTML.trim()
+//             const response = await axios.post(`/checkout`, {
+//                     paymentMethod: selectedPaymentMethod,
+//                     productArray: products,
+//                     delivery_Address: selectedAddress,
+//                     orderTotal
+//                 }
+//             )
+//             const result = response.data
 
-            if(result.success){
-                if(result.COD){
-                    window.location.href = "/cod_otp"
-                }
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-)
+//             if(result.success){
+//                 if(result.COD){
+//                     window.location.href = "/cod_otp"
+//                 }
+//             }
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// )

@@ -184,7 +184,8 @@ exports.get_allProducts = async (req,res)=>{
             products = await productModel.find(
                 {
                     productName : {
-                        $regex : req.query.search
+                        $regex : req.query.search,
+                        $options: 'i'
                     }
                 }
             )
@@ -715,6 +716,38 @@ exports.delete_checkout = async (req,res)=>{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const keyId = process.env.keyId
+const keySecret = process.env.keySecret
+
 let otp
 exports.post_checkout = async (req,res)=>{
     try {
@@ -734,9 +767,29 @@ exports.post_checkout = async (req,res)=>{
                 productId : productArray
             }
             req.session.orders = orders
+            otp = Math.floor(100000 + Math.random() * 900000)
+            const signupData = await signupModel.findOne({_id : req.session.user_id})
+            emailCOD(signupData.email, otp)
 
             if(paymentMethod === 'cashondelivery'){
-                
+                return res.status(200).json({success : true, COD : true})
+            }
+            else if(paymentMethod === 'online'){
+                var instance = new Razorpay ({
+                    key_id : keyId,
+                    key_secret : keySecret
+                })
+
+                const totalPrice = parseInt(orderTotal) * 100
+                const Order = await instance.orders.create({
+                    amount : orderTotal,
+                    currency : "INR",
+                    receipt : "receipt",
+                    payment_capture : 1
+                })
+
+
+                return res.status(200).json({success : true, Order, keyId, totalPrice})
             } 
         }
     } catch (error) {
