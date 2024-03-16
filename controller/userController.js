@@ -8,6 +8,7 @@ const signupModel = require("../model/signupModel")
 const couponModel = require("../model/couponModel")
 const orderModel = require("../model/orderModel")
 const fs = require("fs")
+const Razorpay = require("razorpay")
 
 const { Types, default: mongoose } = require('mongoose')
 const emailCOD = require("../utilities/emailCOD")
@@ -241,23 +242,6 @@ exports.post_product = async (req,res)=>{
         console.log(error);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -558,9 +542,6 @@ exports.post_add_deliveryAddress = async (req,res) =>{
 
 
 
-
-
-
 exports.get_orders = async (req,res)=>{
     try {
         if(req.session.user_id){
@@ -733,6 +714,7 @@ exports.delete_checkout = async (req,res)=>{
 
 
 
+
 let otp
 exports.post_checkout = async (req,res)=>{
     try {
@@ -754,15 +736,8 @@ exports.post_checkout = async (req,res)=>{
             req.session.orders = orders
 
             if(paymentMethod === 'cashondelivery'){
-                const signupData = await signupModel.findOne({_id : req.session.user_id})
-                otp = Math.floor(100000 + Math.random() * 900000)
-                emailCOD(signupData.email, otp)
-                return res.status(200).json({success : true, COD : true})
-            }
-            else if(paymentMethod === 'online'){
-
-            }
-           
+                
+            } 
         }
     } catch (error) {
         console.log(error);
@@ -895,7 +870,7 @@ exports.post_cod_otp = async (req,res)=>{
 
 exports.patch_cancelOrder = async (req,res)=>{
     try {
-        const {productId, orderId} = req.body
+        const {productId, orderId, quantity} = req.body
         const update = await orderModel.findOneAndUpdate(
             {
                 userId : req.session.user_id,
@@ -919,8 +894,17 @@ exports.patch_cancelOrder = async (req,res)=>{
                 new : true
             }
         )
-        console.log(update);
         if(update){
+            await productModel.findOneAndUpdate(
+                {
+                    _id : productId,
+                },
+                {
+                    $inc : {
+                        stock : Number(quantity)
+                    }
+                }
+            )
             return res.status(200).json({success : true})
         }else{
             return res.status(289).json({success : false})

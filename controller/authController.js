@@ -116,7 +116,6 @@ exports.post_otp = async (req,res)=>{
 exports.get_resend_otp = async (req,res)=>{
     try {
         const phone = req.query.phone
-        console.log(phone);
             await client.verify.v2.services.create({friendlyName: "user verification"})
             await client.verify.v2.services(verifySid).verifications.create({to:`+91${phone}`, channel: "sms"})
             .then( otpverification => console.log(otpverification.status))

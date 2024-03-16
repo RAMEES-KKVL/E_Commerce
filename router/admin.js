@@ -32,6 +32,8 @@ router.post("/reset_password",adminControllerInfo.admin_post_reset_pass)
 
 router.get("/home",adminController.admin_get_Home)
 
+router.get("/chart",adminController.admin_getChart)
+
 router.get("/user_list",adminController.admin_get_userList)
 router.patch("/user_list/block",adminController.admin_block_userList)
 router.delete("/user_List/delete_User/:user_id",adminController.admin_delete_user)

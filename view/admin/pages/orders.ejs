@@ -17,28 +17,32 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Sl.No</th>
                                     <th>Order ID</th>
                                     <th>Product Id</th>
                                     <th>Product Name</th>
                                     <th>Price</th>
                                     <th>User ID</th>
-                                    <th>Username</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1548546845486445</td>
-                                    <td>1548546845r86e58e</td>
-                                    <td>abcdrdr</td>
-                                    <td>466565</td>
-                                    <td>abcfityft656975765</td>
-                                    <td>abcrstyf</td>
-                                    <td>ordered</td>
-                                </tr>
+                                <% orders.forEach(userOrder =>{ %> 
+                                    <% userOrder.orders.forEach(order =>{ %>
+                                        <% order.productId.forEach(product =>{ %>
+                                            <tr>
+                                                <td><%= order._id %></td>
+                                                <td><%= product.productId._id %></td>
+                                                <td><%= product.productId.productName %></td>
+                                                <td><%= product.productId.price - product.productId.discount %></td>
+                                                <td><%= userOrder.userId %></td>
+                                                <td style="<%= product.orderStatus === 'Cancelled' ? 'color:red;' : 'color:green;' %>">
+                                                    <%= product.orderStatus %>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    <% }) %>
+                                <% }) %>
                             </tbody>
                         </table>
 

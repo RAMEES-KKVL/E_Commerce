@@ -3,12 +3,83 @@ const categoryModel = require("../model/categoryModel")
 const couponModel = require("../model/couponModel")
 const bannerModel = require("../model/bannerModel")
 const fs = require("fs")
-const { json } = require("express")
+// const { json } = require("express")
+const orderModel = require("../model/orderModel")
+const productModel = require("../model/productModel")
 
 
 exports.admin_get_Home = (req,res)=>{
+
     res.render("admin/pages/dashboard")
 }
+
+
+exports.admin_getChart = async (req,res)=>{
+    try {
+        
+        const monthlyData = await signupModel.aggregate([
+            {
+                $match: {
+                    createdat: {
+                        $gte: new Date(new Date().getFullYear(), 0, 1), // Start of the current year
+                        $lt: new Date(new Date().getFullYear() + 1, 0, 1) // Start of next year
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: { $month: "$createdat" },
+                    count: { $sum: 1 } // Count documents for each month
+                }
+            },
+            {
+                $sort: { "_id": 1 } // Sort by month
+            }
+        ]);
+
+        // Format data for Chart.js
+        const chartData = {
+            labels: [],
+            data: []
+        };
+        monthlyData.forEach(month => {
+            chartData.labels.push(month._id); // Push month number (1-12)
+            chartData.data.push(month.count); // Push count for the month
+        });
+
+        // const orders = await orderModel.find()
+        const results = await orderModel.aggregate([
+            {
+              $unwind: "$orders", // Deconstruct the orders array
+            },
+            {
+              $group: {
+                _id:  { $month: "$orders.orderDate" } , // Group by month
+                count: { $sum: 1 }, // Count the number of orders in each month
+              },
+            },
+            
+        ])
+          
+
+        const products = await productModel.find()
+        // Aggregate the data to get the count of products by category
+        const productCategories = {};
+        products.forEach(product => {
+            const category = product.category;
+            if (!productCategories[category]) {
+                productCategories[category] = 1;
+            } else {
+                productCategories[category]++;
+            }
+        });
+
+        return res.status(200).json({success : true, chartData, orderData : results, productData : productCategories})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
@@ -76,11 +147,13 @@ exports.admin_delete_user = async (req,res)=>{
 
 
 
-
-
-
-exports.admin_get_orders = (req,res)=>{
-    res.render("admin/pages/orders")
+exports.admin_get_orders = async (req,res)=>{
+    try {
+        const orders = await orderModel.find().populate("orders.productId.productId")
+        res.render("admin/pages/orders", {orders})
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 

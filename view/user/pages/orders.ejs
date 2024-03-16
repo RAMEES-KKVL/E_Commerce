@@ -32,10 +32,10 @@
                                 </td>
                                 <td><%= order._id %></td>
                                 <td style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(255, 0, 0, 0.748);">
-                                    <i class="bi bi-currency-rupee"></i><%= product.productId.price %>
+                                    <i class="bi bi-currency-rupee"></i><%= product.productId.price - product.productId.discount %>
                                 </td>
                                 <td style="font-family: 'Poppins',sans-serif; font-weight: 600; color: rgba(0, 0, 0, 0.748);"><%= order.orderDate.toDateString() %></td>
-                                <td class="status delivered"><%= product.orderStatus %></td>
+                                <td class="status delivered" style="<%= product.orderStatus === 'Cancelled' ? 'color: red;' : 'color: green;' %>"><%= product.orderStatus %></td>
                             </tr>
                         <% }) %>
                     <% }) %>

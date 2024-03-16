@@ -13,15 +13,20 @@
             </div>
             <div class="earnings_chart">
                 <div class="earnings_diagram">
-                    <div class="earnings_img"></div>
+                    <div class="earnings_img">
+                        <div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
                 </div>
                 <div class="revenue_diagram">
-                    <div class="revenue_img"></div>
+                    <div class="revenue_img">
+                        <canvas id="myChartProducts"></canvas>
+                    </div>
                 </div>
-
             </div>
-            <div class="project_chart">
-                
+            <div class="project_chart" style="display: flex; justify-content: center;">
+                <canvas id="myChartOrder"></canvas>
             </div>
 
         </div>
@@ -31,3 +36,7 @@
 </div>
 
 <%- include("../../end.ejs") %>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/admin/charts.js"></script>
