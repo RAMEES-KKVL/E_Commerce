@@ -1,3 +1,5 @@
+//------------------------- FORGET PASSWORD - CLIENT SIDE ---------------------------------
+
 const submitButn = document.querySelector("#forget_pass_submitBtn")
 const form = document.getElementById("forgetPass_Form")
 const errorMessage = document.querySelector("#forgetPass_Error")
@@ -11,7 +13,6 @@ submitButn.addEventListener("click", async(event)=>{
         const response = await axios.post("/admin/forget_Password",formEmail)
         const result = response.data
             if(result.success){
-                console.log(1);
                 const forget_email = result.email
                     window.location.href = `/admin/verification?forget_email=${encodeURIComponent(forget_email)}`
             }else if(!result.success){

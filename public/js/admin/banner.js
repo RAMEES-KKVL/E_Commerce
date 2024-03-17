@@ -1,3 +1,6 @@
+//------------------------- BANNER ADDING - CLIENT SIDE ---------------------------------
+
+// FUNCTION FOR IMAGE PREVIEW
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -9,6 +12,7 @@ function previewImage(input){
     } 
 }
 
+// CONDUCTING CLIENT-SIDE VALIDATION AND PASSING DATA TO SERVER-SIDE AND GIVING RESPOSE
 document.getElementById("banner_add_button").addEventListener("click", async (event)=>{
     event.preventDefault()
     try {
@@ -16,7 +20,6 @@ document.getElementById("banner_add_button").addEventListener("click", async (ev
         const bannerImage = document.getElementById("bannerImage").files[0]
         const bannerHeading = document.getElementById("bannerHeading").value.trim()
         const offerPrice = document.getElementById("offerPrice").value
-        // const bannerDescription = document.getElementById("bannerDescription").value.trim()
         const startingDate = document.getElementById("startingDate").value
         const endingDate = document.getElementById("endingDate").value
 

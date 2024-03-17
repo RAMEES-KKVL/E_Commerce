@@ -1,3 +1,5 @@
+//------------------------- COUPON ADDING - CLIENT SIDE ---------------------------------
+
 document.getElementById("coupon_create_button").addEventListener("click", async (event)=>{
     event.preventDefault()
 

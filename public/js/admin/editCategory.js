@@ -1,3 +1,6 @@
+//------------------------- CATEGORY AND SUBCATEGORY EDITING - CLIENT SIDE ---------------------------------
+
+// FUNCTION FOR IMAGE PREVIEW
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -9,14 +12,14 @@ function previewImage(input){
     }
 }
 
+// FUNCTION FOR SUBCATEGORY PREVIEW
 function toggleDropdown() {
     const dropdown = document.getElementById("dropdownList");
     dropdown.style.display = dropdown.style.display ===  'none' ? 'block' : 'none'
 }
 
-
+// SUBCATEGORY EDITING SECTION
 let subcategoryArray = JSON.parse(document.getElementById("dropdownList").getAttribute("sub-Category"))
-
 document.getElementById("sub-category_submit_btn").addEventListener("click", async (event)=>{
     event.preventDefault()
 
@@ -70,7 +73,7 @@ function updateSubcategoryList(){
     })
 }
 
-
+// CATEGORY EDITING SECTION
 document.getElementById("category_edit_btn").addEventListener("click", async (event)=>{
     event.preventDefault()
 
@@ -125,7 +128,7 @@ document.getElementById("category_edit_btn").addEventListener("click", async (ev
                         title: "Category updated successfully",
                         showConfirmButton: false,
                         timer: 2500
-                      });
+                    });
                 }
             }else{
                 if(result.missingData){

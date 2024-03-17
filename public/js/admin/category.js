@@ -1,13 +1,17 @@
+//------------------------- CATEGORY AND SUBCATEGORY ADDING - CLIENT SIDE ---------------------------------
+
 // const { default: axios } = require("axios")
 // const Content = require("twilio/lib/rest/Content")
 
 let subcategoryArray = []
 
+// FUNCTION FOR SUBCATEGORY PREVIEW
 function toggleDropdown() {
     const dropdown = document.getElementById("dropdownList");
     dropdown.style.display = dropdown.style.display ===  'none' ? 'block' : 'none'
 }
 
+// FUNCTION FOR IMAGE PREVIEW
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -19,9 +23,9 @@ function previewImage(input){
     }
 }
 
+// SUBCATEGORY ADDING SECTION
 const categoryBtn = document.getElementById("category_submit_btn")
 const subcategoryBtn = document.getElementById("sub-category_submit_btn")
-
 subcategoryBtn.addEventListener("click", async (event)=>{
     event.preventDefault()
    try {
@@ -61,17 +65,6 @@ function updateSubcategoryList(){
         listItem.classList.add('ul_li')
         listItem.innerHTML = subcategory + `<i  class="bi delete${subcategory} bi-trash-fill"></i>`
         dropdownList.appendChild(listItem)
-
-        // if(dropdownList.appendChild(listItem)){
-        // document.querySelectorAll(`.delete${subcategory}`).addEventListener('click',()=>{
-        //     const index = subcategoryArray.indexOf(subcategory)
-        //         if(index !== -1){
-        //             subcategoryArray.splice(index, 1)
-        //             updateSubcategoryList()
-        //         }
-        //     })
-        // }
-
         const deleteIcons = document.querySelectorAll(`.delete${subcategory}`);
         deleteIcons.forEach(deleteIcon => {
             deleteIcon.addEventListener('click', () => {
@@ -85,6 +78,7 @@ function updateSubcategoryList(){
     });
 }
 
+// FUNCTION FOR ADDING CATEGORY
 categoryBtn.addEventListener("click", async (event)=>{
     event.preventDefault()
     const categoryImage = document.getElementById("categoryImage").files[0]
@@ -128,56 +122,54 @@ categoryBtn.addEventListener("click", async (event)=>{
                     "content-Type" : "multipart/form-data"
                 }
             })
-            
             const result = response.data
+            const categoryInput = document.getElementById("categoryName")
+            const subcategoryNameInput = document.getElementById("subcategoryName")
+            const imageInput = document.getElementById("imagePreview")
 
-                const categoryInput = document.getElementById("categoryName")
-                const subcategoryNameInput = document.getElementById("subcategoryName")
-                const imageInput = document.getElementById("imagePreview")
-
-                if(result.success){
-                    if(result.allData){
-                        categoryInput.value = ""
-                        subcategoryNameInput.value = ""
-                        imageInput.src = ""
-                        subcategoryArray = []
-                        dropdownList.innerHTML = ""
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Category and subcategory updated successfully",
-                            showConfirmButton: false,
-                            timer: 2500
-                          });
-                    }
-                    else if(result.data){
-                        categoryInput.value = ""
-                        imageInput.src = ""
-                        subcategoryNameInput.value = ""
-                        subcategoryArray = []
-                        dropdownList.innerHTML = ""
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Category updated successfully",
-                            showConfirmButton: false,
-                            timer: 2500
-                          });
-                    }
-                }else{
-                    if(result.missingData){
-                        errormsg.innerHTML = result.errorMsg
-                        setTimeout(() => {
-                            errormsg.innerHTML = ""
-                        }, 4000);
-                    }
-                    else if(result.exist){
-                        errormsg.innerHTML = result.errorMsg
-                        setTimeout(() => {
-                            errormsg.innerHTML = ""
-                        }, 4000);
-                    }
+            if(result.success){
+                if(result.allData){
+                    categoryInput.value = ""
+                    subcategoryNameInput.value = ""
+                    imageInput.src = ""
+                    subcategoryArray = []
+                    dropdownList.innerHTML = ""
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Category and subcategory updated successfully",
+                        showConfirmButton: false,
+                        timer: 2500
+                        });
                 }
+                else if(result.data){
+                    categoryInput.value = ""
+                    imageInput.src = ""
+                    subcategoryNameInput.value = ""
+                    subcategoryArray = []
+                    dropdownList.innerHTML = ""
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Category updated successfully",
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                }
+            }else{
+                if(result.missingData){
+                    errormsg.innerHTML = result.errorMsg
+                    setTimeout(() => {
+                        errormsg.innerHTML = ""
+                    }, 4000);
+                }
+                else if(result.exist){
+                    errormsg.innerHTML = result.errorMsg
+                    setTimeout(() => {
+                        errormsg.innerHTML = ""
+                    }, 4000);
+                }
+            }
         }
     } catch (error) {
         console.log("category fetch ",error.message);

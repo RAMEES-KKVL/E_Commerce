@@ -9,12 +9,13 @@ const couponModel = require("../model/couponModel")
 const orderModel = require("../model/orderModel")
 const fs = require("fs")
 const Razorpay = require("razorpay")
-
 const { Types, default: mongoose } = require('mongoose')
 const emailCOD = require("../utilities/emailCOD")
- 
 
+const keyId = process.env.keyId
+const keySecret = process.env.keySecret
 
+//----------------------------- USER CONTROLLER - HOME SECTION -------------------------------
 exports.get_home = async (req,res)=>{
     try {
         const banners = await bannerModel.find()
@@ -34,21 +35,31 @@ exports.get_home = async (req,res)=>{
     }
 }
 
-
-exports.get_count = async (req,res)=>{
+exports.get_category = async (req,res)=>{
     try {
-        const cart = await cartModel.findOne({userId : req.session.user_id})
-        const wishlist = await wishlistModel.findOne({userId : req.session.user_id})
-        const cartCount = cart ? cart.products.length : 0
-        const wishlistCount = wishlist ? wishlist.products.length : 0
-        return res.status(200).json({cartCount, wishlistCount})
+        const categories = await categoryModel.find()
+        const category = req.query.category_name
+        const categoryProducts = await productModel.find({category: category})
+        const wishlist = await wishlistModel.findOne({userId: req.session.user_id})
+        const cart = await cartModel.findOne({userId: req.session.user_id})
+        res.render("user/pages/productViewByCategory", {categories, categoryProducts, wishlist, cart})
     } catch (error) {
         console.log(error);
     }
 }
 
-
-
+exports.get_subcategory = async (req,res)=>{
+    try {
+        const subCategory = req.query.subcategory_Id
+        const products = await productModel.find({subCategory})
+        const categories = await categoryModel.find()
+        const wishlist = await wishlistModel.findOne({userId: req.session.user_id})
+        const cart = await cartModel.findOne({userId: req.session.user_id})
+        res.render("user/pages/productViewBysubCategory", {categories, products, wishlist, cart})
+    } catch (error) {
+      console.log(error);  
+    }
+}
 
 exports.get_allProducts = async (req,res)=>{
     try {
@@ -56,7 +67,8 @@ exports.get_allProducts = async (req,res)=>{
         const currentFilter = req.query ? req.query.category ? req.query.category :  req.query.range : "" 
         const wishlist = await wishlistModel.findOne({userid : req.session.user_id})
         const cart = await cartModel.findOne({userid : req.session.user_id})
-        if(req.query.category){
+
+        if(req.query.category){      // FILTERING PRODUCTS
             const category = req.query.category
             if(category === "all"){
                 products = await productModel.find()
@@ -170,7 +182,7 @@ exports.get_allProducts = async (req,res)=>{
                 const CategoryProducts = await productModel.find({category})
                 products = CategoryProducts
             }
-        }else if(req.query.range){
+        }else if(req.query.range){    // SORTING PRODUCTS
             if(req.query.range === 'Low to High'){
                 products = await productModel.find().sort({
                     price : 1
@@ -180,7 +192,7 @@ exports.get_allProducts = async (req,res)=>{
                     price : -1
                 })
             }
-        }else if(req.query.search){
+        }else if(req.query.search){    // SEARCHING PRODUCTS
             products = await productModel.find(
                 {
                     productName : {
@@ -197,11 +209,21 @@ exports.get_allProducts = async (req,res)=>{
         console.log(error);
     }
 }
-  
 
+//----------------------------- CART - WISHLIST COUNT -------------------------------
+exports.get_count = async (req,res)=>{
+    try {
+        const cart = await cartModel.findOne({userId : req.session.user_id})
+        const wishlist = await wishlistModel.findOne({userId : req.session.user_id})
+        const cartCount = cart ? cart.products.length : 0
+        const wishlistCount = wishlist ? wishlist.products.length : 0
+        return res.status(200).json({cartCount, wishlistCount})
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-
-
+//-----------------------------  FUNCTION FOR VIEWING SINGLE PRODUCT -------------------------------
 exports.get_product = async (req,res)=>{
     try {
         const id = req.query.product_id
@@ -215,8 +237,7 @@ exports.get_product = async (req,res)=>{
     }
 }
 
-
-
+//------------------------------ STORING USER-PREFERRED PRODUCT SIZE -------------------------------
 let checkoutProduct = []
 exports.post_product = async (req,res)=>{
     try {
@@ -225,6 +246,7 @@ exports.post_product = async (req,res)=>{
             const size = req.query.size
             const product = await productModel.findOne({_id : productId})
             const existProduct = checkoutProduct.some(product => product.productId._id === product._id) 
+
             if(!existProduct){
                 const key = {
                     productId : product,
@@ -244,43 +266,7 @@ exports.post_product = async (req,res)=>{
     }
 }
 
-
-
-
-exports.get_category = async (req,res)=>{
-    try {
-        const categories = await categoryModel.find()
-        const category = req.query.category_name
-        const categoryProducts = await productModel.find({category: category})
-        const wishlist = await wishlistModel.findOne({userId: req.session.user_id})
-        const cart = await cartModel.findOne({userId: req.session.user_id})
-        res.render("user/pages/productViewByCategory", {categories, categoryProducts, wishlist, cart})
-    } catch (error) {
-        console.log(error);
-    }
-}
-
- 
-
-  
-
-exports.get_subcategory = async (req,res)=>{
-    try {
-        const subCategory = req.query.subcategory_Id
-        const products = await productModel.find({subCategory})
-        const categories = await categoryModel.find()
-        const wishlist = await wishlistModel.findOne({userId: req.session.user_id})
-        const cart = await cartModel.findOne({userId: req.session.user_id})
-        res.render("user/pages/productViewBysubCategory", {categories, products, wishlist, cart})
-    } catch (error) {
-      console.log(error);  
-    }
-}
-
-
-
-
-
+//-----------------------------  USER PROFILE SECTION -------------------------------
 exports.get_profile = async (req,res)=>{
     try {
         if(req.session.user_id){
@@ -294,10 +280,6 @@ exports.get_profile = async (req,res)=>{
         console.log(error);
     }
 }
-
-
-
-
 
 exports.post_profile = async (req,res)=>{
     try {
@@ -355,7 +337,6 @@ exports.post_profile = async (req,res)=>{
                     }
                 })
                 const added = await newSchema.save()
-
                 if(added && updated){
                     return res.status(200).json({ success : true }) 
                 }else{
@@ -370,10 +351,6 @@ exports.post_profile = async (req,res)=>{
     }
 }
 
-
-
-
-
 exports.get_edit_address = async (req,res)=>{
     try {
         const userId = req.query.userId
@@ -384,10 +361,6 @@ exports.get_edit_address = async (req,res)=>{
         console.log(error);
     }
 }
-
-
-
-
 
 exports.patch_edit_address = async (req,res)=>{
     try {
@@ -497,9 +470,6 @@ exports.patch_edit_address = async (req,res)=>{
     }
 }
 
-
-
-
 exports.post_add_deliveryAddress = async (req,res) =>{
     try {
         if(req.session.user_id){
@@ -540,9 +510,7 @@ exports.post_add_deliveryAddress = async (req,res) =>{
     }
 }
 
-
-
-
+//-----------------------------  USER ORDER SECTION -------------------------------
 exports.get_orders = async (req,res)=>{
     try {
         if(req.session.user_id){
@@ -556,8 +524,6 @@ exports.get_orders = async (req,res)=>{
         console.log(error);
     }
 }
-
-
 
 exports.get_orderOpen = async (req,res)=>{
     try {
@@ -577,10 +543,7 @@ exports.get_orderOpen = async (req,res)=>{
     }
 }
 
-
-
-
-
+//-----------------------------  CHECKOUT SECTION -------------------------------
 exports.get_checkout = async (req,res)=>{
     try {
         if(req.session.user_id){
@@ -597,8 +560,7 @@ exports.get_checkout = async (req,res)=>{
     }
 }
 
-
-
+//-----------------------------  STORING CHANGED QUANTITY FROM CHECKOUT PAGE -------------------------------
 exports.patch_checkout_quantity = async (req,res)=>{
     try {
         const cart = await cartModel.findOne({userId : req.session.user_id})
@@ -637,7 +599,7 @@ exports.patch_checkout_quantity = async (req,res)=>{
     }
 }
 
-
+//-----------------------------  STORING CHANGED SIZE FROM CHECKOUT PAGE -------------------------------
 exports.patch_checkout_size = async (req,res)=>{
     try {
         const cart = await cartModel.findOne({userId : req.session.user_id})
@@ -675,10 +637,7 @@ exports.patch_checkout_size = async (req,res)=>{
     }
 }
 
-
-
-
-
+//-----------------------------  REMOVING PRODUCT FROM CHECKOUT PAGE -------------------------------
 exports.delete_checkout = async (req,res)=>{
     try {
         if(req.session.user_id){
@@ -709,51 +668,13 @@ exports.delete_checkout = async (req,res)=>{
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const keyId = process.env.keyId
-const keySecret = process.env.keySecret
-
+//-----------------------------  PLACING ORDER FROM CHECKOUT PAGE -------------------------------
 let otp
 exports.post_checkout = async (req,res)=>{
     try {
         if(req.session.user_id){
             const {paymentMethod, productArray, orderTotal}= req.body
-            const deliveryAddress = JSON.parse(req.body.delivery_Address)
+            const deliveryAddress = req.body.delivery_Address ? JSON.parse(req.body.delivery_Address) : ''
             const currentDate = new Date()
             const deliveryDate = new Date(currentDate);
             deliveryDate.setDate(currentDate.getDate() + 5);
@@ -769,16 +690,16 @@ exports.post_checkout = async (req,res)=>{
             req.session.orders = orders
             otp = Math.floor(100000 + Math.random() * 900000)
             const signupData = await signupModel.findOne({_id : req.session.user_id})
-            emailCOD(signupData.email, otp)
 
             if(paymentMethod === 'cashondelivery'){
+                emailCOD(signupData.email, otp)
                 return res.status(200).json({success : true, COD : true})
             }
             else if(paymentMethod === 'online'){
                 var instance = new Razorpay ({
                     key_id : keyId,
                     key_secret : keySecret
-                })
+                });
 
                 const totalPrice = parseInt(orderTotal) * 100
                 const Order = await instance.orders.create({
@@ -786,9 +707,8 @@ exports.post_checkout = async (req,res)=>{
                     currency : "INR",
                     receipt : "receipt",
                     payment_capture : 1
-                })
-
-
+                });
+                emailCOD(signupData.email, otp)
                 return res.status(200).json({success : true, Order, keyId, totalPrice})
             } 
         }
@@ -797,14 +717,11 @@ exports.post_checkout = async (req,res)=>{
     }
 }
 
-
-
-
 exports.get_cod_otp = (req,res)=>{
     res.render("user/pages/CODotp")
 }
 
-
+//-----------------------------  VERIFYING OTP AND SAVING ORDER -------------------------------
 exports.post_cod_otp = async (req,res)=>{
     try {
         const {one, two, three, four, five, six} = req.body
@@ -815,7 +732,7 @@ exports.post_cod_otp = async (req,res)=>{
                return item.orderStatus = "Confirmed"
             })
             const orderList = await orderModel.findOne({userId : req.session.user_id})
-            if(!orderList){
+            if(!orderList){    // STORING ORDER DETAILS IN DATABASE
                 const saved = await orderModel.create(prArray)
                 if(saved){
                     const pushed = await orderModel.findOneAndUpdate(
@@ -836,6 +753,7 @@ exports.post_cod_otp = async (req,res)=>{
                             const oldStock = productExist.stock
                             const currentStock = oldStock - quantity
 
+                            // REMOVING ORDERED PRODUCT FROM CART
                             await cartModel.findOneAndUpdate(
                                 {
                                     userId : req.session.user_id
@@ -847,6 +765,7 @@ exports.post_cod_otp = async (req,res)=>{
                                 }
                             )
 
+                            // DECREMENTING QUANTITY OF ORDERD PRODUCT
                             await productModel.findOneAndUpdate(
                                 {
                                     _id : productId
@@ -866,6 +785,7 @@ exports.post_cod_otp = async (req,res)=>{
                     return res.status(279).json({success : false, failedCreation : true})
                 }
             }else{
+                // STORING ORDER DETAILS IN DATABASE
                 const pushed = await orderModel.findOneAndUpdate(
                     {
                         userId : req.session.user_id
@@ -884,6 +804,7 @@ exports.post_cod_otp = async (req,res)=>{
                             const oldStock = productExist.stock
                             const currentStock = oldStock - quantity
 
+                            // REMOVING ORDERED PRODUCT FROM CART
                             await cartModel.findOneAndUpdate(
                                 {
                                     userId : req.session.user_id
@@ -895,6 +816,7 @@ exports.post_cod_otp = async (req,res)=>{
                                 }
                             )
 
+                            // DECREMENTING QUANTITY OF ORDERD PRODUCT
                             await productModel.findOneAndUpdate(
                                 {
                                     _id : productId
@@ -919,10 +841,10 @@ exports.post_cod_otp = async (req,res)=>{
     }
 }
 
-
-
+//-----------------------------  CANCELLING ORDER -------------------------------
 exports.patch_cancelOrder = async (req,res)=>{
     try {
+        // REMOVING ORDER DETAILS FROM DATABASE
         const {productId, orderId, quantity} = req.body
         const update = await orderModel.findOneAndUpdate(
             {
@@ -948,6 +870,7 @@ exports.patch_cancelOrder = async (req,res)=>{
             }
         )
         if(update){
+            // CHANGING QUATITY OF CANCELLED PRODUCT
             await productModel.findOneAndUpdate(
                 {
                     _id : productId,
@@ -967,19 +890,12 @@ exports.patch_cancelOrder = async (req,res)=>{
     }
 }
 
+//-----------------------------  ABOUT US SECTION -------------------------------
+exports.get_aboutUs = (req,res)=>{
+    res.render("user/pages/aboutUs")
+}
 
-exports.get_payment = (req,res)=>{}
-
-
-
-
-
-exports.post_payment = (req,res)=>{}
-
-
-
-
-
+//-----------------------------  USER LOG-OUT SECTION -------------------------------
 exports.get_logout = (req,res)=>{
     req.session.destroy((error)=>{
         if(error){
@@ -989,7 +905,3 @@ exports.get_logout = (req,res)=>{
         }
     })
 }
-
-
-
-

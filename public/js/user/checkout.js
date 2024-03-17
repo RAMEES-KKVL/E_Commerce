@@ -1,5 +1,6 @@
-// FUNCTION FOR DELETING PRODUCT FROM CHECKOUT PAGE 
+//------------------------- CHECKOUT PAGE - CLIENT SIDE ---------------------------------
 
+// FUNCTION FOR DELETING PRODUCT FROM CHECKOUT PAGE 
 async function deleteFromcheckout(event, producId){
     event.stopPropagation()
     try {
@@ -16,9 +17,7 @@ async function deleteFromcheckout(event, producId){
     }
 }
 
-
 // FUNCTION FOR DROPDOWN DIV FOR ADDING DELIVERY ADDRESS FROM CHECKOUT PAGE 
-
 function dropDown(){
     const dropBtn = document.querySelector('.droup_right_btn')
     const plusIcon = document.querySelector('.plus_btn')
@@ -35,9 +34,7 @@ function dropDown(){
     })
 }
 
-
 // FUNCTION FOR SELECTING PRODUCT QUANTITY FROM CHECKOUT PAGE
-
 async function selectQuantity(event, productId){
     event.stopPropagation()
 
@@ -62,9 +59,7 @@ async function selectQuantity(event, productId){
     });   
 }
 
-
 // FUNCTION FOR SELECTING PRODUCT SIZE FROM CHECKOUT PAGE 
-
 function selectSize(event, productId){
     event.stopPropagation()
     document.querySelector(".size_select" + productId).addEventListener("change", async (element)=>{
@@ -89,9 +84,7 @@ function selectSize(event, productId){
     })
 }
 
-
 // FUNCTION FOR APPLYING EXISTING COUPONS FROM CHECKOUT PAGE 
-
 function applyCoupon(event, couponDiscount, couponName){
     document.querySelector(".coupon_price").innerHTML = couponDiscount
     document.querySelector(".order_total").innerHTML = Number(document.querySelector(".sub_total").innerHTML) - Number(couponDiscount)
@@ -99,9 +92,7 @@ function applyCoupon(event, couponDiscount, couponName){
     document.getElementById("custom_coupon_name").value = couponName
 }
 
-
 // FUNCTION FOR ADDING REDEEMABLE EXTRA COUPONS FROM CHECKOUT PAGE
-
 function customCoupon(){
     const userCoupon = document.getElementById("custom_coupon_name").value.trim()
     const orderTotal = document.querySelector(".order_total").innerHTML
@@ -139,9 +130,7 @@ function customCoupon(){
     }
 }
 
-
 // FUNCTION FOR ADDING ADDITIONAL DELIVERY ADDRESS FROM CHECKOUT PAGE 
-
 async function addNewAddress(event){
     try {
         const phoneRegex = /^[0-9]{10}$/
@@ -194,61 +183,91 @@ async function addNewAddress(event){
     }
 }
 
-
 // FUNCTION FOR ORDERING PRODUCTS FROM CHECKOUT PAGE 
+document.querySelector(".proceed_btn").addEventListener("click", async (event)=>{
+    event.preventDefault()
+        try {
+            const paymentInputs = document.querySelectorAll('.payment_method')
+            let selectedPaymentMethod
+            paymentInputs.forEach(input =>{
+                if(input.checked){
+                    selectedPaymentMethod = input.id
+                }
+            })
+            if(!selectedPaymentMethod){
+                document.getElementById("error_payment").innerHTML = "Choose Payment Method"
+                setTimeout(() => {
+                    document.getElementById("error_payment").innerHTML = ""
+                }, 2500);
+            } 
 
-// document.querySelector(".proceed_btn").addEventListener("click", async (event)=>{
-//     event.preventDefault()
-//         try {
-//             const paymentInputs = document.querySelectorAll('.payment_method')
-//             let selectedPaymentMethod
-//             paymentInputs.forEach(input =>{
-//                 if(input.checked){
-//                     selectedPaymentMethod = input.id
-//                 }
-//             })
-//             if(!selectedPaymentMethod){
-//                 document.getElementById("error_payment").innerHTML = "Choose Payment Method"
-//                 setTimeout(() => {
-//                     document.getElementById("error_payment").innerHTML = ""
-//                 }, 2500);
-//             } 
-
-//             const addressInputs = document.querySelectorAll(".delivery_adrress")
-//             let selectedAddress 
-//             addressInputs.forEach(input =>{
-//                 if(input.checked){
-//                     selectedAddress = input.id
-//                 }
-//             })
-//             if(!selectedAddress){
-//                 document.getElementById("error_address").innerHTML = "Choose address"
-//                 setTimeout(() => {
-//                     document.getElementById("error_address").innerHTML = ""
-//                 }, 2500);
-//             }
+            const addressInputs = document.querySelectorAll(".delivery_adrress")
+            let selectedAddress 
+            addressInputs.forEach(input =>{
+                if(input.checked){
+                    selectedAddress = input.id
+                }
+            })
+            if(!selectedAddress){
+                document.getElementById("error_address").innerHTML = "Choose address"
+                setTimeout(() => {
+                    document.getElementById("error_address").innerHTML = ""
+                }, 2500);
+            }
             
-//             const products = JSON.parse(document.querySelector(".checkout_left_top").getAttribute("checkout-Product"))
-//             products.forEach(item => {
-//                 item.orderStatus = 'Pending'
-//             });
-//             const orderTotal = document.querySelector(".order_total").innerHTML.trim()
-//             const response = await axios.post(`/checkout`, {
-//                     paymentMethod: selectedPaymentMethod,
-//                     productArray: products,
-//                     delivery_Address: selectedAddress,
-//                     orderTotal
-//                 }
-//             )
-//             const result = response.data
+            const products = JSON.parse(document.querySelector(".checkout_left_top").getAttribute("checkout-Product"))
+            products.forEach(item => {
+                item.orderStatus = 'Pending'
+            });
+            const orderTotal = document.querySelector(".order_total").innerHTML.trim()
+            const response = await axios.post(`/checkout`, {
+                    paymentMethod: selectedPaymentMethod,
+                    productArray: products,
+                    delivery_Address: selectedAddress,
+                    orderTotal
+                }
+            )
+            const result = response.data
 
-//             if(result.success){
-//                 if(result.COD){
-//                     window.location.href = "/cod_otp"
-//                 }
-//             }
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// )
+            if(result.success){
+                if(result.COD){
+                    window.location.href = "/cod_otp"
+                }else if(result.Order){
+                    const order = result.Order
+                    const keyId = result.keyId
+                    const totalPrice = result.totalPrice
+                    var options = {
+                        "key" : keyId,
+                        "amount" : totalPrice,
+                        "currency" : "INR",
+                        "name" : "E Kart",
+                        "description": "Test Transaction",
+                        "order_id":  order._id,
+                        "handler": function (response){
+                            window.location.href = '/cod_otp'
+                        },
+                        "notes": {
+                            "address": "Razorpay Corporate Office"
+                        },
+                        "theme": {
+                            "color": "#3399cc"
+                        }
+                    }
+                    var rzp1 = new Razorpay(options)
+                    rzp1.on('payment.failed', function(response){
+                        alert(response.error.code);
+                        alert(response.error.description);
+                        alert(response.error.source);
+                        alert(response.error.step);
+                        alert(response.error.reason);
+                        alert(response.error.metadata.order_id);
+                        alert(response.error.metadata.payment_id);
+                    })
+                    rzp1.open()
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)

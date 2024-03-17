@@ -8,8 +8,6 @@
     
 }
 
-
-
 .btn-danger{
     padding: .8rem 1rem;
     background-color: rgb(0, 206, 0);
@@ -36,12 +34,6 @@
 .btn-secondary:active{
    transform: scale(.95);
 }
-
-
-
-
-
-
 
 .container{
     height: 100vh;
@@ -92,21 +84,9 @@
     font-size: 1.5rem;
 }
 
-
-
-
-
-
-
-
-
-
-
 /* ===================================================
    BODY   SIDEBAR
 ==================================================== */
-
-
 .body{
     width: 100vw;
     height: calc(100vh - 4rem);
@@ -144,15 +124,9 @@
     padding-right: 1rem;
 }
 
-
-
-
-
-
 /* ============================================================
    LOGIN
 ============================================================ */
-
 .login_body{
     width: 100vw;
     height: calc(100vh - 4rem);
@@ -249,21 +223,12 @@
     height: 12rem;
 }
 
-
-
-
-
-
 /* ============================================================
    SIGNUP
 ============================================================ */
-
-
 .signup_submit_div{
     display: flex;
     justify-content: center;
-    /* margin-top: 1rem; */
-    /* margin-bottom: 2rem; */
 }
 .signup_box{
     display: flex;
@@ -277,7 +242,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* border:1px solid black; */
 }
 .signup_part_head{
 font-size: xx-large;
@@ -300,23 +264,6 @@ height: 3.4rem !important;
     margin: 2px 0 0 0;
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media screen and (max-width:650px){
     .logo{
@@ -342,14 +289,9 @@ height: 3.4rem !important;
     }
 }
 
-
-
-
 /* ============================================================
    VERIFICATION
 ============================================================ */
-
-
 .otp_container{
     width: 100vw;
     height: 100vh;
@@ -413,11 +355,8 @@ height: 3.4rem !important;
 .otp_number input{
     width: 1.5rem;
     height: 2rem;
-    /* display: flex; */
     color: #4D4C7D;
     font-size: 1.5rem;
-    /* align-items: center; */
-    /* justify-content: center; */
     background-color: aliceblue;
     box-shadow: 2px 2px 4px 2px lightsteelblue;
 }
@@ -461,33 +400,9 @@ height: 3.4rem !important;
     color:#edb409;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ===============================================
    CONTENT 
 =============================================== */
-
 .content_part{
     width: calc(100vw - 15rem);
     height: 100%;
@@ -533,15 +448,9 @@ height: 3.4rem !important;
     border:1px solid;
 }
 
-
-
-
-
-
 /* ================================================
    USER LIST
 ================================================ */
-
 .user_list_head{
     height: 4rem;
     display: flex;
@@ -555,7 +464,6 @@ height: 3.4rem !important;
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    /* overflow: hidden; */
 }
 .user_table th {
     background-color: lightsteelblue;
@@ -563,18 +471,15 @@ height: 3.4rem !important;
     padding: 10px;
     text-align: left;
     overflow: auto;
-    /* table-layout: fixed; */
 }
 .user_table td {
     border-bottom: 1px solid grey;
     padding: 10px;
-    /* table-layout: fixed; */
     overflow: auto;
 }
 .user_table .action {
     text-align: center;
 }
-/* .user_table . */
 .user_table .bi-trash-fill {
     cursor: pointer;
     color: #363062;
@@ -597,17 +502,9 @@ height: 3.4rem !important;
     color: darkred;
 }
 
-
-
-
-
-
-
-
 /* ===================================================
    ORDER LIST
 =================================================== */
-
 .order_list_head{
     height: 4rem;
     display: flex;
@@ -633,19 +530,48 @@ height: 3.4rem !important;
     max-width: 10rem;
     overflow: scroll;
 }
+.edit_order_status{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.hidden_orderstatus_div{
+    width:100%;
+    height: 100%;
+    position: absolute;
+    display:none;
+}
+.edit_order_status:hover + .hidden_orderstatus_div {
+    display: block;
+}
+.edit_order_status {
+    position: relative;
+}
 
+.order_status_dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    /* padding: 5px; */
+    display: none;
+}
+.edit_order_status:hover .order_status_dropdown {
+    display: block;
+}
 
+.order_status_dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
 
-
-
-
-
-
+.order_status_dropdown ul li {
+    cursor: pointer;
+}
 
 /* ==============================================
     ADD PRODUCT 
 ============================================== */
-
 .frame{
     width: 100%;
     height: 100%;
@@ -749,7 +675,6 @@ textarea {
     border: none;
 }
 
-
 @media screen and (max-width:1000px) {
     .image_space{
         width: 15rem;
@@ -781,8 +706,6 @@ textarea {
         margin-left: 2.2rem;
     }
 }
-
-
 .dropdown_size ul{
     list-style: none;
 }
@@ -791,29 +714,9 @@ textarea {
      display: block;
 }
 
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ===========================================
    PRODUCTS GET 
 ==============================================*/
-
 .product_list{
     margin: 0 1rem  1rem 1.5rem;
     overflow: auto;  
@@ -872,16 +775,9 @@ textarea {
     color: #edb409;
 }
 
-
-
-
-
-
-
 /* =============================================
    ADD COUPON 
 ============================================= */
-
 .coupon_gap_div{
     width: 60%;
     height: 80%;
@@ -917,16 +813,12 @@ textarea {
 button:hover {
     background-color: #363062;
     color: aliceblue;
-    border: none;
-    
+    border: none;    
 }
-
-
 
 /* ============================================
    ADD CATEGORY
 ============================================= */
-
 .category_gap_div{
     width: 60%;
     height: 80%;
@@ -953,7 +845,6 @@ button:hover {
     height: 100%;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
 }
 .category_img_div{
     width: 100%;
@@ -1032,20 +923,9 @@ button:hover {
     line-break:anywhere;
 }
 
-
-
-
-
-
-
-
-
-
-
 /* ==========================================
    ADD Banner
 =========================================== */
-
 .banner_gap_div{
     width: 60%;
     height: 80%;
@@ -1073,7 +953,6 @@ button:hover {
     align-items: center;
 }
 .banner_img_div{
-    /* width: 100%; */
     width: 15rem;
     height: 15rem;
     display: flex;
@@ -1130,11 +1009,3 @@ button:hover {
     color: aliceblue;
     border: none;
 }
-
-
-
-
-
-
-
-

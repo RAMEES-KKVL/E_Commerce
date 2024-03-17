@@ -1,3 +1,5 @@
+//------------------------- FUNCTION FOR BANNER AUTO - SLIDE ---------------------------------
+
 const bannerSubs = document.querySelectorAll('.banner_sub_div');
 const prevBanner = document.querySelector('.prev_banner');
 const nextBanner = document.querySelector('.next_banner');

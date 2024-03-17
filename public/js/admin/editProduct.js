@@ -1,7 +1,6 @@
+//------------------------- PRODUCT EDIT SECTION - CLIENT SIDE ---------------------------------
 
 // FUNCTION FOR IMAGE PREVIEW
-
-
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -14,7 +13,6 @@ function previewImage(input){
 } 
 
 // FUNCTION FOR VIEW SUBCATEGORY IF EXISTS 
-
 async function categoryView(event){
     try {
         const categoryName = event.target.value
@@ -31,9 +29,7 @@ async function categoryView(event){
     } 
 }
 
-
-
-
+// FUNCTION FOR EDITING PRODUCT DETAILS 
 document.getElementById("edit_product_btn").addEventListener("click", async (event)=>{
     event.preventDefault()
 
@@ -43,12 +39,9 @@ document.getElementById("edit_product_btn").addEventListener("click", async (eve
         const discount = document.getElementById("discount").value
         const stock = document.getElementById("stock").value
         const category = document.getElementById("category").value
-        const subCategory = document.getElementById("subCategory").value
         const deliveryDate = document.getElementById("deliveryDate").value
-        const colour = document.getElementById("colour").value
         const size = document.getElementById("size").value
         const descriptions = document.getElementById("descriptions").value.trim()
-        const productImage = document.getElementById("productImage").files[0]
 
         if(!productName || !price || !discount || !stock || !category || !deliveryDate || !size || !descriptions){
             document.getElementById("errorMain").innerHTML = "Provide required datas"

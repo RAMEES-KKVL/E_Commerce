@@ -1,11 +1,10 @@
-// const { set } = require("mongoose")
+//------------------------- PRODUCT ADDING - CLIENT SIDE ---------------------------------
 
+// const { set } = require("mongoose")
 const addButtn = document.getElementById("add_product_btn")
 const errorMain = document.getElementById("errorMain")
 
-
 // FUNCTION FOR IMAGE PREVIEW
-
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -17,9 +16,7 @@ function previewImage(input){
     }
 } 
 
-
 // FUNCTION FOR VIEW SUBCATEGORY IF EXISTS 
-
 async function categoryView(event){
     try {
         const categoryName = event.target.value
@@ -36,9 +33,7 @@ async function categoryView(event){
     } 
 } 
 
-
 // CONDUCTING CLIENT-SIDE VALIDATION AND PASSING DATA TO SERVER-SIDE
-
 addButtn.addEventListener("click", async (event)=>{
     event.preventDefault()
 
@@ -102,8 +97,3 @@ addButtn.addEventListener("click", async (event)=>{
         console.log("add product ",error.message);
     }
 })
-
-
-
-
-

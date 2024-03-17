@@ -1,3 +1,4 @@
+//------------------------- FUNCTIONS FOR SHOWING CART, WISHLIST COUNTS - CLIENT SIDE ---------------------------------
 
 document.addEventListener("DOMContentLoaded", async ()=>{
     try {
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     }
 })
 
+// FUNCTION FOR SEARCHBAR
 function search(){
     const search = document.getElementById("searchBar_input").value.trim()
     if(search){

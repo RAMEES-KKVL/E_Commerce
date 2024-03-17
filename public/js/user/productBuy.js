@@ -1,3 +1,5 @@
+//------------------------- FUNCTION FOR BUYING SINGLE PRODUCT - CLIENT SIDE ---------------------------------
+
 document.getElementById("singleProductBuy").addEventListener("click", async (event)=>{
     event.preventDefault()
     try {
@@ -14,8 +16,3 @@ document.getElementById("singleProductBuy").addEventListener("click", async (eve
         console.log(error);
     }
 })
-
-
-async function productBuy(){
-
-}

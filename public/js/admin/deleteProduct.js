@@ -1,4 +1,3 @@
-
 // CLIENT SIDE ACTION FOR DELETING REQUIRED PRODUCT 
 
 document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
@@ -63,7 +62,6 @@ document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
                         });
                     }
                 });
-            
         } catch (error) {
             console.log(error);
         }

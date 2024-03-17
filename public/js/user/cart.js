@@ -1,3 +1,6 @@
+//------------------------- CART SECTION - CLIENT SIDE ---------------------------------
+
+// FUNCTION FOR ADDING PRODUCT TO CART
 async function addtoCart(event, productId){
     event.stopPropagation()
     try {
@@ -20,11 +23,8 @@ async function addtoCart(event, productId){
     }
 }
 
-
-
-
+// FUNCTION FOR REMOVING PRODUCT FROM CART
 async function deleteCartItem(event, productId){
-
     event.stopPropagation()
     try {
         const response = await axios.delete(`/cart/delete_Item?product_id=${productId}`)
@@ -41,7 +41,7 @@ async function deleteCartItem(event, productId){
     }
 }
 
-
+// FUNCTION FOR CHOOSING PRODUCT QUANTITY FROM CART
 async function selectQuantity(event, productId){
     event.stopPropagation()
  

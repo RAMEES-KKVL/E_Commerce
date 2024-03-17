@@ -39,7 +39,6 @@
                                     <label for="category">Category</label>
                                     <div id="add_product_category_error"></div>
                                     <select id="category" name="category" onchange="categoryView(event)" >
-                                        <!-- <option></option> -->
                                         <% category.forEach((cat) =>{ %>    
                                             <option value="<%= product.category %>"><%= product.category %></option>
                                         <% }) %>
@@ -71,7 +70,6 @@
                                     <label for="colour">Colour</label>
                                     <div id="add_product_colour_error"></div>
                                     <select name="colour" id="colour" value="<%= product.colour %>">
-                                        <!-- <option value="" selected disabled>Select color</option> -->
                                         <option value="#ff0000" style="color: #ff0000;">Red</option> 
                                         <option value="#0000ff" style="color: #0000ff;">Blue</option>
                                         <option value="#00ff00" style="color: #00ff00;">Green</option>
@@ -88,24 +86,13 @@
                                 <div class="form-group">
                                     <label for="size">Size</label>
                                     <div id="add_product_size_error"></div>
-                                    <!-- <div class="dropdown"> -->
-                                        <!-- <input type="text" style="width: 95%; position:relative;">
-                                        <ul style="display: none; position:absolute;">
-                                            <li><input type="checkbox" id="s" name="s" value="s"><label for="s">Small</label></li>
-                                            <li><input type="checkbox" id="m" name="m" value="m"><label for="m">Medium</label></li>
-                                            <li><input type="checkbox" id="l" name="l" value="l"><label for="l">Large</label></li>
-                                            <li><input type="checkbox" id="xl" name="xl" value="xl"><label for="xl">X-Large</label></li>
-                                            <li><input type="checkbox" id="xxl" name="xxl" value="xxl"><label for="xxl">XX-Large</label></li>
-                                        </ul> -->
-                                        <select name="size" id="size" value="<%= product.size %>">
-                                            <!-- <option value="" selected disabled>Choose Size</option>                                             -->
-                                            <option value="S">Small</option>
-                                            <option value="M">Medium</option>
-                                            <option value="L">Large</option>
-                                            <option value="XL">XL</option>
-                                            <option value="XX-Large">XXL</option>
-                                        </select>
-                                    <!-- </div> -->
+                                    <select name="size" id="size" value="<%= product.size %>">                                         -->
+                                        <option value="S">Small</option>
+                                        <option value="M">Medium</option>
+                                        <option value="L">Large</option>
+                                        <option value="XL">XL</option>
+                                        <option value="XX-Large">XXL</option>
+                                    </select>
                                 </div>
                 
                                 <div class="form-group">
@@ -114,7 +101,6 @@
                                     <textarea id="descriptions" name="descriptions" class="descriptions" value=""><%= product.descriptions %></textarea>
                                 </div>
                                 <div class="form-group">
-
                                     <button type="submit" id="edit_product_btn" product-id="<%= product._id %>">Submit</button>
                                 </div>
                             </div>

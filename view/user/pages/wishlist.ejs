@@ -75,31 +75,10 @@
         </div>
     </div>
 
-
     <%- include('../common/footer.ejs') %>
-
 </div>
 <%- include('../../end.ejs') %>
 
 <script src="/js/common.js"></script>
 <script src="/js/user/count.js"></script>
-
-<script>
-
-    async function wishDelete(event, productId){
-        event.stopPropagation()
-        try {
-            const response = await axios.delete(`/wishlist/delete_Item?productId=${productId}`)
-            const result = response.data
-
-            if(result.success){
-                document.getElementById("wish_pic_remove"+productId).remove()
-                document.querySelector(".wish_count_top").innerHTML = Number(document.querySelector(".wish_count_top").innerHTML) - 1
-            }else{
-                document.getElementById("error").innerHTML = "Couldn't delete wishlist item"
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-</script>
+<script src="/js/user/wishlist.js"></script>

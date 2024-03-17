@@ -10,11 +10,7 @@ const accountSid = process.env.accountSid
 const verifySid = process.env.verifySid
 const client = require("twilio")( accountSid, authToken )
 
-
-
-
-// USER CONTROLLER - SIGNUP
-
+//-------------------- USER CONTROLLER - SIGNUP ---------------------------------
 exports.get_signup = (req,res)=>{
     res.status(200),res.render("user/pages/signupbody")
 }
@@ -48,9 +44,7 @@ exports.post_signup = async (req,res)=>{
         else if( notVerified ){
             const oldUser = notVerified.email === email && notVerified.phone == phone
             if( oldUser ){
-                
                 await signupModel.findOneAndUpdate({ email, phone },{$set:{ username:username, password:hashedPassword }})
-
                 await client.verify.v2.services.create({friendlyName: "user verification"})
                 await client.verify.v2.services(verifySid).verifications.create({to:`+91${phone}`, channel: "sms"})
                 .then( otpverification => console.log(otpverification.status))
@@ -60,8 +54,7 @@ exports.post_signup = async (req,res)=>{
                 console.log(3);
                 return res.status(409).json({success: false, usernoval: true, error: "Email or Phone already exist"})
             }     
-        }
-        else{    
+        }else{    
             await client.verify.v2.services.create({friendlyName: "user verification"})
             await client.verify.v2.services(verifySid).verifications.create({to:`+91${phone}`, channel: "sms"})
             .then( otpverification => console.log(otpverification.status))
@@ -70,17 +63,12 @@ exports.post_signup = async (req,res)=>{
             console.log("Data reached in dATABASE");
             return res.status(200).json({success: true,phone: phone, newUser: true})
         }
-
     } catch (error) {
         console.log("post signup ", error.message);
     }
 }
 
-
-
-
-// USER CONTROLLER - OTP
-
+// --------------------------- USER CONTROLLER - OTP --------------------------
 exports.get_otp = (req,res)=>{
     const phone = req.query.phone
     res.status(200).render("user/pages/otp",{phone})
@@ -93,7 +81,6 @@ exports.post_otp = async (req,res)=>{
         const countryCode = "+91";
         const phone = req.query.phone
         phoneNumberWithCountryCode = countryCode + phone;
-       
         let status = false 
 
         await client.verify.v2.services(verifySid).verificationChecks
@@ -107,7 +94,6 @@ exports.post_otp = async (req,res)=>{
         }else{
             return res.status(400).json({success: false, error: "Invalid otp"})
         }
-     
     } catch (error) {
         console.log("post otp ", error.message);
     }
@@ -124,12 +110,8 @@ exports.get_resend_otp = async (req,res)=>{
         console.log("resend otp get ",error.message);
     }
 }
- 
 
-
-
-// USER CONTROLLER - LOGIN
-
+//----------------------------- USER CONTROLLER - LOGIN -----------------------------------
 exports.get_login = (req,res)=>{
     res.status(200).render("user/pages/loginbody")
 }    
@@ -165,17 +147,12 @@ exports.post_login = async (req,res)=>{
         }else{
             return res.status(224).json({success:false,error:"User does not exist"})
         }
-
     } catch (error) {
         console.log("login post ",error.message);
     }
 }
 
-
-
-
-// USER CONTROLLER - RESET PASSWORD
-
+//---------------------------------- USER CONTROLLER - RESET PASSWORD -----------------------------------------
 exports.get_forget_Password = (req,res)=>{
     res.status(200).render("user/pages/forgetPass")
 }
@@ -198,10 +175,7 @@ exports.post_forget_Password = async (req,res)=>{
     }
 }
 
-
-
-// USER CONTROLLER - RESET PASSWORD - OTP - EMAIL
-
+//---------------------------- USER CONTROLLER - RESET PASSWORD - OTP - EMAIL ------------------------------
 exports.get_forget_Password_otp = (req,res)=>{
     res.status(200).render("user/pages/forgetPassOtp")
 }
@@ -241,18 +215,12 @@ exports.post_reset_Password = async (req,res)=>{
         else{
             return res.status(299).json({success: false, error:"Server does not responding, try again later...!"})
         }
-
     } catch (error) {
         console.log("reset post ", error.message);
     }
 }
 
-
-
-
-
-// ADMIN CONTROLLER - SIGNUP
-
+//----------------------------- ADMIN CONTROLLER - SIGNUP -------------------------------
 exports.admin_get_signup = (req,res)=>{ 
     res.render("admin/pages/signup")
 }
@@ -296,17 +264,12 @@ exports.admin_post_signup = async (req,res)=>{
             console.log("Data reached in dATABASE");
             return res.status(200).json({success: true, phone: phone, newAdmin: true})
         }
-
     } catch (error) {
         console.log("admin signup ",error.message);        
     }  
 }
 
-
-
-
-// ADMIN CONTROLLER - SECERT KEY VERIFICATION
-
+//------------------------ ADMIN CONTROLLER - SECERT KEY VERIFICATION-------------------------------
 exports.admin_get_verification = (req,res)=>{ 
     const email = req.query.email 
     const phone = req.query.phone
@@ -359,11 +322,7 @@ exports.admin_post_verification = async (req,res)=>{
     }
 }
 
-
-
-
-// ADMIN CONTROLLER - LOGIN
-
+//------------------------ ADMIN CONTROLLER - LOGIN -------------------------------
 exports.admin_get_login = (req,res)=>{
     res.render("admin/pages/login")
 }
@@ -396,12 +355,7 @@ exports.admin_post_login = async (req,res)=>{
     }
 }
 
-
-
-
-
-// ADMIN CONTROLLER -RESET PASSWORD
-
+//--------------------- ADMIN CONTROLLER -RESET PASSWORD --------------------------
 exports.admin_get_reset_pass = (req,res)=>{
     const email = req.query.email
     res.status(200).render("admin/pages/resetPass",{email})
@@ -423,7 +377,6 @@ exports.admin_post_reset_pass = async (req,res)=>{
         }else{
             return res.status(299).json({success: false, error:"Server does not responding, try again later...!"})
         }
-
     } catch (error) {
         console.log("admin reset pass post ",error.message);
     }
@@ -443,7 +396,6 @@ exports.admin_post_forget_Password = async (req,res)=>{
         }else if(!admin){
             return res.status(259).json({success:false, error:"Admin not found"})
         }
-        
     } catch (error) {
         console.log("admin reset post ",error.message);
     }

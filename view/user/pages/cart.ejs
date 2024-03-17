@@ -1,9 +1,7 @@
 <%- include('../common/header.ejs') %>
 <div class="wrapper cart_wrapper">
 
-
     <%- include('../common/topnav.ejs') %>
-
 
      <!-- LOGIN REMINDER -->
 
@@ -20,8 +18,8 @@
         
         <!-- YOU CART IS EMPTY -->
         <div style="<%= (()=>{
-            const list = cart ? cart.products : [];
-            return list.length == 0 ? 'display:block' : 'display:none'
+                const list = cart ? cart.products : [];
+                return list.length == 0 ? 'display:block' : 'display:none'
             })() %>" class="login_to_view">
             <div class="log_frame" style="display: flex;justify-content: center;">
                 <h3>Your Cart is Empty</h3>
@@ -29,7 +27,6 @@
                 <img src="#" class="cart_png" alt="">
             </div>
         </div>
-            
             
         <div class="product_frame" style="margin-top: 0; ">
             <!-- CART  -->
@@ -72,7 +69,6 @@
             </div>
             <% }) %>
         </div>
-        
                 
         <div class="price_frame">
             <div class="price_sub_frame">
@@ -128,8 +124,6 @@
         </div>
          
     </div>
-
-
 
     <%- include('../common/footer.ejs') %>
 

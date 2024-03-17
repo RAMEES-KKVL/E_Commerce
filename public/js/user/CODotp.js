@@ -1,5 +1,6 @@
-// FUNCTION FOR MANAGING INPUT FIELDS 
+//------------------------- OTP SECTION - CLIENT SIDE ---------------------------------
 
+// FUNCTION FOR MANAGING INPUT FIELDS 
 const otpInputs = document.querySelectorAll('.otp_number input');
 document.addEventListener('keydown', () => {
     if(otpInputs[0].value){
@@ -30,9 +31,7 @@ otpInputs.forEach((input, index) => {
         })
 })
 
-
 // FUNCTION SUBMITTING OTP FORM 
-
 document.getElementById("cod_Otp_bttn").addEventListener("click", async (event)=>{
     event.preventDefault()
     try {
@@ -81,5 +80,4 @@ document.getElementById("cod_Otp_bttn").addEventListener("click", async (event)=
     } catch (error) {
         console.log(error);
     }
-
 })

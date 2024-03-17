@@ -1,3 +1,5 @@
+//------------------------- REMOVING CATEGORY - CLIENT SIDE ---------------------------------
+
 document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
     deleteBtn.addEventListener("click", async (event)=>{
         event.preventDefault()
@@ -52,7 +54,6 @@ document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
                         });
                     }
                 });
-
         } catch (error) {
             console.log(error);
         }

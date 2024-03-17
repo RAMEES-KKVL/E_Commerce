@@ -15,11 +15,9 @@
                     <table>
                        <thead>
                         <tr>
-                            <!-- <th style="width: 2rem; max-width: 2rem;">Sl.No</th> -->
                             <th style="width: 6rem; max-width: 7rem;">Username</th>
                             <th style="width: 6rem; max-width: 7rem;">Email</th>
                             <th style="width: 5rem; max-width: 5rem;">Phone</th>
-                            <!-- <th style="width: 5rem; max-width: 5rem;">Reg.Date</th> -->
                             <th style="width: 3rem; max-width: 3rem;">Orders</th>
                             <th style="width: 12rem; max-width: 3rem;">Details</th>
                             <th style="width: 12rem; max-width: 3rem;">Status</th>
@@ -33,7 +31,6 @@
                                 <td><%= val.username %></td>
                                 <td><%= val.email %></td>
                                 <td><%= val.phone %></td>
-                                <!-- <td><%= val.createdat %></td> -->
                                 <td><%= 0 %></td>
                                 <td><a href="">link</a></td>
                                 <td id="user_status<%= val._id %>">
@@ -55,8 +52,7 @@
                        
                        </tbody>
     
-    
-                   </table>
+                    </table>
                 </div>
             </div>
 
@@ -66,100 +62,5 @@
 </div>
 <%- include("../../end.ejs") %>
 
-<script>
- 
-async function blockUser(e,userId){
-    try {
-        const icon = document.querySelector(".block_icon" + userId)
-
-        if(icon.classList.contains("bi-person-fill")){
-            document.getElementById("user_status"+userId).innerHTML = "Active"
-            icon.classList.replace("bi-person-fill","bi-person-fill-slash")
-        }else{
-            icon.classList.replace( "bi-person-fill-slash","bi-person-fill")
-            document.getElementById("user_status"+userId).textContent = "Blocked"
-        }
-
-        await axios.patch(`/admin/user_list/block?user_id=${userId}`)
-
-    } catch (error) {
-        console.log(error);
-    }
-}  
-
-
-
-</script>
-
-<script>
-
-document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
-
-deleteBtn.addEventListener("click", async (event)=>{
-    event.preventDefault()
-    const userId = deleteBtn.getAttribute("data-id");
-    const userTr = deleteBtn.closest("tr")
-    const errorMessage = document.getElementById("errorMessage")
-    try {
-        // const url = `/admin/user_List/delete_User?user_id=${encodeURIComponent(user_id)}`
-
-        const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: "btn btn-success",
-                    cancelButton: "btn btn-danger"
-                },
-                buttonsStyling: false
-                });
-                swalWithBootstrapButtons.fire({
-
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                reverseButtons: true,
-                customClass: {
-                    confirmButton: 'btn btn-danger',
-                    cancelButton: 'btn btn-secondary'
-                }}).then( async (result) => {
-                    if (result.isConfirmed) {
-                        swalWithBootstrapButtons.fire({
-                        title: "Deleted!",
-                        text: "User has been deleted.",
-                        icon: "success"
-                        });
-
-                        const url = `/admin/user_List/delete_User/${userId}`
-                        const response = await axios.delete(url)
-                        const result = response.data
-                        
-                        if(result.success){
-                            userTr.remove()
-                        }else{
-                            errorMessage.innerHTML = "Failed"
-                            setTimeout(() => {
-                                errorMessage.innerHTML = "" 
-                            }, 4000);
-                        }
-                    } else if (
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire({
-                        title: "Cancelled",
-                        text: "Banner deletion cancelled",
-                        icon: "error"
-                        });
-                    }
-                });
-                                
-                        
-
-    } catch (error) {
-        console.log("user delete ",error.message);
-    }
-})
-})
-
-</script>
+<script src="/js/admin/deletUser.js"></script>
 

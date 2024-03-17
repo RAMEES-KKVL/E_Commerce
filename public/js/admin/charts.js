@@ -1,3 +1,5 @@
+//------------------------- ADMIN SIDE - CHART VIEWING ---------------------------------
+
 document.addEventListener("DOMContentLoaded", async () => {
     const response = await axios.get("/admin/chart");
     const signupChart = response.data.chartData;

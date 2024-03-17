@@ -1,3 +1,5 @@
+//------------------------- ADMIN SIGNUP SECTION - CLIENT SIDE ---------------------------------
+
 const submitButn = document.getElementById("signup_submit_btn")
 const form = document.getElementById("signup_form")
 const signup_email = document.getElementById("signup_error_email")

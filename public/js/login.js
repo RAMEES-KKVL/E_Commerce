@@ -1,3 +1,5 @@
+//------------------------- USER LOGIN SECTION - CLIENT SIDE ---------------------------------
+
 const sumbitbtn = document.querySelector('.login_submit')
 const form = document.getElementById('loginForm')
 const errorMessage = document.getElementById("loginError")
@@ -5,7 +7,6 @@ const errorMessage = document.getElementById("loginError")
 sumbitbtn.addEventListener("click", async (event)=>{
     event.preventDefault()
     const loginForm = new FormData(form)
-
     try {
         const response = await fetch("/login",{
             method: "POST",
@@ -20,7 +21,6 @@ sumbitbtn.addEventListener("click", async (event)=>{
         }
         else{
             const result = await response.json()
-    
             if(result.success){
                 if(result.user){
                     window.location.href = "/home"

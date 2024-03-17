@@ -1,3 +1,5 @@
+//------------------------- ADMIN LOGIN SECTION - CLIENT SIDE ---------------------------------
+
 const submitbtn = document.querySelector(".login_submit")
 const form = document.getElementById("loginForm")
 const errorMessage = document.getElementById("loginError")

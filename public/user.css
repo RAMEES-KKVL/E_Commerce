@@ -5,7 +5,6 @@
     margin: 0px;
     font-family: 'Poppins',sans-serif;
     font-size: 1rem;
-    
 }
 .container{
     height: 100vh;
@@ -24,14 +23,12 @@
     font-size: 1.2rem;
     flex: 1;
     color: aliceblue;
-    /* border-right: 1px solid white; */
 }
 .search_div{
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 2;
-    /* border-right: 1px solid white; */
 }
 .search_bar{
     display: flex;
@@ -39,7 +36,6 @@
     height: 2rem;
     width: 70%;
     border-radius: 4px 0px 0px 4px;
-    /* box-shadow: -1px 1px 8px 1px; */
 }
 .search_text{
     font-size: .8rem;
@@ -48,15 +44,12 @@
     justify-content: center;
     height: 100%;
     width: 3.5rem;
-    /* border-left: 1px solid #000; */
     background-color: #edb409;
     color: #363062;
-    
 }
 .search_text:hover{
     background-color: #4D4C7D;
     color: aliceblue;
-
 }
 .input_serach{
     height: 100%;
@@ -100,26 +93,14 @@
 }
 .page_links ul li a:hover{
     color: #f5bd1390;
-    /* color: aqua; */
-    /* background-color: red; */
 }
 .bi_topnav{
     font-size: 1.5rem;
 }
 
-
-
-
-
-
-
-
-
-
 /* ============================================================
    LOGIN
 ============================================================ */
-
 .body{
     width: 100vw;
     height: calc(100vh - 4rem);
@@ -136,18 +117,14 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.205);
 }
 .input_logoin{
-    /* border: 1px solid black; */
     width: 50%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border-radius: 2rem 0 0 2rem; */
     background-color: rgba(255, 255, 255, 0.842);
-
 }
 .logo{
-    /* border: 1px solid black; */
     width: 50%;
     height: 100%;
 }
@@ -156,7 +133,6 @@
     height: 90%;
     display: flex;
     flex-direction: column;
-    /* border:1px solid black; */
 }
 .input_logoin .form_layout form{
     display: flex;
@@ -195,7 +171,6 @@
     height: 6rem;
     color: rgba(0, 0, 0, 0.638);
 }
-
 .login_submit_div{
     display: flex;
     justify-content: center;
@@ -213,20 +188,12 @@
     height: 12rem;
 }
 
-
-
-
-
-
 /* ============================================================
    SIGNUP
 ============================================================ */
-
 .signup_submit_div{
     display: flex;
     justify-content: center;
-    /* margin-top: 1rem; */
-    /* margin-bottom: 2rem; */
 }
 .signup_box{
     display: flex;
@@ -240,11 +207,10 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* border:1px solid black; */
 }
 .signup_part_head{
-font-size: xx-large;
-height: 3.4rem !important;
+    font-size: xx-large;
+    height: 3.4rem !important;
 }
 .part_2_btn{
     width: 7rem;
@@ -284,14 +250,7 @@ height: 3.4rem !important;
     }
 }
 
-
-
-
-
-
-
 /* ================================ OTP ================================ */
-
 .otp_container{
     width: 100vw;
     height: 100vh;
@@ -355,11 +314,8 @@ height: 3.4rem !important;
 .num_one,.num_two,.num_three,.num_four,.num_five,.num_six{
     width: 2.5rem;
     height: 2.5rem;
-    /* display: flex; */
     color: #4D4C7D;
     font-size: 1.5rem;
-    /* align-items: center; */
-    /* justify-content: center; */
     background-color: aliceblue;
     box-shadow: 2px 2px 4px 2px lightsteelblue;
 }
@@ -402,11 +358,3 @@ height: 3.4rem !important;
 .resend_otp p a:hover{
     color:#edb409;
 }
-
-
-
-
-
-
-
-.option_category_sub_add{}

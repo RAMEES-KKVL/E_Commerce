@@ -1,3 +1,6 @@
+//------------------------- USER PROFILE SECTION - CLIENT SIDE ---------------------------------
+
+// FUNCTION FOR IMAGE PREVIEW
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -9,10 +12,9 @@ function previewImage(input){
     } 
 }
 
-
+// FUNCTION FOR ADDING USER PROFILE DETAILS
 document.querySelector(".update_profile_btn").addEventListener("click", async (event)=>{
     event.preventDefault()
-
     try {
         if(
             ! document.getElementById("username").value.trim() ||
@@ -53,7 +55,6 @@ document.querySelector(".update_profile_btn").addEventListener("click", async (e
                 document.getElementById("edit_profile_btn").style.display = 'block'
                 document.getElementById("choose_img_btn").style.display = 'none'
                 document.getElementById("addProfile_btn").style.display = 'none'
-
             }else{
                 if(result.missingData){
                     document.getElementById("error_message").innerHTML = "Provide required datas"
@@ -77,7 +78,7 @@ document.querySelector(".update_profile_btn").addEventListener("click", async (e
     }
 })
 
-
+// FUNCTION FOR EDITING PROFILE
 function editProfile(event, userId){
     event.stopPropagation()
     window.location.href = `/account/profile_Edit?userId=${userId}`

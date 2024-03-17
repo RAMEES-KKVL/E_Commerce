@@ -1,10 +1,8 @@
-
 const productModel = require("../model/productModel")
 const categoryModel = require("../model/categoryModel")
 const fs = require("fs")
 
-
-
+//----------------------------- ADMIN CONTROLLER - PRODUCT SECTION -------------------------------
 exports.admin_get_products = async (req,res)=>{
     try {
         const products = await productModel.find()
@@ -14,31 +12,6 @@ exports.admin_get_products = async (req,res)=>{
     }
 }
 
-
-
-let subCategoryArray=[]
-exports.admin_get_subcategory = async (req,res)=>{
-    try { 
-        const categoryName = req.query.categoryName
-        const category = await categoryModel.findOne({category:categoryName})
-        if(category){
-            const subCategoryStatus = category.subCategory.length > 0
-            if(subCategoryStatus){
-                subCategoryArray = category.subCategory
-                return res.status(200).json({success:true, subCategoryArray})
-            }else{
-                return res.status(290).json({success:false, noSubCategory:true})
-            }
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-
-
-
-
 exports.admin_get_addProduct = async (req,res)=>{
     try {
         const category = await categoryModel.find()
@@ -47,8 +20,6 @@ exports.admin_get_addProduct = async (req,res)=>{
         console.log(error," product_add_get");
     }
 }
-
-
 
 exports.admin_post_addProduct = async (req,res)=>{
     try {
@@ -80,12 +51,6 @@ exports.admin_post_addProduct = async (req,res)=>{
     }
 }
 
-
-
-
-
-
-
 exports.admin_get_editProduct = async (req,res)=>{
     try {
         const productId = req.query.product_id
@@ -93,17 +58,9 @@ exports.admin_get_editProduct = async (req,res)=>{
         const product = await productModel.findOne({_id:productId})
         res.render("admin/pages/editProduct", {category, product})
     } catch (error) {
-        
+        console.log(error);
     }
 }
-
-
-
-
-
-
-
-
 
 exports.admin_patch_editProduct = async (req,res)=>{
     try {
@@ -129,8 +86,7 @@ exports.admin_patch_editProduct = async (req,res)=>{
                     descriptions,
                     productImage
                 }
-            })
-
+            });
             if(updatedWithOldArray){
                 return res.status(200).json({success: true, oldArray: true})
             }else{
@@ -168,15 +124,6 @@ exports.admin_patch_editProduct = async (req,res)=>{
     }
 }
 
-
- 
- 
-
-
-
-
-
-
 exports.admin_delete_product = async (req,res)=>{
     try {
         const productId = req.query.productId
@@ -196,11 +143,7 @@ exports.admin_delete_product = async (req,res)=>{
         } else {
             return res.status(299).json({success: false, productIssue: true})
         }
-        
     } catch (error) {
         console.log(error); 
     }
 }
-
-
-

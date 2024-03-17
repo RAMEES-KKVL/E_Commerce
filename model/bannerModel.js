@@ -21,10 +21,6 @@ const schema = {
         type : Date,
         required : true
     },
-    // bannerDescription : {
-    //     type : String,
-    //     required : true
-    // },
     bannerImage : {
         type : String,
         required : true

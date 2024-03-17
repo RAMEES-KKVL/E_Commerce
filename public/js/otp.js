@@ -1,3 +1,5 @@
+//------------------------- OTP SECTION - CLIENT SIDE ---------------------------------
+
 const submitButn = document.getElementById("otp_submit_btn")
 const form = document.getElementById("otp_form")
 const errorMessage = document.getElementById("otp_error_message")

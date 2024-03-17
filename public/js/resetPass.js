@@ -1,3 +1,5 @@
+//------------------------- RESET PASSWORD SECTION - CLIENT SIDE ---------------------------------
+
 const submitbtn = document.getElementById("reset_submit")
 const form = document.getElementById("resetForm")
 const errorMessage = document.getElementById("resetError")

@@ -2,8 +2,7 @@ const { default: mongoose } = require("mongoose");
 const wishlistModel = require("../model/wishlistModel")
 const cartModel = require("../model/cartModel")
 
-
-
+//----------------------------- CART SECTION -------------------------------
 exports.get_cart = async (req,res)=>{
     try {
         if(req.session){
@@ -18,8 +17,7 @@ exports.get_cart = async (req,res)=>{
     }
 }
 
-
-
+//----------------------------- UPDATING PRODUCT QUANTITY FROM CART -------------------------------
 exports.patch_cart_quantity = async (req,res)=>{
     try {
         const productId = req.query.product_id
@@ -41,8 +39,7 @@ exports.patch_cart_quantity = async (req,res)=>{
     }
 }
 
-
-
+//----------------------------- ADDING PRODUCT TO CART -------------------------------
 exports.patch_cart_Item = async (req,res)=>{
     try {
         const user = req.session.user_id
@@ -86,11 +83,7 @@ exports.patch_cart_Item = async (req,res)=>{
     }
 }
 
-
-
-
-
-
+//----------------------------- REMOVING PRODUCT FROM CART -------------------------------
 exports.delete_cart_Item = async (req,res)=>{
     try {
         const productId = req.query.product_id
@@ -113,13 +106,7 @@ exports.delete_cart_Item = async (req,res)=>{
     }
 }
 
-
-
-
-
-
-
-
+//----------------------------- WISHLIST SECTION -------------------------------
 exports.get_wishlist = async (req,res)=>{
     try {
         if(req.session){
@@ -134,16 +121,14 @@ exports.get_wishlist = async (req,res)=>{
     } 
 }
 
-
-
-
-
+//----------------------------- ADDING PRODUCT TO WISHLIST -------------------------------
 exports.patch_wishlist_Item = async (req,res)=>{
     try {
         const productId = req.query.productId
         const userId = req.session.user_id
         const userId1 =  new mongoose.Types.ObjectId(userId)
         const productId1 =  new mongoose.Types.ObjectId(productId)
+
         if(userId){
             const wishlistExist = await wishlistModel.findOne({userId})
             if(wishlistExist){
@@ -180,15 +165,12 @@ exports.patch_wishlist_Item = async (req,res)=>{
         }else{
             return res.status(299).json({success: false})
         }
-
     } catch (error) {
         console.log(error);
     }
 }
 
-
-
-
+//----------------------------- REMOVING PRODUCT FROM WISHLIST -------------------------------
 exports.delete_wishlist_Item = async (req,res)=>{
     try {
         const product_id = req.query.productId

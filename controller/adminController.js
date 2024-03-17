@@ -3,20 +3,16 @@ const categoryModel = require("../model/categoryModel")
 const couponModel = require("../model/couponModel")
 const bannerModel = require("../model/bannerModel")
 const fs = require("fs")
-// const { json } = require("express")
 const orderModel = require("../model/orderModel")
 const productModel = require("../model/productModel")
 
-
+//----------------------------- ADMIN CONTROLLER - DASHBOARD -------------------------------
 exports.admin_get_Home = (req,res)=>{
-
     res.render("admin/pages/dashboard")
 }
 
-
 exports.admin_getChart = async (req,res)=>{
     try {
-        
         const monthlyData = await signupModel.aggregate([
             {
                 $match: {
@@ -60,7 +56,6 @@ exports.admin_getChart = async (req,res)=>{
             },
             
         ])
-          
 
         const products = await productModel.find()
         // Aggregate the data to get the count of products by category
@@ -73,16 +68,13 @@ exports.admin_getChart = async (req,res)=>{
                 productCategories[category]++;
             }
         });
-
         return res.status(200).json({success : true, chartData, orderData : results, productData : productCategories})
     } catch (error) {
         console.log(error);
     }
 }
 
-
-
-
+//----------------------------- ADMIN CONTROLLER - USER SECTION -------------------------------
 exports.admin_get_userList = async (req,res)=>{
     try {
         const users = await signupModel.find()
@@ -91,7 +83,6 @@ exports.admin_get_userList = async (req,res)=>{
         console.log("get userlist ",error.message);
     }
 }
-
 
 exports.admin_block_userList = async (req,res)=>{
     try {
@@ -126,8 +117,6 @@ exports.admin_block_userList = async (req,res)=>{
     }
 }
 
-
-
 exports.admin_delete_user = async (req,res)=>{
     try {
         const user_id = req.params.user_id
@@ -142,11 +131,7 @@ exports.admin_delete_user = async (req,res)=>{
     }
 }
 
-
-
-
-
-
+//----------------------------- ADMIN CONTROLLER - ORDERS SECTION -------------------------------
 exports.admin_get_orders = async (req,res)=>{
     try {
         const orders = await orderModel.find().populate("orders.productId.productId")
@@ -156,21 +141,50 @@ exports.admin_get_orders = async (req,res)=>{
     }
 }
 
+exports.admin_patch_orderstatus = async (req,res)=>{
+    try {
+        const { orderId, productId, userId } = req.body
+        const updated = await orderModel.findOneAndUpdate(
+            {
+                userId,
+                'orders._id' : orderId
+            },
+            {
+                $set : {
+                    'orders.$[order].productId.$[product].orderStatus' : "Delivered"
+                }
+            },
+            {
+                arrayFilters : [
+                    {
+                        'order._id' : orderId
+                    },
+                    {
+                        'product.productId' : productId
+                    }
+                ],
+                new : true
+            }
+        )
+        if(updated){
+            return res.status(200).json({ success : true })
+        }else{
+            return res.status(289).json({ success : false })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-
-
-
-
-
+//----------------------------- ADMIN CONTROLLER - COUPON SECTION -------------------------------
 exports.admin_get_coupons = async (req,res)=>{
     try {
         const coupons = await couponModel.find()
         res.render("admin/pages/coupons", {coupons})
     } catch (error) {
-        
+        console.log(error);
     }
 }
-
 
 exports.admin_get_addCoupon = (req,res)=>{
     res.render("admin/pages/addCoupon")
@@ -201,7 +215,6 @@ exports.admin_post_addCoupon = async (req,res)=>{
     }
 }
 
-
 exports.admin_edit_Coupon = async (req,res)=>{
     try {
         const couponId = req.query.couponId
@@ -212,7 +225,6 @@ exports.admin_edit_Coupon = async (req,res)=>{
     }
 } 
  
-
 exports.admin_patch_coupon = async (req,res)=>{
     try {
         const {couponName, couponDiscount, minOrderAmount, maxOrderAmount, startingDate, endingDate, availability} = req.body
@@ -234,17 +246,10 @@ exports.admin_patch_coupon = async (req,res)=>{
         }else{
             return res.status(290).json({success: false})
         }
-        
     } catch (error) {
-        
+        console.log(error);
     }
 }
-
-
-
-
-
-
 
 exports.admin_delete_coupon = async (req,res)=>{
     try {
@@ -261,25 +266,7 @@ exports.admin_delete_coupon = async (req,res)=>{
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//----------------------------- ADMIN CONTROLLER - CATEGORY SECTION -------------------------------
 exports.admin_get_category = async (req,res)=>{
     try {
         const category = await categoryModel.find()
@@ -288,13 +275,6 @@ exports.admin_get_category = async (req,res)=>{
         console.log("category get ",error);
     }
 }
-
-
-
-
-
-
-
 
 exports.admin_get_addCategory = (req,res)=>{
     res.render("admin/pages/addCategory")
@@ -307,6 +287,7 @@ exports.admin_post_addCategory = async (req,res)=>{
         const subCategoryArray = JSON.parse(subCategory)
         const categories = await categoryModel.find()
         const existCategory = categories.find( val => val.category === category)
+
         if(!category || !categoryImage){
             return res.status(294).json({ success:false, missingData:true, errorMsg:"Please provide missing datas"})
         }
@@ -335,12 +316,6 @@ exports.admin_post_addCategory = async (req,res)=>{
     }
 }
 
-
-
-
-
-
-
 exports.admin_get_editCategory = async (req,res)=>{
     try {
         const categoryId = req.query.category_id
@@ -351,21 +326,16 @@ exports.admin_get_editCategory = async (req,res)=>{
     }
 }
 
-
-
-
-
-
-
 exports.admin_patch_editCategory = async (req,res)=>{
     try {
         try{
-            const { category, subCategory} = req.body
+            const { category, subCategory } = req.body
             const categoryId = req.query.category_id
             const oldCategory = await categoryModel.findOne({_id:categoryId})
             const oldImage = oldCategory.categoryImage
             const categoryImage = req.file ? req.file.filename : oldImage
             const subCategoryArray = subCategory ? JSON.parse(subCategory) : []
+
             if(!category){
                 return res.status(294).json({ success:false, missingData:true, errorMsg:"Please provide category name"})
             }else{
@@ -395,7 +365,7 @@ exports.admin_patch_editCategory = async (req,res)=>{
                 }else{
                     fs.unlinkSync(`./public/uploads/category/${oldImage}`)
                     if(category && categoryImage && subCategoryArray.length > 0){
-                      await categoryModel.updateOne(
+                        await categoryModel.updateOne(
                             {_id:categoryId},
                                 {
                                     category,
@@ -418,7 +388,6 @@ exports.admin_patch_editCategory = async (req,res)=>{
                     }
                 }
             }
-            
         } catch (error){
             console.log("category post ",error.message);
         }
@@ -426,12 +395,26 @@ exports.admin_patch_editCategory = async (req,res)=>{
         console.log(error);
     }
 }
+
+let subCategoryArray=[]
+exports.admin_get_subcategory = async (req,res)=>{
+    try { 
+        const categoryName = req.query.categoryName
+        const category = await categoryModel.findOne({category:categoryName})
+        if(category){
+            const subCategoryStatus = category.subCategory.length > 0
+            if(subCategoryStatus){
+                subCategoryArray = category.subCategory
+                return res.status(200).json({success:true, subCategoryArray})
+            }else{
+                return res.status(290).json({success:false, noSubCategory:true})
+            }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
   
-
-
- 
-
-
 exports.admin_delete_category = async (req,res)=>{
     try {
         const categoryId = req.query.categoryId
@@ -447,32 +430,12 @@ exports.admin_delete_category = async (req,res)=>{
                 res.status(289).json({success: false})
             }
         }
-    
     } catch (error) {
         console.log(error);
     }
 }
- 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
+//----------------------------- ADMIN CONTROLLER - BANNER SECTION -------------------------------
 exports.admin_get_banners = async (req,res)=>{
     try {
         const banners = await bannerModel.find()
@@ -481,10 +444,6 @@ exports.admin_get_banners = async (req,res)=>{
         console.log(error);
     }
 }
-
-
-
-
 
 exports.admin_get_addbanner = (req,res)=>{
     res.render("admin/pages/addBanner")
@@ -508,7 +467,6 @@ exports.admin_post_addbanner = async (req,res)=>{
                 bannerImage
             })
             await newSchema.save()
-
             return res.status(200).json({ success: true })
         }
     } catch (error) {
@@ -522,7 +480,7 @@ exports.admin_edit_banner = async (req,res)=>{
         const banner = await bannerModel.findOne({_id:bannerId})
         res.render("admin/pages/editBanner", {banner})
     } catch (error) {
-        
+        console.log(error);
     } 
 }
  
@@ -545,14 +503,12 @@ exports.admin_patch_banner = async (req,res)=>{
                     endingDate, 
                     bannerImage
                 }
-            })
-            
+            });
             if(oldupdated){
                 return res.status(200).json({success: true, oldimg:true})
             }else{
                 return res.status(290).json({success: false, oldimg:false})
             }
-            
         }else{
             const updated = await bannerModel.findOneAndUpdate(
                 {_id:bannerId},
@@ -564,8 +520,7 @@ exports.admin_patch_banner = async (req,res)=>{
                     endingDate, 
                     bannerImage
                 }
-            })
-
+            });
             if(updated){
                 await fs.unlinkSync(`./public/uploads/banner/${oldImage}`)
                 return res.status(200).json({success: true, successnew: true})
@@ -573,15 +528,10 @@ exports.admin_patch_banner = async (req,res)=>{
                 return res.status(290).json({success: false, successnew: false,})
             }
         }
-        
     }catch(error){
         console.log(error);
     }
 }
-
-   
-
-  
 
 exports.admin_delete_banners = async (req,res)=>{
     try {
@@ -603,10 +553,4 @@ exports.admin_delete_banners = async (req,res)=>{
     }
 }
 
-
-
 exports.admin_get_logout = (req,res)=>{}
-
-
-
- 

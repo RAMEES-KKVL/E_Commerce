@@ -1,3 +1,6 @@
+//------------------------- USER PROFILE SECTION - CLIENT SIDE ---------------------------------
+
+// FUNCTION FOR IMAGE PREVIEW
 function previewImage(input){
     const file = input.files[0]
     if(file){
@@ -9,6 +12,7 @@ function previewImage(input){
     } 
 }
 
+// FUNCTION FOR EDITING USER PROFILE DETAILS
 document.getElementById("profile_Edit_submit_btn").addEventListener("click", async (event) =>{
     event.preventDefault()
     try {

@@ -19,7 +19,6 @@
 
                             <thead>
                                 <tr>
-                                    <!-- <th>Sl.No</th> -->
                                     <th>Category ID</th>
                                     <th>Category Name</th>
                                     <th>Product Count</th>
@@ -30,7 +29,6 @@
                             <tbody>
                             <% category.forEach((value, index) =>{ %>
                                 <tr>
-                                    <!-- <td><%= index + 1 %></td> -->
                                     <td><%= value._id %></td>
                                     <td><%= value.category %></td>
                                     <td><%= value.subCategory.length %></td>
@@ -48,7 +46,6 @@
                         </table>
                     </div>
                 </div>
-
                          
             </div>
         </div>

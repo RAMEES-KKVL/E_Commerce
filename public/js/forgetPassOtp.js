@@ -1,3 +1,5 @@
+//------------------------- FORGET PASSWORD OTP SECTION - CLIENT SIDE ---------------------------------
+
 const submitButn = document.getElementById("forgetPass_Otp_bttn")
 const form = document.getElementById("forgetPass_otp_form")
 const errorMessage = document.getElementById("error_message")
