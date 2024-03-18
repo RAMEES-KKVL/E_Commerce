@@ -4080,7 +4080,7 @@ word-wrap: break-word;
         height: 6rem;
     }
     .link_pagination{
-        display: flex;
+        /* display: flex !important; */
         gap: 1rem;
         align-items: center; 
     }

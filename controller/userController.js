@@ -67,11 +67,22 @@ exports.get_allProducts = async (req,res)=>{
         const currentFilter = req.query ? req.query.category ? req.query.category :  req.query.range : "" 
         const wishlist = await wishlistModel.findOne({userid : req.session.user_id})
         const cart = await cartModel.findOne({userid : req.session.user_id})
-
+        let pageNumber = req.query.pageNo ? parseInt(req.query.pageNo) : 1
+        let pageLimit = 0 
+        if(pageNumber > 1){
+            pageLimit = (pageNumber - 1) * 8
+        }
         if(req.query.category){      // FILTERING PRODUCTS
             const category = req.query.category
             if(category === "all"){
-                products = await productModel.find()
+                products = await productModel.aggregate([
+                    {
+                        $skip :  pageLimit
+                    },
+                    {
+                        $limit : 8
+                    }
+                ])
             }
             else if(category == 500){
                 products = await productModel.find(
@@ -202,9 +213,16 @@ exports.get_allProducts = async (req,res)=>{
                 }
             )
         }else{
-            products = await productModel.find()
+            products = await productModel.aggregate([
+                {
+                    $skip :  pageLimit
+                },
+                {
+                    $limit : 8
+                }
+            ])
         }
-        res.render("user/pages/allProducts", {products, wishlist, cart , currentFilter})
+        res.render("user/pages/allProducts", {products, wishlist, cart , currentFilter, pageNumber})
     } catch (error) {
         console.log(error);
     }

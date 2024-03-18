@@ -58,7 +58,10 @@
                 </div>
 
                 <div class="order_frames review_div" style="<%= product.orderStatus ==='Delivered' ? 'display: block;' : 'display: none;' %>">
-                    <div class="reviewproduct">Rate your Product</div>
+                    <div class="reviewproduct" style="display: flex;">
+                        Rate your Product
+                        
+                    </div>
                     <div class="review_frame">
                         <textarea class="review_textarea" placeholder="Review your Product here.." spellcheck="false"></textarea>
                         <button class="review_submit_btn">Submit Review</button>
@@ -75,3 +78,5 @@
 
 <script src="/js/user/count.js"></script>
 <script src="/js/user/canceelOrder.js"></script>
+
+
