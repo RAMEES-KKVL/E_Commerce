@@ -7,6 +7,7 @@ const userProfileModel = require("../model/userProfileModel")
 const signupModel = require("../model/signupModel")
 const couponModel = require("../model/couponModel")
 const orderModel = require("../model/orderModel")
+const reviewModel = require("../model/reviewModel")
 const fs = require("fs")
 const Razorpay = require("razorpay")
 const { Types, default: mongoose } = require('mongoose')
@@ -552,7 +553,9 @@ exports.get_orderOpen = async (req,res)=>{
             const profileDetails = await userProfileModel.findOne({userId : req.session.user_id})
             const address = profileDetails.deliveryAddresses.find(address => address._id == order.deliveryAddress)
             const product = order.productId.find(product => product.productId._id == productId)
-            res.render("user/pages/orderOpen", {orderId, product, address})
+            const productreview = await reviewModel.findOne({productId, 'review.userId' : req.session.user_id})
+            const userReview = productreview ? productreview.review.find(userReview => userReview.userId == req.session.user_id) : ''
+            res.render("user/pages/orderOpen", {orderId, product, address, userReview})
         }else{
             res.redirect("/login")
         }
@@ -902,6 +905,72 @@ exports.patch_cancelOrder = async (req,res)=>{
             return res.status(200).json({success : true})
         }else{
             return res.status(289).json({success : false})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//-----------------------------  REVIEWING PRODUCT -------------------------------
+exports.patch_review_product = async (req,res)=>{
+    try {
+        const {productReview, selectedStars, productId} = req.body
+        const userId = req.session.user_id
+        
+        if(!productReview || !selectedStars){
+            return res.status(289).json({success : false, missingData : true})
+        }else{
+            const productReviewExist = await reviewModel.findOne({ productId })
+            if(productReviewExist){
+                const reviewExist = await reviewModel.findOne(
+                    {
+                        productId,
+                        'review.userId' : userId
+                    }
+                )
+                if(reviewExist){
+                    return res.status(279).json({success : false, reviewExist : true})
+                }else{
+                    const reviewData = {
+                        rating : selectedStars,
+                        review : productReview,
+                        userId
+                    }
+                    const pushed = await reviewModel.findOneAndUpdate(
+                        {
+                            productId
+                        },
+                        {
+                            $push : {
+                                review : reviewData
+                            }
+                        },
+                        {
+                            new : true
+                        }
+                    )
+                    if(pushed){
+                        return res.status(200).json({ success : true})
+                    }else{
+                        return res.status(289).json({success : false, failedSave : true})
+                    }
+                }
+            }else{
+                const newSchema = await reviewModel({
+                    productId,
+                    review:[{
+                        rating : selectedStars,
+                        review : productReview,
+                        userId
+                    }],
+                })
+                const saved = await newSchema.save()
+                if(saved){
+                    return res.status(200).json({success : true})
+                }else{
+                    return res.status(289).json({success : false, failedSave : true})
+                }
+            }
         }
     } catch (error) {
         console.log(error);

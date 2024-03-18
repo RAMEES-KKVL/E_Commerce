@@ -58,13 +58,20 @@
                 </div>
 
                 <div class="order_frames review_div" style="<%= product.orderStatus ==='Delivered' ? 'display: block;' : 'display: none;' %>">
-                    <div class="reviewproduct" style="display: flex;">
+                    <div class="reviewproduct" style="display: flex; <%= userReview ? 'pointer-events: none;' : '' %>">
                         Rate your Product
-                        
+                        <div style="margin-left: 4rem;" id="star_rating">
+                            <i class="bi <%= userReview ? userReview.rating >= 1 ? 'bi-star-fill' : 'bi-star' : 'bi-star' %>" onclick="starRating(1)"></i>
+                            <i class="bi <%= userReview ? userReview.rating >= 2 ? 'bi-star-fill' : 'bi-star' : 'bi-star' %>" onclick="starRating(2)"></i>
+                            <i class="bi <%= userReview ? userReview.rating >= 3 ? 'bi-star-fill' : 'bi-star' : 'bi-star' %>" onclick="starRating(3)"></i>
+                            <i class="bi <%= userReview ? userReview.rating >= 4 ? 'bi-star-fill' : 'bi-star' : 'bi-star' %>" onclick="starRating(4)"></i>
+                            <i class="bi <%= userReview ? userReview.rating >= 5 ? 'bi-star-fill' : 'bi-star' : 'bi-star' %>" onclick="starRating(5)"></i>
+                        </div>
+                        <div id="error_message" style="color: red; margin-left: 4rem;"></div>
                     </div>
                     <div class="review_frame">
                         <textarea class="review_textarea" placeholder="Review your Product here.." spellcheck="false"></textarea>
-                        <button class="review_submit_btn">Submit Review</button>
+                        <button class="review_submit_btn" onclick="reviewSubmit(event,'<%= product.productId._id %>')">Submit Review</button>
                     </div>
                 </div>
 
@@ -78,5 +85,4 @@
 
 <script src="/js/user/count.js"></script>
 <script src="/js/user/canceelOrder.js"></script>
-
-
+<script src="/js/user/review.js"></script>

@@ -37,7 +37,7 @@
                                                 <td><%= product.productId.price - product.productId.discount %></td>
                                                 <td><%= userOrder.userId %></td>
                                                 <td>
-                                                    <div class="edit_order_status edit_order_status<%= order._id %><%= product.productId._id %>" style="<%= product.orderStatus === 'Cancelled' ? 'color:red;' : 'color:green;' %>;">
+                                                    <div class="edit_order_status edit_order_status<%= order._id %><%= product.productId._id %>" style="<%= product.orderStatus === 'Cancelled' ? 'color:red;' : 'color:green;' %>">
                                                         <%= product.orderStatus %>
                                                         <div class="order_status_dropdown">
                                                             <ul>

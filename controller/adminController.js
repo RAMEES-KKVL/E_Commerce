@@ -90,7 +90,7 @@ exports.admin_block_userList = async (req,res)=>{
         const user = await signupModel.findOne({_id:userId})
 
         if(user.blocked){
-            await signupModel.findOneAndUpdate(
+            const success = await signupModel.findOneAndUpdate(
                 {
                     _id:userId
                 },
@@ -100,8 +100,13 @@ exports.admin_block_userList = async (req,res)=>{
                     }
                 }
             )
+            if(success){
+                res.status(200).json({success : true})
+            }else{
+                res.status(289).json({success : false})
+            }
         }else{
-            await signupModel.findOneAndUpdate(
+            const success = await signupModel.findOneAndUpdate(
                 {
                     _id:userId
                 },
@@ -111,6 +116,11 @@ exports.admin_block_userList = async (req,res)=>{
                     }
                 }
             )
+            if(success){
+                res.status(200).json({success : true})
+            }else{
+                res.status(289).json({success : false})
+            }
         }
     } catch (error) {
         console.log(error);

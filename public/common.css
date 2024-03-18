@@ -5211,6 +5211,9 @@ word-wrap: break-word;
     font-size: 1.1rem;
     font-family: 'Poppins',sans-serif;
   }
+  .bi-star-fill{
+    color: gold;
+  }
   .user_name{
     font-size: 1rem;
     font-family: 'poppins',sans-serif;

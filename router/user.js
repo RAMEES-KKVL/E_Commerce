@@ -90,6 +90,8 @@ router.post("/cod_otp",userRouterWeb.post_cod_otp)
 
 router.patch("/cancelOrder",userRouterWeb.patch_cancelOrder)
 
+router.post("/review_product",userRouterWeb.patch_review_product)
+
 router.get("/aboutUs",userRouterWeb.get_aboutUs)
 
 router.get("/logout",userRouterWeb.get_logout)

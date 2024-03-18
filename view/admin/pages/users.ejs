@@ -14,12 +14,12 @@
 
                     <table>
                        <thead>
-                        <tr>
+                           <tr>
+                            <th style="width: 9rem; max-width: 11rem;">User Id</th>
                             <th style="width: 6rem; max-width: 7rem;">Username</th>
                             <th style="width: 6rem; max-width: 7rem;">Email</th>
                             <th style="width: 5rem; max-width: 5rem;">Phone</th>
                             <th style="width: 3rem; max-width: 3rem;">Orders</th>
-                            <th style="width: 12rem; max-width: 3rem;">Details</th>
                             <th style="width: 12rem; max-width: 3rem;">Status</th>
                             <th style="width: 3.5rem; max-width: 5rem;">Action</th>
                         </tr>
@@ -28,12 +28,12 @@
                        <tbody>
                         <% users.forEach(val =>{ %>
                             <tr id="userlist_tr">
+                                <td><%= val._id %></td>
                                 <td><%= val.username %></td>
                                 <td><%= val.email %></td>
                                 <td><%= val.phone %></td>
                                 <td><%= 0 %></td>
-                                <td><a href="">link</a></td>
-                                <td id="user_status<%= val._id %>">
+                                <td id="user_status<%= val._id %>" style="<%= val.blocked ? 'color:red;' : 'color:green;' %>">
                                     <%= (()=>{
                                         const blocked = val.blocked
                                         return blocked ? 'Blocked' : 'Active';

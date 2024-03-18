@@ -66,16 +66,28 @@ document.querySelectorAll(".bi-trash-fill").forEach(deleteBtn =>{
 // FUNCTION FOR BLOCKING USER
 async function blockUser(e,userId){
     try {
-        const icon = document.querySelector(".block_icon" + userId)
+        const response = await axios.patch(`/admin/user_list/block?user_id=${userId}`)
+        const result = response.data
 
-        if(icon.classList.contains("bi-person-fill")){
-            document.getElementById("user_status"+userId).innerHTML = "Active"
-            icon.classList.replace("bi-person-fill","bi-person-fill-slash")
+        if(result.success){
+            const icon = document.querySelector(".block_icon" + userId)
+
+            if(icon.classList.contains("bi-person-fill")){
+                document.getElementById("user_status"+userId).innerHTML = "Active"
+                document.getElementById("user_status"+userId).style.color = 'green'
+                icon.classList.replace("bi-person-fill","bi-person-fill-slash")
+            }else{
+                icon.classList.replace( "bi-person-fill-slash","bi-person-fill")
+                document.getElementById("user_status"+userId).textContent = "Blocked"
+                document.getElementById("user_status"+userId).style.color = 'red'
+            }
         }else{
-            icon.classList.replace( "bi-person-fill-slash","bi-person-fill")
-            document.getElementById("user_status"+userId).textContent = "Blocked"
+            const status = document.getElementById("user_status"+userId).innerHTML
+            document.getElementById("user_status"+userId).innerHTML = "Failed"
+            setTimeout(() => {
+                document.getElementById("user_status"+userId).innerHTML = status
+            }, 4000);
         }
-        await axios.patch(`/admin/user_list/block?user_id=${userId}`)
     } catch (error) {
         console.log(error);
     }
