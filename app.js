@@ -2,7 +2,7 @@ const express = require("express")
 const flash = require("connect-flash")
 const session = require("express-session")
 require("dotenv").config()
-const port = process.env.port || 7001
+const port = process.env.port
 const secretKey = process.env.secret
 const mongoose = require("mongoose")
 
@@ -32,7 +32,7 @@ const MONGO_URL = process.env.MONGO_URL
 
 mongoose.connect(MONGO_URL)
 .then(()=>console.log("Database connected"))
-.catch(()=>console.log("Database connection failed"))
+.catch((err)=>console.log("Database connection failed",err))
 
 app.listen(port,()=>console.log("All set to go...!",port))
 
