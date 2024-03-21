@@ -2,8 +2,8 @@
     <div class="left_bar">
         <ul>
             <li class="left_profile_li">
-                <img src="#" alt="">
-                <h3> HELLO </h3>
+                <img src="/uploads/profile/<%= userProfile ? userProfile.profileImage ? userProfile.profileImage : 'blank-profile-picture-973460_1920.png' : 'blank-profile-picture-973460_1920.png' %>" alt="">
+                <h3> <%= signupData ? signupData.username : '' %> </h3>
             </li>
             <li onclick="location.href='/account'"> <i class="bi bi_left_bar bi-person-circle"></i> Profile </li>
             <li onclick="location.href='/forget_Password'"> <i class="bi bi_left_bar bi-shield-lock-fill"></i> Update Password </li>

@@ -7,12 +7,12 @@
         
         <%- include('../common/userLeft.ejs') %>
         
+        <form id="user_profile_form" spellcheck="false" >
         <div class="right_content">
             <div class="address_frame">
                
                 <h3 class="edit_text" style="text-align: center;">Edit Profile</h3>
                 <div class="form_frame" >
-                    <form id="user_profile_form" spellcheck="false" >
                         <div class="top">
                             <div class="top_left">
                                 <label for="username">User Name</label>
@@ -80,17 +80,17 @@
                             </span>
                             <p class="error_msg" id="error_message" style="color: brown;"></p>
                             <span style="display: flex; flex-direction: column; gap: .2rem; margin-top: .5rem;">
-                                <button style="display: block;" type="button" class="update_profile_btn" id="profile_Edit_submit_btn">UPDATE PROFILE</button>
+                                <button style="display: block;" type="button" class="update_profile_btn add_btn" id="profile_Edit_submit_btn">UPDATE PROFILE</button>
                             </span>
                         </div>
-                    </form>
+                    </div>
+                    
                 </div>
-
+                
             </div>
-
+            
         </div>
-
-    </div>
+    </form>
     <%- include('../common/footer.ejs') %>
 </div>
 <%- include('../../end.ejs') %>

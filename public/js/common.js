@@ -13,8 +13,8 @@ function imageClicked(image){
 
 // FUNCTION FOR VIEWING NEXT IMAGE WHEN RIGHT ARROW CLICKED
 function nextImage(imageArray){
-    const imagerArray =JSON.parse(imageArray)
-    const indx =  imagerArray.indexOf(document.getElementById("product_image_img_view").src.split("/").pop())
+    const imagerArray = JSON.parse(imageArray)
+    const indx =  imagerArray.indexOf(document.getElementById("product_image_img_view").src.split("/").pop().replace('%20', ' '))
     if(indx != -1 && imagerArray[indx + 1] != undefined || null){
         document.getElementById("product_image_img_view").src = `/uploads/product/${imagerArray[indx + 1]}`
     }else{
@@ -24,8 +24,8 @@ function nextImage(imageArray){
 
 // FUNCTION FOR VIEWING PREVIOUS IMAGE WHEN LEFT ARROW CLICKED
 function prevImage(Array){
-    const imageArray =JSON.parse(Array)
-    const indx =  imageArray.indexOf(document.getElementById("product_image_img_view").src.split("/").pop())
+    const imageArray = JSON.parse(Array)
+    const indx =  imageArray.indexOf(document.getElementById("product_image_img_view").src.split("/").pop().replace('%20', ' '))
     if(indx != -1 && imageArray[indx - 1] != undefined || null){
         document.getElementById("product_image_img_view").src = `/uploads/product/${imageArray[indx - 1]}`
     }else{

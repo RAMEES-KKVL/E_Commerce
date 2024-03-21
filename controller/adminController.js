@@ -77,7 +77,12 @@ exports.admin_getChart = async (req,res)=>{
 //----------------------------- ADMIN CONTROLLER - USER SECTION -------------------------------
 exports.admin_get_userList = async (req,res)=>{
     try {
-        const users = await signupModel.find()
+        let users = await signupModel.find()
+        users = await Promise.all(users.map(async (user) => {
+            let orderCount = await orderModel.countDocuments({ userId: user._id });
+            return { ...user.toObject(), orderCount };
+        }));
+
         res.render("admin/pages/users",{users})
     } catch (error) {
         console.log("get userlist ",error.message);
@@ -563,4 +568,12 @@ exports.admin_delete_banners = async (req,res)=>{
     }
 }
 
-exports.admin_get_logout = (req,res)=>{}
+exports.admin_get_logout = (req,res)=>{
+    req.session.destroy((error)=>{
+        if(error){
+            console.log("Could't destroy Admin Session ", error.message);
+        }else{
+            res.redirect("/admin/login")
+        }
+    })
+}

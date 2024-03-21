@@ -6,7 +6,6 @@ const port = process.env.port || 7001
 const secretKey = process.env.secret
 const mongoose = require("mongoose")
 
-
 const app = express()
 
 const userRouter = require("./router/user")
@@ -26,9 +25,8 @@ app.use(session({
     saveUninitialized : false
 }))
 
-app.use("/",userRouter)
 app.use("/admin",adminRouter)   
-
+app.use("/",userRouter)
 
 mongoose.connect("mongodb://localhost:27017/E_commerce_project")
 .then(()=>console.log("Database connected"))

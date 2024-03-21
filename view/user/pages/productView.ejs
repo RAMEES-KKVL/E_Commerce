@@ -12,7 +12,7 @@
                             </button>
 
                             <div>
-                                <img src = "/uploads/product/<%= product.productImage[0] %>" class="product_image_img" alt="" id="product_image_img_view">
+                                <img src = "/uploads/product/<%= product.productImage[0] %>" class="product_image_img" alt="" id="product_image_img_view" style="width:100%;">
                             </div>
                             <button type="button" class="prev_next_btn" onclick="nextImage('<%= JSON.stringify(product.productImage) %>')">
                                 <i class="bi left_right_icon bi-caret-right"></i>
@@ -54,13 +54,17 @@
 
                             <!-- ===================================== -->
 
-                            <div class="top_rating">
-                                <span style="font-size: 1.3rem;">5</span>
+                            <div class="top_rating" style="<%= productReview ? 'display:block;' : 'display:none;' %>">
+                                <span style="font-size: 1.3rem;">
+                                    <%= productReview ? productReview.review.reduce((acc, value, index) => acc + value.rating, 0 ) / ( productReview.review.length || 1 ) : '' %>
+                                </span>
                                 <i class="bi top_star bi-star-fill"></i>
                                 <span style="font-size: .7rem; font-family: 'Poppins',sans-serif;">
-                                    Out of 
-                                    <span>4</span> 
-                                    Reviews
+                                    Out of &nbsp;
+                                    <span>
+                                        <%= productReview ? productReview.review.length || 1 : '' %>
+                                    </span> 
+                                    &nbsp; Reviews
                                 </span>
                             </div>
                             
@@ -158,7 +162,8 @@
                 <% relatedProducts.forEach(relatedProduct =>{ %>
                 <div class="product_frame_grid" onclick="productView(event,'<%= relatedProduct._id %>')">
                     <div class="top">
-                        <button class="wish_btn" onclick="wishlistUpdate(event,'<%= relatedProduct._id %>')">
+                        <img src="/uploads/product/<%= relatedProduct.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
+                        <button class="wish_btn" onclick="wishlistUpdate(event,'<%= relatedProduct._id %>')" style="margin-bottom: 10rem;">
                             <i class="bi wishlist_heart<%= relatedProduct._id %> <%= (()=>{
                                   const listArray = wishlist ? wishlist.products : []
                                   const productId = relatedProduct._id;
@@ -167,7 +172,6 @@
                                })() %>">
                             </i>
                          </button>
-                        <img src="/uploads/product/<%= relatedProduct.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                     </div>
                     <div class="center">
                         <div class="name_div">
@@ -201,18 +205,20 @@
         </div>
 
 
-        <div class="product_frame_related">
+        <div class="product_frame_related" style="<%= productReview ? 'display:block' : 'display:none' %>">
             <div class="product_top">Ratings & Reviews</div>
-            <h4 class="rating_number">4.5</h4>
-            <h6 class="basedon_tex">Based on <span>23</span> Reviews</h6>
-            <div class="product_bottom product_review">
-                <div class="review_frame">
+            <h4 class="rating_number">
+                <%= productReview ? productReview.review.reduce((acc, value, index) => acc + value.rating, 0 ) / ( productReview.review.length || 1 ) : '' %><i class="bi bi-star-fill review_Star" style="font-size: x-large;"></i>
+            </h4>
+            <h6 class="basedon_tex">Based on <span> <%= productReview ? productReview.review.length || 1 : '' %> </span> Reviews</h6>
+            <div class="product_bottom product_review" style="<%= userReview ? 'displayblock;' : 'display:none' %>">
+                <div class="review_frame" style="">
                     <div class="user_img_div">
-                        <img class="user_img" src="#" alt="">
+                        <img class="user_img" src="/uploads/profile/<%= userReview ? userImage ? userImage : 'blank-profile-picture-973460_1920.png' : '' %>" alt="">
                     </div>
                     <div class="user_review">
-                        <span class="star_rating"><span>5</span><i class="bi bi-star-fill"></i></span>
-                        <p class="rating_para">good Product</p>
+                        <span class="star_rating"><span><%= userReview ? userReview.rating : '' %></span><i class="bi bi-star-fill"></i></span>
+                        <p class="rating_para"><%= userReview ? userReview.review : '' %></p>
                     </div>
                 </div>
             </div>
@@ -229,4 +235,3 @@
 <script src="/js/common.js"></script>
 <script src="/js/user/productBuy.js"></script>
 <script src="/js/user/count.js"></script>
-

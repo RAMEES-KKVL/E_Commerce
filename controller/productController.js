@@ -5,8 +5,22 @@ const fs = require("fs")
 //----------------------------- ADMIN CONTROLLER - PRODUCT SECTION -------------------------------
 exports.admin_get_products = async (req,res)=>{
     try {
-        const products = await productModel.find()
-        res.render("admin/pages/products", {products})
+        const productList = await productModel.find()
+        const length = productList.length
+        const pageNumber = req.query.pageNumber ? parseInt(req.query.pageNumber) : 1
+        let pageLimit = 0
+        if(pageNumber > 1){
+            pageLimit = (pageNumber - 1) * 8
+        }
+        const products = await productModel.aggregate([
+            {
+                $skip : pageLimit
+            },
+            {
+                $limit : 8
+            }
+        ])
+        res.render("admin/pages/products", {products, length})
     } catch (error) {
         console.log(error);
     }
@@ -70,7 +84,7 @@ exports.admin_patch_editProduct = async (req,res)=>{
         const oldImageArray = product.productImage
         const productImage = req.files ? req.files.map((file) => file.filename) : oldImageArray
         
-        if(!req.files){
+        if(req.files.length == 0){
             const updatedWithOldArray = await productModel.findOneAndUpdate(
                 {_id:productId},
                 {$set:{ 

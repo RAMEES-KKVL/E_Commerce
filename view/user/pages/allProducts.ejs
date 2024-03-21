@@ -132,20 +132,19 @@
         window.location.href = `/all_Products?range=${range}`
     }
 
+    function nextPage(pageNo,category){
+        let pageNumber = parseInt(pageNo)
+        const products = document.querySelector(".pagination_div").getAttribute("products")
+        if(pageNumber >= 1 && products.length > 0){
+            pageNumber++
+        }
+        window.location.href = `/all_Products?pageNo=${pageNumber}&category=${category}`
+    }
+    
     function prevPage(pageNo,category){
         let pageNumber = parseInt(pageNo)
         if(pageNumber > 1){
             pageNumber--
-        }
-        window.location.href = `/all_Products?pageNo=${pageNumber}&category=${category}`
-    }
-
-    function nextPage(pageNo,category){
-        let pageNumber = parseInt(pageNo)
-        const products = document.querySelector(".pagination_div").getAttribute("products")
-        console.log(pageNumber);
-        if(pageNumber >= 1 && products.length > 0){
-            pageNumber++
         }
         window.location.href = `/all_Products?pageNo=${pageNumber}&category=${category}`
     }

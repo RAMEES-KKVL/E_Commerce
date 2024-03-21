@@ -2030,7 +2030,7 @@ word-wrap: break-word;
     .send_msg_btn:active{
         transform: scale(.96);
     }
-}
+} 
 
 
 /* <<<< ========= ORDER WRAPPER ======= >>>>  */
@@ -2214,7 +2214,7 @@ word-wrap: break-word;
     .send_msg_btn:active{
         transform: scale(.96);
     }
-}
+} 
 
 
 
@@ -2232,7 +2232,18 @@ word-wrap: break-word;
         justify-content: center;
         align-items: start;
         padding: 0 2rem;
-
+        height: 100%;
+        width: calc(100vw - 21rem);
+        overflow: scroll;
+    }
+    .right_content::-webkit-scrollbar {
+        width: 0em;
+    }
+    .right_content::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    .right_content::-webkit-scrollbar-thumb {
+        background-color: transparent;
     }
     .pro_top{
         display: flex;
@@ -2250,7 +2261,7 @@ word-wrap: break-word;
     }
     .pro_top button{
         position: absolute;
-        right: 0;
+        right: 0rem;
         font-family: 'Poppins',sans-serif;
         font-size: .9rem;
         text-align: end;
@@ -2268,9 +2279,18 @@ word-wrap: break-word;
         transform: scale(.95);
     }
     .address_frame{
-        height: 90%;
+        height: 100%;
         width: 70%;
-       
+       overflow: scroll;
+    }
+    .address_frame::-webkit-scrollbar {
+        width: 0em;
+    }
+    .address_frame::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    .address_frame::-webkit-scrollbar-thumb {
+        background-color: transparent;
     }
     .form_frame{
         width: 100%;
@@ -2322,7 +2342,7 @@ word-wrap: break-word;
     .file_div{
         display: flex;
         position: relative;
-        right: 1.8rem;
+        right: 2.5rem;
     }
     .choose_file{
         padding: .7em 1.9rem;
@@ -2432,6 +2452,9 @@ word-wrap: break-word;
         justify-content: center;
         align-items: start;
         padding: 0 2rem;
+        height: 100%;
+        width: calc(100vw - 21rem);
+        overflow: auto;
     }
 
     .edit_text{
@@ -2461,8 +2484,8 @@ word-wrap: break-word;
         transform: scale(.95);
     }
     .address_frame{
-        width: 37rem;
-        height: 90%;
+        width: 80%;
+        height: 100%;
     }
     .form_frame{
         width: 100%;
@@ -2492,13 +2515,14 @@ word-wrap: break-word;
     .product_img{
         margin-top: 2.3rem;
         margin-right: .4rem;
-        width: 70%;
-        height: 9rem;
+        width: 9rem;
+        height: 10rem;
         background-color: white;
     }
     .file_div{
         display: flex;
         position: relative;
+        right: .5rem;
     }
     .choose_file{
         padding: .5rem .9rem;
@@ -2533,6 +2557,7 @@ word-wrap: break-word;
         display: flex;
         flex-direction: column;
         gap: .1rem;
+        overflow: auto;
     }
     .bottom label{
         font-family: 'Poppins',sans-serif;
@@ -4150,7 +4175,9 @@ word-wrap: break-word;
 /* ========================================================== */
 
 
-
+/* .review_Star{
+    font-size: 15rem;
+} */
 .checkout_wrapper{
     .checkout_content{
       display: flex;
@@ -5402,14 +5429,17 @@ word-wrap: break-word;
         display: block;
     }
     .content{
-        position: relative;
+        position: relative;     
     }
     .right_content{
         width: 100%;
     }
+    .form_frame{
+        width: 100%;
+    }
     .frame{
         position: absolute;
-        left: -21rem;
+        left: -21rem;       
         transition: left 0.5s ease;
     }
 

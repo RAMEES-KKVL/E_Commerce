@@ -11,66 +11,68 @@
 
             <div class="checkout_left_top" checkout-Product="<%= JSON.stringify(checkoutProduct) %>">
                 <% checkoutProduct.forEach( product =>{ %>
-                <div class="product product<%= product.productId._id %>" onclick="">
-                    <div class="image_sec">
-                        <img src="/uploads/product/<%= product.productId.productImage[0] %>" style="width: 8rem;" alt="">
-                    </div>
-                    <div class="discription_sec">
-                        <p class="product_name"><%= product.productId.productName %> </p>
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <select name="quantity" style="outline: none; padding: .3rem;" class="quantity_count<%= product.productId._id %>" onclick="selectQuantity(event, '<%= product.productId._id %>')" >
-                                <option value="<%= product.quantity %>"><%= product.quantity %></option>
-                                <% for(i = 1; i<= product.productId.stock; i++){ %>
-                                    <% if(i == product.quantity ){ continue } %>
-                                        <option value="<%= i %>"><%= i %></option>
-                                <% } %>
-                            </select>
-                            <div class="stock_left"><%= product.productId.stock %> stock Left </div>
+                <div style="<%= product.productId.stock == 0 ? 'display:none' : 'display:block' %>">
+                    <div class="product product<%= product.productId._id %>" onclick="">
+                        <div class="image_sec">
+                            <img src="/uploads/product/<%= product.productId.productImage[0] %>" style="width: 8rem;" alt="">
                         </div>
-                        <div style="display: flex; gap: .7rem; align-items: center;">
-                            <p class="old_price">
-                                <i class="bi bi-currency-rupee"></i>
-                                <%= product.productId.price * product.quantity %>
-                            </p>
-                            <p class="new_price">
-                                <i class="bi bi-currency-rupee"></i>
-                                <%= (product.productId.price - product.productId.discount) * product.quantity %>
-                            </p>
-                        </div>
-                        <div class="color_size">
-                            <div class="size_li">
-                                <p style="font-family: 'Poppins',sans-serif; font-weight: 500;font-size: .98rem; color: black;">SIZE :
-                                    <select name="size" id="" class="size_select<%= product.productId._id %>" onclick="selectSize(event, '<%= product.productId._id %>')">
-                                        <option value="<%= product.size %>"><%= product.size %></option>
-                                    <% product.productId.size.forEach(size =>{ %>
-                                        <option value="<%= size %>"><%= size %></option>
-                                    <% }) %>
-                                    </select>
+                        <div class="discription_sec">
+                            <p class="product_name"><%= product.productId.productName %> </p>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <select name="quantity" style="outline: none; padding: .3rem;" class="quantity_count<%= product.productId._id %>" onclick="selectQuantity(event, '<%= product.productId._id %>')" >
+                                    <option value="<%= product.quantity %>"><%= product.quantity %></option>
+                                    <% for(i = 1; i <= 9 && i<= product.productId.stock; i++){ %>
+                                        <% if(i == product.quantity ){ continue } %>
+                                            <option value="<%= i %>"><%= i %></option>
+                                    <% } %>
+                                </select>
+                                <div class="stock_left"><%= product.productId.stock == 0 ? 'Out of Stock' : product.productId.stock + ' stock Left' %> </div>
+                            </div>
+                            <div style="display: flex; gap: .7rem; align-items: center;">
+                                <p class="old_price">
+                                    <i class="bi bi-currency-rupee"></i>
+                                    <%= product.productId.price * product.quantity %>
+                                </p>
+                                <p class="new_price">
+                                    <i class="bi bi-currency-rupee"></i>
+                                    <%= (product.productId.price - product.productId.discount) * product.quantity %>
                                 </p>
                             </div>
-                            
-                            <!-- ------------------------------------- -->
-                            
-                            <div class="color_li">
-                                <p style="font-family: 'Poppins',sans-serif;color: black;font-size: .93rem;">COLOR :</p>
-                                <span style="background-color:<%= product.productId.colour %>" class="label_span_color" onclick="" >
-                                    <input  id="color" name="color" value="<%= product.productId.colour %>" type="radio" >
-                                    <label for="color" ></label>
-                                </span>
+                            <div class="color_size">
+                                <div class="size_li">
+                                    <p style="font-family: 'Poppins',sans-serif; font-weight: 500;font-size: .98rem; color: black;">SIZE :
+                                        <select name="size" id="" class="size_select<%= product.productId._id %>" onclick="selectSize(event, '<%= product.productId._id %>')">
+                                            <option value="<%= product.size %>"><%= product.size %></option>
+                                        <% product.productId.size.forEach(size =>{ %>
+                                            <option value="<%= size %>"><%= size %></option>
+                                        <% }) %>
+                                        </select>
+                                    </p>
+                                </div>
+                                
+                                <!-- ------------------------------------- -->
+                                
+                                <div class="color_li">
+                                    <p style="font-family: 'Poppins',sans-serif;color: black;font-size: .93rem;">COLOR :</p>
+                                    <span style="background-color:<%= product.productId.colour %>" class="label_span_color" onclick="" >
+                                        <input  id="color" name="color" value="<%= product.productId.colour %>" type="radio" >
+                                        <label for="color" ></label>
+                                    </span>
+                                </div>
                             </div>
+                            <li style="display: flex; gap: .7rem; align-items: center; height: 2rem;">
+                                <div style="display: flex; align-items: center; font-family: 'sans-serif'; ">Return
+                                    <i class="bi bi-check"></i>
+                                    <i class="bi bi-x"></i>
+                                </div>
+                            </li>                     
                         </div>
-                        <li style="display: flex; gap: .7rem; align-items: center; height: 2rem;">
-                            <div style="display: flex; align-items: center; font-family: 'sans-serif'; ">Return
-                                <i class="bi bi-check"></i>
-                                <i class="bi bi-x"></i>
+                        <div class="delete_section">
+                            <div style="margin-bottom: 1rem;">
+                                <button onclick="deleteFromcheckout(event,'<%= product.productId._id %>')">
+                                    <i class="bi bi-x-circle"></i>
+                                </button>
                             </div>
-                        </li>                     
-                    </div>
-                    <div class="delete_section">
-                        <div style="margin-bottom: 1rem;">
-                            <button onclick="deleteFromcheckout(event,'<%= product.productId._id %>')">
-                                <i class="bi bi-x-circle"></i>
-                            </button>
                         </div>
                     </div>
                 </div>

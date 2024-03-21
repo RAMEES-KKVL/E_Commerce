@@ -22,6 +22,10 @@ exports.get_home = async (req,res)=>{
         const banners = await bannerModel.find()
         const userId = req.session.user_id
         const Tshirts = await productModel.find({subCategory:"T-shirts"})
+        const Mobiles = await productModel.find({subCategory:"Mobiles"})
+        const Laptops = await productModel.find({subCategory:"Laptops"})
+        const Footwears = await productModel.find({subCategory:"Footwears"})
+        const Frocks = await productModel.find({subCategory:"Frocks"})
         const Shirts = await productModel.find({subCategory:"Shirts"})
         const Shoes = await productModel.find({subCategory:"Shoes"})
         const Sarees = await productModel.find({subCategory:"Sarees"})
@@ -30,7 +34,9 @@ exports.get_home = async (req,res)=>{
         const wishlist = await wishlistModel.findOne({userId})
         const categories = await categoryModel.find()
         const cart = await cartModel.findOne({userId})
-        res.render("user/pages/userHome", {banners, Tshirts, Shirts, Shoes, Sarees, Tops, Pants, wishlist, categories, cart})
+        res.render("user/pages/userHome", {
+            banners, Tshirts, Shirts, Shoes, Sarees, Tops, Pants, wishlist, categories, cart, Frocks, Mobiles, Laptops, Footwears
+        })
     } catch (error) {
         console.log(error);
     }
@@ -250,7 +256,22 @@ exports.get_product = async (req,res)=>{
         const cart = await cartModel.findOne({userId : req.session.user_id})
         const relatedProducts = await productModel.find({subCategory : product.subCategory})
         const wishlist = await wishlistModel.findOne({userId : req.session.user_id})
-        res.render("user/pages/productView", {product, cart, relatedProducts, wishlist})
+        const productReview = await reviewModel.findOne({productId : id})
+        let userReview
+        let userImage
+        if(req.session.user_id){
+            userReview = productReview ? productReview.review.find(reviews => reviews.userId == req.session.user_id) : ''
+            if(userReview){
+                const user = await userProfileModel.findOne({userId : req.session.user_id})
+                userImage = user.profileImage
+            }
+        }else{
+            userReview = productReview ? productReview.review[0] : ''
+            const userId = productReview ? productReview.review[0].userId : ''
+            const user = productReview ? await userProfileModel.findOne({userId}) : ''
+            userImage = user ?  user.profileImage : ''
+        }
+        res.render("user/pages/productView", {product, cart, relatedProducts, wishlist, productReview, userReview, userImage})
     } catch (error) {
         console.log(error);
     }
@@ -533,9 +554,11 @@ exports.post_add_deliveryAddress = async (req,res) =>{
 exports.get_orders = async (req,res)=>{
     try {
         if(req.session.user_id){
+            const userProfile = await userProfileModel.findOne({userId : req.session.user_id})
+            const signupData = await signupModel.findOne({_id : req.session.user_id})
             const userOrder = await orderModel.findOne({userId:req.session.user_id}).populate("orders.productId.productId")
             const orders = userOrder.orders
-            res.render('user/pages/orders',{orders})
+            res.render('user/pages/orders',{orders, userProfile, signupData})
         }else{
             res.redirect("/login")
         }
@@ -978,8 +1001,18 @@ exports.patch_review_product = async (req,res)=>{
 }
 
 //-----------------------------  ABOUT US SECTION -------------------------------
-exports.get_aboutUs = (req,res)=>{
-    res.render("user/pages/aboutUs")
+exports.get_aboutUs = async (req,res)=>{
+    try {
+        let userProfile
+        let signupData
+        if(req.session.user_id){
+            signupData = await signupModel.findOne({_id : req.session.user_id}) 
+            userProfile = await userProfileModel.findOne({userId : req.session.user_id})
+        }
+        res.render("user/pages/aboutUs",{userProfile, signupData})
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 //-----------------------------  USER LOG-OUT SECTION -------------------------------

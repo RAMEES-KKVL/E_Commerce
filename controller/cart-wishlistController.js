@@ -113,8 +113,9 @@ exports.get_wishlist = async (req,res)=>{
             const userExist = req.session.user_id
             const wishlist = await wishlistModel.findOne({userId: userExist})
             const wishlistProductlist = await wishlistModel.findOne({userId: userExist}).populate('products.productId')
+            const cart = await cartModel.findOne({userId : userExist})
             const wishlistProducts = wishlistProductlist ? wishlistProductlist.products : []
-            res.render("user/pages/wishlist", {userExist, wishlist, wishlistProducts})
+            res.render("user/pages/wishlist", {userExist, wishlist, wishlistProducts, cart})
         }
     } catch (error) {
         console.log(error);

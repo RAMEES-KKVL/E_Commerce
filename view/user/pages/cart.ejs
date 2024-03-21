@@ -14,9 +14,10 @@
         </div>
     </div>
 
-    <div class="content cart_content" style="<%= !userId ? 'display:none' : 'display:block' %> display: flex;">    
+    <div class="content cart_content" style="display: flex;">    
         
         <!-- YOU CART IS EMPTY -->
+        <div style="<%= userId && !cart ||  userId && cart.products.length == 0 ? 'display:block' : 'display:none' %>">
         <div style="<%= (()=>{
                 const list = cart ? cart.products : [];
                 return list.length == 0 ? 'display:block' : 'display:none'
@@ -26,6 +27,7 @@
                 <p>Looks like you haven't added anything to your Cart yet.</p>
                 <img src="#" class="cart_png" alt="">
             </div>
+        </div>
         </div>
             
         <div class="product_frame" style="margin-top: 0; ">
@@ -40,14 +42,14 @@
                     <p class="product_name"><%= product.productId.productName %> </p>
                     <div id="error" style="color: red;" product-price="<%= product.productId.price %>" product-discount="<%= product.productId.discount %>"></div>
                     <div style="display: flex; gap: 1rem; align-items: center;">
-                        <select class="quantity_count<%= product.productId._id %>"  name="quantity" style="outline: none; padding: .3rem;  " onclick="selectQuantity(event,'<%= product.productId._id %>')">
+                        <select class="quantity_count<%= product.productId._id %>"  name="quantity" style="outline: none; padding: .3rem; <%= product.productId.stock == 0 ? 'display:none;' : 'display:block' %>" onclick="selectQuantity(event,'<%= product.productId._id %>')">
                             <option value="<%= product.quantity %>"> <%= product.quantity %></option>
-                            <% for(i = 1; i <= product.productId.stock; i++){ %>
+                            <% for(i = 1; i <= 9 && i <= product.productId.stock; i++){ %>
                                 <% if(i ==  product.quantity ){ continue } %>
                                     <option value="<%= i %>"><%= i %></option>
                             <% } %>
                         </select>
-                        <div class="stock_left"> <%= product.productId.stock %> stock Left</div>
+                        <div class="stock_left"> <%= product.productId.stock == 0 ? 'Out of Stock' : product.productId.stock + ' Stock left' %></div>
                     </div>
                     <div style="display: flex; gap: .7rem; align-items: center;" >
                         <p class="old_price old_price<%= product.productId._id %>"><%= product.productId.price * product.quantity %></p>

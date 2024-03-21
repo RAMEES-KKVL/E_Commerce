@@ -61,7 +61,7 @@ exports.post_signup = async (req,res)=>{
             
             await newSchema.save()
             console.log("Data reached in dATABASE");
-            return res.status(200).json({success: true,phone: phone, newUser: true})
+            return res.status(200).json({success: true, phone: phone, newUser: true})
         }
     } catch (error) {
         console.log("post signup ", error.message);
@@ -339,7 +339,7 @@ exports.admin_post_login = async (req,res)=>{
 
             if(comparePass){
                 if(verified === true){
-                    req.session.admin_id = adminExist._id
+                    req.session.adminLoggged = true
                     return res.status(200).json({ success:true, admin:true })
                 }else{
                     return res.status(200).json({success:true, verification:true, email:email})

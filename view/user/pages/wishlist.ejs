@@ -65,8 +65,20 @@
                         </div>
                     </div>
                     <div class="bottom">
-                        <button class="addto_cart_btn">
-                            MOVE TO CART
+                        <button class="addto_cart_btn addto_cart_btn<%= product.productId._id %>" onclick="addtoCart(event,'<%= product.productId._id %>')">
+                            <%= (()=>{
+                               const productId = product.productId._id
+                               const listArray = cart ? cart.products : []
+                               const exist = listArray.some(product => product.productId.equals(productId))
+                               return exist ? 'GO TO CART' : 'ADD TO CART'
+                            })() %>
+                            <i class="bi add_toCart_plus<%= product._id %> <%= (()=>{
+                                  const productId = product.productId._id
+                                  const listArray = cart ? cart.products : []
+                                  const exist = listArray.some(product => product.productId.equals(productId))
+                                  return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                               })() %>">
+                            </i>
                         </button>
                     </div>
                     <div id="error" style="color: red;"></div>
@@ -82,3 +94,4 @@
 <script src="/js/common.js"></script>
 <script src="/js/user/count.js"></script>
 <script src="/js/user/wishlist.js"></script>
+<script src="/js/user/cart.js"></script>

@@ -421,6 +421,7 @@ height: 3.4rem !important;
     width: 100%;
     height: 26rem;
     display: flex;
+    margin-bottom: 5rem;
 }
 .earnings_diagram{
     width: 60%;
@@ -434,18 +435,28 @@ height: 3.4rem !important;
     height: 100%;
     margin-left: 1.5rem;
     margin-bottom: 1.5rem;
-    border:1px solid;
+    padding: 1rem;
+    background-color: azure;
+    box-shadow: 0 0 .7rem .2rem #4d4c7d74;
 }
 .revenue_img{
-    border:1px solid;
     margin-left: 1.5rem;
     margin-right: 1.5rem;
     height: 100%;
+    padding: 2rem;
+    background-color: azure;
+    box-shadow: 0 0 .7rem .2rem #4d4c7d74;
 }
 .project_chart{
-    height: 15rem;
+    margin-top: rem;
+    padding: 2rem;
+    height: 25rem;
     margin: 1.5rem;
-    border:1px solid;
+    background-color: azure;
+    box-shadow: 0 0 .7rem .2rem #4d4c7d74;
+}
+.earnings_img:hover,.revenue_img:hover,.project_chart:hover{
+    box-shadow: 0 0 .7rem .2rem #4d4c7db7;
 }
 
 /* ================================================
@@ -552,7 +563,6 @@ height: 3.4rem !important;
     position: absolute;
     top: 100%;
     left: 0;
-    /* padding: 5px; */
     display: none;
 }
 .edit_order_status:hover .order_status_dropdown {
@@ -772,6 +782,27 @@ textarea {
 }
 .product_table .bi-pencil-square:hover {
     color: #edb409;
+}
+.pagination_admin_products{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.page_btn{
+    width: 3rem;
+    height: 50%;
+    background-color: #edb409;
+    color: #363062;
+    border: none;
+    border-radius: 4px;
+}
+.page_btn:hover {
+    background-color: #363062;
+    color: aliceblue;
+    border: none;    
 }
 
 /* =============================================

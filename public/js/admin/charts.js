@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             data: {
                 labels: signupChart.labels,
                 datasets: [{
-                    label: '# of Signups',
+                    label: signupChart.labels.length + ' Signups',
                     data: signupChart.data,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const orderData = response.data.orderData;
         const labels = orderData.map(result => result._id); // Month numbers
         const totalAmounts = orderData.map(result => result.count); // Total order counts
-
+        
         new Chart(orderGraph, {
             type: 'line',
             data: {

@@ -25,24 +25,19 @@
                </ul>
             </header>
  
- 
              <!-- ========================================================================================================= -->
  
              <div class="banner">
                <% banners.forEach(banner =>{ %>
                <button class="prev_banner"><i class="bi banner_chevron bi-chevron-left"></i></button>
-                
- 
                <div class="banner_sub_div">
-               <img src="/uploads/banner/<%= banner.bannerImage %>"  style="width: 45%;">
-               <div class="banner_text_frame">
-                  <h2><%= banner.bannerName %></h2>
-                  <h4><%= banner.bannerHeading %></h4>
-                  <h5><i class="bi bi-currency-rupee"><%= banner.offerPrice %></i></h5>
+                  <img src="/uploads/banner/<%= banner.bannerImage %>"  style="width: 45%;">
+                  <div class="banner_text_frame">
+                     <h2><%= banner.bannerName %></h2>
+                     <h4><%= banner.bannerHeading %></h4>
+                     <h5><i class="bi bi-currency-rupee"><%= banner.offerPrice %></i></h5>
+                  </div>
                </div>
-               </div>
- 
-                     
                 <button class="next_banner"><i class="bi banner_chevron bi-chevron-right"></i></button>
                 <% }) %>
              </div>
@@ -50,7 +45,6 @@
              <!-- ========================================================================================================= -->
  
                  <!-- ------------------------- CATEGORY --------------------------- -->
- 
  
                <div class="category_div">
                   <% categories.forEach(category =>{ %>
@@ -62,12 +56,7 @@
                   </div>
                   <% }) %>
                </div>
-             
-                
-                
-              <!-- ============================================================================================================================ -->
- 
- 
+
               <!-- ------------------------- MENS SHIRTS --------------------------- -->
  
                <div class="product_frame">
@@ -118,17 +107,7 @@
                   </div>
                </div>
                               
-                       
- 
-                   
- 
-              
-                
-              <!-- --------------------------------------------------------------------------------------------------------- -->
- 
- 
               <!-- ------------------------- MENS TSHIRTS --------------------------- -->
- 
  
                <div class="product_frame">
                   <div class="product_top">MENS T-SHIRTS</div>
@@ -177,61 +156,8 @@
                      <% }) %>
                   </div>
                </div>
-                              
-                              
-                              
-                  
-                      
- 
-                
-              <!-- --------------------------------------------------------------------------------------------------------- -->
- 
- 
-                           <!-- ------------------------- WOMENS KURTHAS --------------------------- -->
- 
-<!--  
-                           <div class="product_frame">
- 
-                            <div class="product_top">WOMENS KURTHAS</div>
-                            <div class="product_bottom">
-            
-                      
-                               <div class="product_frame_grid">
-                                  
-            
-                                 <div class="top">
-                                    <button class="wish_btn">
-                                        <i class="bi bi-heart"> </i>
-                                    </button>
-                                    <img src="" style="width: 84%; height: 94%;" alt="">
-                                  </div>
-                                  <div class="center">
-                                    <div class="name_div">
-                                    <p class="product_name">  </p>
-                                    </div>
-                                    <div class="price_div">
-                                       <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                       <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                    </div>
-                                 </div>
-                                 <div class="bottom">
-                                    <button  class="addto_cart_btn addto_cart_btn">
-                                       GO TO CART<i class="bi bi-arrow-right-short"></i>
-                                    </button>
-                               </div>           
-                                 
-                              </div>
-                              
-                               
-                           </div>
-                        </div> -->
-            
-                           
-                  <!-- --------------------------------------------------------------------------------------------------------- -->
-                
  
                            <!-- ------------------------- WOMENS SAREE --------------------------- -->
- 
  
                            <div class="product_frame">
                               <div class="product_top">WOMENS SAREE</div>
@@ -280,31 +206,17 @@
                                  <% }) %>
                               </div>
                            </div>
-            
                            
                   <!-- --------------------------------------------------------------------------------------------------------- -->
  
- 
-     
- 
- 
                     <div class="promo_div">
-                        <div class="promo_sec"><img src="#"><p>Best quality </p></div>
-                        <div class="promo_sec"><img src="#"><p>Free delivery</p></div>
-                        <div class="promo_sec"><img src="#"><p>1 year warranty</p></div>
+                        <div class="promo_sec"><img src="/assets/promo 2.png"><p>Best quality </p></div>
+                        <div class="promo_sec"><img src="/assets/promo 1.png"><p>Free delivery</p></div>
+                        <div class="promo_sec"><img src="/assets/promo 3.png"><p>1 year warranty</p></div>
                     </div>
       
- 
- 
- 
-             <!-- ---------------------------------------------------------------------------------------------------------------------- -->
- 
                       <!-- ------------------------- MENS SHOES --------------------------- -->
  
- 
- 
-                      
-
                   <div class="product_frame">
                      <div class="product_top">MENS SHOES</div>
                      <div class="product_bottom">
@@ -353,68 +265,13 @@
                      </div>
                   </div>
 
-                  
-                  
-                  
- 
- 
-             <!-- ---------------------------------------------------------------------------------------------------------------------- -->
- 
- 
-                  <!-- ------------------------- WOMENS FOOTWEAR --------------------------- -->
- 
- 
- 
-             <!-- <div class="product_frame">
- 
-                <div class="product_top">WOMENS FOOTWEAR</div>
-                <div class="product_bottom">
- 
-                  
-                   <div class="product_frame_grid">
-                      
- 
-                     <div class="top">
-                        <button class="wish_btn">
-                         <i class="bi bi-heart"></i>
-                      </button>
-                        <img src="#" style="width: 85%; height: 90%;" alt="">
-                      </div>
-                      <div class="center">
-                        <div class="name_div">
-                        <p class="product_name">  </p>
-                        </div>
-                        <div class="price_div">
-                           <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                           <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                        </div>
-                     </div>
-                     <div class="bottom">
-                        <button class="addto_cart_btn addto_cart_btn">
-                            GO TO CART<i class="bi bi-arrow-right-short"></i>
-                        </button>
-                   </div>
-                     
-                  </div>
-                  
-                
-               </div>
-            </div>
-  -->
-             <!-- ------------------------------------------------------------------------------------------------- -->
- 
+             <!-- ---------------------------------------------------------------------------------------------------------------------- --> 
  
              <div class="banner_2">
-                <img src="#" height="100%" width="100%" alt="">
+                <img src="/assets/banner 2.jpg" height="100%" width="100%" alt="">
              </div>
  
-       
-             <!-- ------------------------------------------------------------------------------------------------------------------ -->
- 
- 
                  <!-- ------------------------- MENS PANTS --------------------------- -->
- 
- 
  
                   <div class="product_frame">
                      <div class="product_top">MENS PANTS</div>
@@ -463,16 +320,8 @@
                         <% }) %>
                      </div>
                   </div>
-                     
-                        
- 
- 
-       
-             <!-- ------------------------------------------------------------------------------------------------------------------ -->
  
                    <!-- ------------------------- WOMENS TOP --------------------------- -->
- 
- 
  
                   <div class="product_frame">
                      <div class="product_top">WOMENS TOPS</div>
@@ -522,341 +371,221 @@
                      </div>
                   </div>
  
- 
- 
-             <!-- ---------------------------------------------------------------------------------------------------- -->
-       
- 
                    <!-- ------------------------- KIDS FROCKS --------------------------- -->
  
- 
- 
-             <div class="product_frame">
- 
-                <div class="product_top">KIDS FROCKS</div>
-                <div class="product_bottom">
- 
-                    
-                   <div class="product_frame_grid">
-                      
- 
-                    <div class="top">
-                        <button class="wish_btn">
-                         <i class="bi bi-heart"></i>
-                      </button>
-                        <img src="#" style="width: 85%; height: 90%;" alt="">
-                      </div>
-                      <div class="center">
-                        <div class="name_div">
-                        <p class="product_name">  </p>
-                        </div>
-                        <div class="price_div">
-                           <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                           <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                        </div>
+                  <div class="product_frame">
+                     <div class="product_top">KIDS FROCKS</div>
+                     <div class="product_bottom">
+                        <% Frocks.forEach(product =>{ %>
+                           <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
+                              <div class="top">
+                                 <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                    <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                          const listArray = wishlist ? wishlist.products : []
+                                          const productId = product._id;
+                                          const exist = listArray.some(product => product.productId.equals(productId))
+                                          return exist ? 'bi-heart-fill' : 'bi-heart'
+                                       })() %>">
+                                    </i>
+                                 </button>
+                                 <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
+                              </div>
+                              <div class="center">
+                                 <div class="name_div">
+                                    <p class="product_name"><%= product.productName %></p>
+                                 </div>
+                                 <div class="price_div">
+                                    <p class="old_price"><i class="bi bi-currency-rupee"><%= product.price %></i></p>
+                                    <p class="new_price"><i class="bi bi-currency-rupee"></i><%= product.price - product.discount %></p>
+                                 </div>
+                              </div>
+                              <div class="bottom">
+                                 <button class="addto_cart_btn addto_cart_btn<%= product._id %>" onclick="addtoCart(event,'<%= product._id %>')">
+                                    <%= (()=>{
+                                       const productId = product._id
+                                       const listArray = cart ? cart.products : []
+                                       const exist = listArray.some(product => product.productId.equals(productId))
+                                       return exist ? 'GO TO CART' : 'ADD TO CART'
+                                    })() %>
+                                    <i class="bi add_toCart_plus<%= product._id %> <%= (()=>{
+                                          const productId = product._id
+                                          const listArray = cart ? cart.products : []
+                                          const exist = listArray.some(product => product.productId.equals(productId))
+                                          return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                                       })() %>">
+                                    </i>
+                                 </button>
+                              </div>
+                           </div>                     
+                        <% }) %>
                      </div>
-                     <div class="bottom">
-                        <button class="addto_cart_btn addto_cart_btn">
-                            ADD TO CART<i class="bi bi-plus-lg"></i>
-                        </button>
-                   </div>
-                     
                   </div>
-                  
-                   
-               </div>
-            </div>
+
+                  <!-- ------------------------- WOMENS FOOTWEAR --------------------------- -->
  
- 
- 
- 
- 
-             <!-- ---------------------------------------------------------------------------------------------------- -->
-       
- 
-                 <!-- ------------------------- KIDS TOYS --------------------------- -->
- 
- 
- 
-             <div class="product_frame">
- 
-                <div class="product_top">KIDS TOYS</div>
-                <div class="product_bottom">
- 
-                    
-                   <div class="product_frame_grid">
-                      
- 
-                    <div class="top">
-                        <button class="wish_btn">
-                         <i class="bi bi-heart"></i>
-                      </button>
-                        <img src="#" style="width: 85%; height: 90%;" alt="">
-                      </div>
-                      <div class="center">
-                        <div class="name_div">
-                        <p class="product_name">  </p>
-                        </div>
-                        <div class="price_div">
-                           <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                           <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                        </div>
+                  <div class="product_frame">
+                     <div class="product_top">WOMENS FOOTWEAR</div>
+                     <div class="product_bottom">
+                        <% Footwears.forEach(product =>{ %>
+                           <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
+                              <div class="top">
+                                 <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                    <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                          const listArray = wishlist ? wishlist.products : []
+                                          const productId = product._id;
+                                          const exist = listArray.some(product => product.productId.equals(productId))
+                                          return exist ? 'bi-heart-fill' : 'bi-heart'
+                                       })() %>">
+                                    </i>
+                                 </button>
+                                 <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
+                              </div>
+                              <div class="center">
+                                 <div class="name_div">
+                                    <p class="product_name"><%= product.productName %></p>
+                                 </div>
+                                 <div class="price_div">
+                                    <p class="old_price"><i class="bi bi-currency-rupee"><%= product.price %></i></p>
+                                    <p class="new_price"><i class="bi bi-currency-rupee"></i><%= product.price - product.discount %></p>
+                                 </div>
+                              </div>
+                              <div class="bottom">
+                                 <button class="addto_cart_btn addto_cart_btn<%= product._id %>" onclick="addtoCart(event,'<%= product._id %>')">
+                                    <%= (()=>{
+                                       const productId = product._id
+                                       const listArray = cart ? cart.products : []
+                                       const exist = listArray.some(product => product.productId.equals(productId))
+                                       return exist ? 'GO TO CART' : 'ADD TO CART'
+                                    })() %>
+                                    <i class="bi add_toCart_plus<%= product._id %> <%= (()=>{
+                                          const productId = product._id
+                                          const listArray = cart ? cart.products : []
+                                          const exist = listArray.some(product => product.productId.equals(productId))
+                                          return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                                       })() %>">
+                                    </i>
+                                 </button>
+                              </div>
+                           </div>                     
+                        <% }) %>
                      </div>
-                     <div class="bottom">
-                        <button class="addto_cart_btn addto_cart_btn">
-                            ADD TO CART<i class="bi bi-plus-lg"></i>
-                        </button>
-                   </div>
-                     
                   </div>
-                  
-                   
-               </div>
-            </div>
- 
- 
- 
  
              <!-- ---------------------------------------------------------------------------------------------------- -->
              
- 
-             <div class="brands_frame">
-                <img src="#" class="band_img" alt="">
-                <img src="#" class="band_img" alt="">
-                <img class="redmi_png" src="#" class="band_img" alt="">
-                <img src="#" class="band_img" alt="">
-                <img src="#" class="band_img" alt="">
-              </div>
- 
- 
- 
-             <!-- --------------------------------------------------------------------------------------------------------------------------------- -->
- 
+            <div class="brands_frame">
+               <img src="/assets/oppo.png" class="band_img" alt="">
+               <img src="/assets/realmi.png" class="band_img" alt="">
+               <img class="redmi_png" src="/assets/redmi.jpg" class="band_img" alt="">
+               <img src="/assets/samsung.png" class="band_img" alt="">
+            </div>
  
              <!-- ------------------------- BEST  MOBILES --------------------------- -->
  
- 
-                       <div class="product_frame">
- 
-                         <div class="product_top">BEST  MOBILES</div>
-                         <div class="product_bottom">
-          
-                            
-                            <div class="product_frame_grid">
-                               
-          
-                                <div class="top">
-                                    <button class="wish_btn">
-                                        <i class="bi bi-heart"></i>
-                                    </button>
-                                    <img src="#" style="width: 85%; height: 90%;" alt="">
-                                </div>
-                                <div class="center">
-                                    <div class="name_div">
-                                        <p class="product_name">  </p>
-                                    </div>
-                                    <div class="price_div">
-                                       <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                       <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                    </div>
-                                </div>
-                                 <div class="bottom">
-                                    <button class="addto_cart_btn addto_cart_btn">
-                                        ADD TO CART<i class="bi bi-plus-lg"></i>
-                                    </button>
-                                </div>       
-                              
-                           </div>
-                           
-                            
+            <div class="product_frame">
+               <div class="product_top">MOBILES</div>
+               <div class="product_bottom">
+                  <% Mobiles.forEach(product =>{ %>
+                     <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
+                        <div class="top">
+                           <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                              <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                    const listArray = wishlist ? wishlist.products : []
+                                    const productId = product._id;
+                                    const exist = listArray.some(product => product.productId.equals(productId))
+                                    return exist ? 'bi-heart-fill' : 'bi-heart'
+                                 })() %>">
+                              </i>
+                           </button>
+                           <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                         </div>
-                     </div>
+                        <div class="center">
+                           <div class="name_div">
+                              <p class="product_name"><%= product.productName %></p>
+                           </div>
+                           <div class="price_div">
+                              <p class="old_price"><i class="bi bi-currency-rupee"><%= product.price %></i></p>
+                              <p class="new_price"><i class="bi bi-currency-rupee"></i><%= product.price - product.discount %></p>
+                           </div>
+                        </div>
+                        <div class="bottom">
+                           <button class="addto_cart_btn addto_cart_btn<%= product._id %>" onclick="addtoCart(event,'<%= product._id %>')">
+                              <%= (()=>{
+                                 const productId = product._id
+                                 const listArray = cart ? cart.products : []
+                                 const exist = listArray.some(product => product.productId.equals(productId))
+                                 return exist ? 'GO TO CART' : 'ADD TO CART'
+                              })() %>
+                              <i class="bi add_toCart_plus<%= product._id %> <%= (()=>{
+                                    const productId = product._id
+                                    const listArray = cart ? cart.products : []
+                                    const exist = listArray.some(product => product.productId.equals(productId))
+                                    return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                                 })() %>">
+                              </i>
+                           </button>
+                        </div>
+                     </div>                     
+                  <% }) %>
+               </div>
+            </div>
           
-          
-  
-                       <!-- ---------------------------------------------------------------------------------------------------- -->
-       
- 
                  <!-- ------------------------- BEST LAPTOPS --------------------------- -->
  
- 
-                       <div class="product_frame">
- 
-                         <div class="product_top">BEST  LAPTOPS</div>
-                         <div class="product_bottom">
-          
-                             
-                            <div class="product_frame_grid">
-                               
-          
-                                <div class="top">
-                                    <button class="wish_btn">
-                                        <i class="bi bi-heart"></i>
-                                    </button>
-                                    <img src="#" style="width: 85%; height: 90%;" alt="">
-                                </div>
-                                <div class="center">
-                                    <div class="name_div">
-                                        <p class="product_name">  </p>
-                                    </div>
-                                    <div class="price_div">
-                                       <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                       <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                    </div>
-                                </div>
-                                 <div class="bottom">
-                                    <button class="addto_cart_btn addto_cart_btn">
-                                        ADD TO CART<i class="bi bi-plus-lg"></i>
-                                    </button>
-                                </div>         
-                              
+               <div class="product_frame">
+                  <div class="product_top">LAPTOPS</div>
+                  <div class="product_bottom">
+                     <% Laptops.forEach(product =>{ %>
+                        <div class="product_frame_grid" onclick="productView(event,'<%= product._id %>')">
+                           <div class="top">
+                              <button class="wish_btn" onclick="wishlistUpdate(event,'<%= product._id %>')">
+                                 <i class="bi wishlist_heart<%= product._id %> <%= (()=>{
+                                       const listArray = wishlist ? wishlist.products : []
+                                       const productId = product._id;
+                                       const exist = listArray.some(product => product.productId.equals(productId))
+                                       return exist ? 'bi-heart-fill' : 'bi-heart'
+                                    })() %>">
+                                 </i>
+                              </button>
+                              <img src="/uploads/product/<%= product.productImage[0] %>" style="width: 85%; height: 90%;" alt="">
                            </div>
-                           
-                            
-                        </div>
-                     </div>
-          
-          
-          
-  
+                           <div class="center">
+                              <div class="name_div">
+                                 <p class="product_name"><%= product.productName %></p>
+                              </div>
+                              <div class="price_div">
+                                 <p class="old_price"><i class="bi bi-currency-rupee"><%= product.price %></i></p>
+                                 <p class="new_price"><i class="bi bi-currency-rupee"></i><%= product.price - product.discount %></p>
+                              </div>
+                           </div>
+                           <div class="bottom">
+                              <button class="addto_cart_btn addto_cart_btn<%= product._id %>" onclick="addtoCart(event,'<%= product._id %>')">
+                                 <%= (()=>{
+                                    const productId = product._id
+                                    const listArray = cart ? cart.products : []
+                                    const exist = listArray.some(product => product.productId.equals(productId))
+                                    return exist ? 'GO TO CART' : 'ADD TO CART'
+                                 })() %>
+                                 <i class="bi add_toCart_plus<%= product._id %> <%= (()=>{
+                                       const productId = product._id
+                                       const listArray = cart ? cart.products : []
+                                       const exist = listArray.some(product => product.productId.equals(productId))
+                                       return exist ? 'bi-arrow-right-short' : 'bi-plus-lg'
+                                    })() %>">
+                                 </i>
+                              </button>
+                           </div>
+                        </div>                     
+                     <% }) %>
+                  </div>
+               </div>
                        <!-- ---------------------------------------------------------------------------------------------------- -->
        
- 
-                   <!-- ------------------------- BEST  FIRDGES --------------------------- -->
- 
- 
- 
-                       <div class="product_frame">
- 
-                         <div class="product_top">BEST  FIRDGES</div>
-                         <div class="product_bottom">
-          
-                            <div class="product_frame_grid">
-                               
-          
-                                <div class="top">
-                                    <button class="wish_btn">
-                                        <i class="bi bi-heart"></i>
-                                    </button>
-                                    <img src="#" style="width: 85%; height: 90%;" alt="">
-                                </div>
-                                <div class="center">
-                                    <div class="name_div">
-                                        <p class="product_name">  </p>
-                                    </div>
-                                    <div class="price_div">
-                                       <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                       <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                                    </div>
-                                </div>
-                                 <div class="bottom">
-                                    <button class="addto_cart_btn addto_cart_btn">
-                                        ADD TO CART<i class="bi bi-plus-lg"></i>
-                                    </button>
-                                </div>         
-                              
-                           </div>
-                           
-                            
-                        </div>
-                     </div>
-          
-          
-          
-                      <!-- ---------------------------------------------------------------------------------------------------- -->
-          
- 
-               <!-- ------------------------- BEST WATCHES --------------------------- -->
- 
- 
- 
-             <div class="product_frame">
- 
-                <div class="product_top">BEST WATCHES</div>
-                <div class="product_bottom">
- 
-                    
-                   <div class="product_frame_grid">
-                      
- 
-                    <div class="top">
-                        <button class="wish_btn">
-                            <i class="bi bi-heart"></i>
-                        </button>
-                        <img src="#" style="width: 85%; height: 90%;" alt="">
-                    </div>
-                    <div class="center">
-                        <div class="name_div">
-                            <p class="product_name">  </p>
-                        </div>
-                        <div class="price_div">
-                           <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                           <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                        </div>
-                    </div>
-                     <div class="bottom">
-                        <button class="addto_cart_btn addto_cart_btn">
-                            ADD TO CART<i class="bi bi-plus-lg"></i>
-                        </button>
-                    </div>
-                     
-                  </div>
-                  
-                   
-               </div>
-            </div>
-    
-                
-            
- 
-                <!-- -------------------------------------------------------------------------------------------- -->
- 
-             <!-- ------------------------- KITCHEN ITEMS  --------------------------- -->
- 
- 
-             <div class="product_frame">
- 
-                <div class="product_top">KITCHEN ITEMS</div>
-                <div class="product_bottom">
- 
-                    
-                   <div class="product_frame_grid">
-                      
-                    <div class="top">
-                        <button class="wish_btn">
-                            <i class="bi bi-heart"></i>
-                        </button>
-                        <img src="#" style="width: 85%; height: 90%;" alt="">
-                    </div>
-                    <div class="center">
-                        <div class="name_div">
-                            <p class="product_name">  </p>
-                        </div>
-                        <div class="price_div">
-                           <p class="old_price"><i class="bi bi-currency-rupee"></i>  </p>
-                           <p class="new_price"><i class="bi bi-currency-rupee"></i>  </p>
-                        </div>
-                    </div>
-                     <div class="bottom">
-                        <button class="addto_cart_btn addto_cart_btn">
-                            ADD TO CART<i class="bi bi-plus-lg"></i>
-                        </button>
-                    </div>                
-                
-                </div>
-                  
-                    
-               </div>
-            </div>
-                
-                <!-- -------------------------------------------------------------------------------------------- -->
-                 
                 <%- include('../common/footer.ejs') %>
              </div>
 
     </div>
 </div>
-
 
 <%- include('../../end.ejs') %>
 

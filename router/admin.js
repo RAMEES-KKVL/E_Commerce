@@ -7,26 +7,22 @@ const productController = require("../controller/productController")
 const upload = require("../middlewares/multerCategory")
 const productUpload = require("../middlewares/multerProduct")
 const bannerUpload = require("../middlewares/multerBanner")
+const adminSession = require('../middlewares/adminSession')
+
+//--------------- ADMIN - AUTHENTICATION ---------------------------
 
 router.get("/login",adminControllerInfo.admin_get_login)
-
 router.post("/login",adminControllerInfo.admin_post_login)
-
 router.get("/signup",adminControllerInfo.admin_get_signup)
-
 router.post("/signup",adminControllerInfo.admin_post_signup)
- 
 router.get("/forget_Password",adminControllerInfo.admin_get_forget_Password)
-
 router.post("/forget_Password",adminControllerInfo.admin_post_forget_Password)
-
 router.get("/verification",adminControllerInfo.admin_get_verification)
-
 router.post("/verification",adminControllerInfo.admin_post_verification)
-
 router.get("/reset_password",adminControllerInfo.admin_get_reset_pass)
-
 router.post("/reset_password",adminControllerInfo.admin_post_reset_pass)
+
+router.use(adminSession)
 
 router.get("/home",adminController.admin_get_Home)
 

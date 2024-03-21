@@ -83,5 +83,3 @@ function editProfile(event, userId){
     event.stopPropagation()
     window.location.href = `/account/profile_Edit?userId=${userId}`
 }
-
-

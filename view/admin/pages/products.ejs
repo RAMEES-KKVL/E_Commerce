@@ -51,7 +51,17 @@
                         </table>
                     </div>
                 </div>
-      
+
+                <div class="pagination_admin_products" >
+                    <div class="buttn_spc" style=" width: 80%; height: 100%; display: flex; align-items: center; justify-content: center; gap: .8rem; overflow-x: scroll;">
+                        <% let pageNumber = length / 8 %>
+                        <% pageNumber = Math.ceil(pageNumber) %>
+                        <% for (let page = 1; page <= pageNumber; page++) { %>
+                            <button class="page_btn" onclick="active('<%= page %>')"><%= page %></button>
+                        <% } %>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -59,3 +69,10 @@
 <%- include("../../end.ejs") %>
 
 <script src="/js/admin/deleteProduct.js"></script>
+
+<script>
+    function active(page){
+        const pageNumber = parseInt(page)
+        window.location.href = `/admin/products?pageNumber=${pageNumber}`
+    }
+</script>
