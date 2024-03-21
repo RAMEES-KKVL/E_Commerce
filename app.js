@@ -28,7 +28,9 @@ app.use(session({
 app.use("/admin",adminRouter)   
 app.use("/",userRouter)
 
-mongoose.connect("mongodb://localhost:27017/E_commerce_project")
+const MONGO_URL = process.env.MONGO_URL
+
+mongoose.connect(MONGO_URL)
 .then(()=>console.log("Database connected"))
 .catch(()=>console.log("Database connection failed"))
 
